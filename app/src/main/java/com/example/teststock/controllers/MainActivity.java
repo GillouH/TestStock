@@ -1,6 +1,7 @@
 package com.example.teststock.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity{
         // Activity initialization.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.activityMain_toolbar);
+        setSupportActionBar(toolbar);
 
         // RecyclerView initialization.
         recyclerView = findViewById(R.id.activityMain_recyclerView_listItem);
