@@ -1,14 +1,14 @@
 package com.example.teststock.controllers;
 
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 
 import com.example.teststock.R;
 import com.example.teststock.adapters.ItemAdapter;
@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity{
     private ItemAdapter itemAdapter;
     private Drawable drawableDivider;
     private DividerItemDecoration dividerItemDecoration;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.activityMain_toolbar);
+        toolbar = findViewById(R.id.activityMain_toolbar);
         setSupportActionBar(toolbar);
 
         // RecyclerView initialization.

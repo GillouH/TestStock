@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.teststock.R;
 import com.example.teststock.models.BasicItem;
@@ -17,15 +18,23 @@ import java.io.Serializable;
 public class ItemDetailActivity extends AppCompatActivity{
     private TextView nameText, quantityText, quantityOutText, quantityPackText;
     private LinearLayout linearLayout_itemBasic, linearLayout_itemPack;
+    private Toolbar toolbar;
+    private Item item;
+    private Class<? extends Serializable> itemClass;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
 
+        toolbar = findViewById(R.id.activityItemDetail_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.itemDetailActivity_title);
+
         // Get cliked item and his class in the last activity.
-        Item item = (Item)getIntent().getSerializableExtra("item");
-        Class<? extends Serializable> itemClass = item.getClass();
+        item = (Item)getIntent().getSerializableExtra("item");
+        itemClass = item.getClass();
 
         // Print détails
         if(itemClass.equals(BasicItem.class) || itemClass.equals(PackItem.class)){
@@ -54,5 +63,11 @@ public class ItemDetailActivity extends AppCompatActivity{
                 quantityPackText.setText(packItem.getNbPackFull() + " " + packItem.getPackUnit() + " de " + packItem.getQuantityMaxInPackStr() + " " + packItem.getUnitInPack());
             }
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }

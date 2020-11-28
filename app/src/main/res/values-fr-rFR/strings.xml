@@ -7,4 +7,5 @@
     <string name="default_itemQuantityOutValue">@string/default_item_quantityUnitValue</string>
     <string name="default_nbPackLabel">Nombre de paquet(s) plein(s) :\u0020</string>
     <string name="default_nbPackValue">@string/default_item_quantityUnitValue</string>
+    <string name="itemDetailActivity_title">Détails</string>
 </resources>

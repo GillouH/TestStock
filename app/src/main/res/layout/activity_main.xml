@@ -11,12 +11,20 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/activityMain_toolbar"
         android:layout_width="match_parent"
-        app:titleTextAppearance="@style/AppName"
-        style="@style/ActionBar"/>
+        style="@style/ActionBar"
+        app:title="@string/app_name"
+        app:titleTextAppearance="@style/ActivityTitle" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activityMain_recyclerView_listItem"
+    <LinearLayout
+        style="@style/Contenu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activityMain_recyclerView_listItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </LinearLayout>
