@@ -59,8 +59,8 @@ public class ItemDetailActivity extends AppCompatActivity{
                 PackItem packItem = (PackItem)item;
                 quantityOutText = findViewById(R.id.activityItemDetail_textView_itemQuantityUnitOutValue);
                 quantityPackText = findViewById(R.id.activityItemDetail_textView_nbPackValue);
-                quantityOutText.setText(packItem.getQuantityOutStr() + " " + packItem.getUnitInPack());
-                quantityPackText.setText(packItem.getNbPackFull() + " " + packItem.getPackUnit() + " de " + packItem.getQuantityMaxInPackStr() + " " + packItem.getUnitInPack());
+                quantityOutText.setText(packItem.getQuantityOut() + " " + packItem.getUnitInPack());
+                quantityPackText.setText(packItem.getNbPackFull() + " " + packItem.getPackUnit() + " de " + packItem.getQuantityMaxInPack() + " " + packItem.getUnitInPack());
             }
         }
     }

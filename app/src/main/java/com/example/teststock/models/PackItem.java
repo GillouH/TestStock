@@ -1,13 +1,13 @@
 package com.example.teststock.models;
 
 public class PackItem extends Item{
-    private Float quantityOut;
+    private Integer quantityOut;
     private final String unitInPack;
     private Integer nbPackFull;
     private final String packUnit;
-    private final Float quantityMaxInPack;
+    private final Integer quantityMaxInPack;
 
-    public PackItem(String name, Float quantityOut, String unitInPack, Integer nbPackFull, String packUnit, Float quantityMaxInPack) {
+    public PackItem(String name, Integer quantityOut, String unitInPack, Integer nbPackFull, String packUnit, Integer quantityMaxInPack) {
         super(name);
         this.quantityOut = quantityOut;
         this.unitInPack = unitInPack;
@@ -16,7 +16,7 @@ public class PackItem extends Item{
         this.quantityMaxInPack = quantityMaxInPack;
     }
 
-    private void addQuantity(Float quantityToAdd){
+    private void addQuantity(Integer quantityToAdd){
         if(quantityToAdd > 0){
             quantityOut += quantityToAdd;
             if(quantityOut >= quantityMaxInPack){
@@ -27,7 +27,7 @@ public class PackItem extends Item{
         }
     }
 
-    private void removeQuantity(Float quantityToRemove){
+    private void removeQuantity(Integer quantityToRemove){
         if(quantityToRemove > 0){
             //quantityOut -= quantityToRemove;
             if(quantityOut - quantityToRemove < 0){
@@ -56,16 +56,8 @@ public class PackItem extends Item{
         }
     }
 
-    public Float getQuantityOut(){
+    public Integer getQuantityOut(){
         return quantityOut;
-    }
-
-    public String getQuantityOutStr(){
-        if(quantityOut == quantityOut.intValue()){
-            return Integer.toString(quantityOut.intValue());
-        }else{
-            return quantityOut.toString();
-        }
     }
 
     public String getUnitInPack(){
@@ -80,16 +72,8 @@ public class PackItem extends Item{
         return packUnit;
     }
 
-    public Float getQuantityMaxInPack(){
+    public Integer getQuantityMaxInPack(){
         return quantityMaxInPack;
-    }
-
-    public String getQuantityMaxInPackStr(){
-        if(quantityMaxInPack == quantityMaxInPack.intValue()){
-            return Integer.toString(quantityMaxInPack.intValue());
-        }else{
-            return quantityMaxInPack.toString();
-        }
     }
 
     @Override

@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity{
         listItem.add(new BasicItem("Lingettes desinfectante", 2, "boîte(s)"));
         listItem.add(new BasicItem("Mouchoirs", 5, "boîte(s)"));
         listItem.add(new BasicItem("Gants", 8, "boîte(s)"));
-        listItem.add(new PackItem("Papier toilette", 3F, "rouleau(x)", 1, "packet(s)", 8F));
-        listItem.add(new PackItem("Essuie main", 2F, "rouleau(x)", 3, "packet(s)", 6F));
+        listItem.add(new PackItem("Papier toilette", 3, "rouleau(x)", 1, "packet(s)", 8));
+        listItem.add(new PackItem("Essuie main", 2, "rouleau(x)", 3, "packet(s)", 6));
         listItem.add(new BasicItem("Sac poubelle (petit noir)", 5, "rouleau(x)"));
         listItem.add(new BasicItem("Sac poubelle (grand noir)", 3, "rouleau(x)"));
         listItem.add(new BasicItem("Sac poubelle (blanc)", 1, "rouleau(x)"));
