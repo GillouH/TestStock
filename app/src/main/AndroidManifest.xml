@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_coccinelle_trefle_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TestStock">
-        <activity android:name=".controllers.ItemDetailActivity"></activity>
-        <activity android:name=".controllers.MainActivity">
+        <activity android:name=".controllers.ItemDetailActivity" />
+        <activity android:name=".controllers.MainActivity" />
+        <activity android:name=".controllers.SplashscreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
