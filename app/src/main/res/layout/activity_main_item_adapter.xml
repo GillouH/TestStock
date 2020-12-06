@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical">
+    style="@style/MainActivity_ItemAdapter">
 
     <TextView
         android:id="@+id/activityMainItemAdapter_textView_itemName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/default_item_name"
-        style="@style/MainActivityItemList" />
+        style="@style/MainActivity_ItemAdapter_ItemName" />
+
+    <ImageView style="@style/MainActivity_ItemAdapter_Divider"/>
 
 </LinearLayout>

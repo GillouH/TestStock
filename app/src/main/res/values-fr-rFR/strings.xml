@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="default_item_name">Nom de l\'article</string>
-    <string name="default_item_quantityUnitLabel">Quantitée :\u0020</string>
-    <string name="default_item_quantityUnitValue">0 unité(s)</string>
-    <string name="default_itemQuantityOutLabel">Quantitée restante dans le pack ouvert :\u0020</string>
-    <string name="default_itemQuantityOutValue">@string/default_item_quantityUnitValue</string>
-    <string name="default_nbPackLabel">Nombre de paquet(s) plein(s) :\u0020</string>
-    <string name="default_nbPackValue">@string/default_item_quantityUnitValue</string>
+    <string name="item_name">Nom de l\'article</string>
+    <string name="quantityUnit_label">Quantitée :\u0020</string>
+    <string name="quantityUnit_value">0 unité(s)</string>
+    <string name="quantityOut_label">Quantitée restante dans le pack ouvert :\u0020</string>
+    <string name="quantityOut_value">@string/quantityUnit_value</string>
+    <string name="nbPack_Label">Nombre de paquet(s) plein(s) :\u0020</string>
+    <string name="nbPack_value">@string/quantityUnit_value</string>
     <string name="itemDetailActivity_title">Détails</string>
 </resources>
