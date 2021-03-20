@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".controllers.MainActivity"
-    style="@style/Activity">
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Root"
+    tools:context=".controllers.MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/activityMain_toolbar"
-        style="@style/MainActivity_ActionBar" />
+    <LinearLayout style="@style/Activity">
 
-    <LinearLayout style="@style/Contenu">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/activityMain_toolbar"
+            style="@style/ToolBar"
+            app:menu="@menu/activity_main_menu"
+            app:title="@string/app_name" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/activityMain_recyclerView_listItem"
-            style="@style/MainActivity_ItemListe"
-            tools:listitem="@layout/activity_main_item_adapter"/>
+            android:id="@+id/activityMain_recyclerView"
+            style="@style/Content"
+            android:paddingVertical="8dp"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_adapter" />
 
     </LinearLayout>
 
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/activityMain_floattingButton"
+        style="@style/FloatingButton"
+        android:contentDescription="@string/mainActivity_floatingActionButton_contentDescription"
+        android:src="@drawable/ic_baseline_add_24" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

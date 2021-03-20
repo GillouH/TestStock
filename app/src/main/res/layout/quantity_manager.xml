@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/QuantityManager_Root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/QuantityManager_ButtonMinus"
+        style="@style/QuantityManager_Elements"
+        android:text="-"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/QuantityManager_EditTextNumber"
+        style="@style/QuantityManager_Elements"
+        android:layout_toEndOf="@id/QuantityManager_ButtonMinus"
+        android:hint="0"
+        android:importantForAutofill="no"
+        android:inputType="numberSigned"
+        android:textAlignment="center"
+        tools:ignore="HardcodedText,LabelFor" />
+
+    <Button
+        android:id="@+id/QuantityManager_ButtonPlus"
+        style="@style/QuantityManager_Elements"
+        android:layout_toEndOf="@id/QuantityManager_EditTextNumber"
+        android:text="+"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/QuantityManager_ButtonValidation"
+        style="@style/QuantityManager_Elements"
+        android:layout_below="@id/QuantityManager_ButtonMinus"
+        android:layout_alignStart="@id/QuantityManager_ButtonMinus"
+        android:layout_alignEnd="@id/QuantityManager_ButtonPlus"
+        android:enabled="false" />
+
+</RelativeLayout>

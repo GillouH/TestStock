@@ -1,11 +1,44 @@
 <resources>
-    <string name="app_name" translatable="false">Test Stock</string>
+    <string name="app_name">Stock Management</string>
     <string name="item_name">Item name</string>
-    <string name="quantityUnit_label">Quantity:\u0020</string>
+    <string name="quantityUnit_label">Quantity:</string>
     <string name="quantityUnit_value">0 unit(s)</string>
-    <string name="quantityOut_label">Quantity left in the open pack:\u0020</string>
+    <string name="quantityOut_label">Quantity left in the open pack:</string>
     <string name="quantityOut_value">@string/quantityUnit_value</string>
-    <string name="nbPack_Label">Quantity of full pack:\u0020</string>
+    <string name="nbPack_label">Quantity of full pack:</string>
     <string name="nbPack_value">@string/quantityUnit_value</string>
     <string name="itemDetailActivity_title">Details</string>
+    <string name="addQuantity">Add</string>
+    <string name="removeQuantity">Remove</string>
+    <string name="addQuantityOut">@string/addQuantity</string>
+    <string name="removeQuantityOut">@string/removeQuantity</string>
+    <string name="addPack">Add pack(s)</string>
+    <string name="removePack">Remove pack(s)</string>
+    <string name="notifThreshold_label">Notification threshold:</string>
+    <string name="notifThreshold_value">1 unit(s)</string>
+    <string name="actionBar_modifyOrder">Change order</string>
+    <string name="actionBar_removeItem">Remove item</string>
+    <string name="actionBar_raz">RAZ</string>
+    <string name="ok">@android:string/ok</string>
+    <string name="cancel">@android:string/cancel</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="label_name">Name:</string>
+    <string name="mainActivity_floatingActionButton_contentDescription">Add</string>
+    <string name="itemAdapter_floatingActionButton_contentDescription">Action</string>
+    <string name="itemDetailActivity_floatingActionButton_contentDescription">Edit</string>
+    <string name="type">Type :</string>
+    <string name="simpleItem">Simple Item</string>
+    <string name="packItem">Packed item</string>
+    <string name="unit_label">Unit:</string>
+    <string name="unit_value">unit(s)</string>
+    <string name="threshold">Threshold:</string>
+    <string name="number0" translatable="false">0</string>
+    <string name="unitPack">Pack Unit:</string>
+    <string name="unitPackExample">pack, box, etc…</string>
+    <string name="quantityMaxInPack">Quantity max in pack:</string>
+    <string name="unitInPack">Unit in pack:</string>
+    <string name="preview">Preview:</string>
+    <string name="example_label">Example:</string>
+    <string name="example_value">5 box of 50 gloves:</string>
+    <string name="save">Save</string>
 </resources>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Root"
+    tools:context=".controllers.EditItemActivity">
+
+    <LinearLayout style="@style/Activity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/activityEditItem_toolbar"
+            style="@style/ToolBar"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:title="@string/edit_item" />
+
+        <ScrollView style="@style/ScrollView">
+
+            <LinearLayout
+                style="@style/Content"
+                android:scrollbars="vertical">
+
+                <TextView
+                    style="@style/TextView"
+                    android:text="@string/label_name" />
+
+                <EditText
+                    android:id="@+id/activityEditItem_editText_itemName"
+                    style="@style/EditText.Text"
+                    android:hint="@string/item_name"
+                    tools:ignore="Autofill" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/type" />
+
+                    <RadioButton
+                        android:id="@+id/activityEditItem_radioButton_basicItem"
+                        style="@style/TextView.Value"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="@string/simpleItem" />
+
+                    <RadioButton
+                        android:id="@+id/activityEditItem_radioButton_packItem"
+                        style="@style/TextView.Value"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="@string/packItem" />
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/activityEditItem_linearLayout_basicItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/unit_label" />
+
+                    <EditText
+                        android:id="@+id/activityEditItem_editText_basicItem_unit"
+                        style="@style/EditText.Text"
+                        android:hint="@string/unit_value"
+                        tools:ignore="Autofill" />
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/threshold" />
+
+                    <LinearLayout style="@style/Container.EditItemActivity">
+
+                        <EditText
+                            android:id="@+id/activityEditItem_editText_basicItem_seuil"
+                            style="@style/EditText.Number"
+                            tools:ignore="Autofill,LabelFor" />
+
+                        <TextView
+                            android:id="@+id/activityEditItem_textView_basicItem_unit_for_seuil"
+                            style="@style/TextView"
+                            android:text="@string/unit_value" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/activityEditItem_linearLayout_packItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/unitPack" />
+
+                    <EditText
+                        android:id="@+id/activityEditItem_editText_packItem_unitPack"
+                        style="@style/EditText.Text"
+                        android:hint="@string/unitPackExample"
+                        tools:ignore="Autofill" />
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/unitInPack" />
+
+                    <EditText
+                        android:id="@+id/activityEditItem_editText_packItem_unit"
+                        style="@style/EditText.Text"
+                        android:hint="@string/unit_value"
+                        tools:ignore="Autofill" />
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/quantityMaxInPack" />
+
+                    <LinearLayout style="@style/Container.EditItemActivity">
+
+                        <EditText
+                            android:id="@+id/activityEditItem_editText_packItem_quantityMaxInPack"
+                            style="@style/EditText.Number"
+                            tools:ignore="Autofill,LabelFor" />
+
+                        <TextView
+                            android:id="@+id/activityEditItem_textView_packItem_unit_for_quantityMaxInPack"
+                            style="@style/TextView"
+                            android:text="@string/unit_value" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/threshold" />
+
+                    <LinearLayout style="@style/Container.EditItemActivity">
+
+                        <EditText
+                            android:id="@+id/activityEditItem_editText_packItem_seuil"
+                            style="@style/EditText.Number"
+                            tools:ignore="Autofill,LabelFor" />
+
+                        <TextView
+                            android:id="@+id/activityEditItem_textView_packItem_unit_for_seuil"
+                            style="@style/TextView"
+                            android:text="@string/unitPackExample" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/preview" />
+
+                    <TextView
+                        android:id="@+id/activityEditItem_textView_packItem_example"
+                        style="@style/TextView.Value" />
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/example_label" />
+
+                    <TextView
+                        style="@style/TextView.Value"
+                        android:text="@string/example_value" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/activityEditItem_button_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:enabled="false"
+                    android:text="@string/save" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

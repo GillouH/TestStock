@@ -1,60 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Activity"
+    style="@style/Root"
     tools:context=".controllers.ItemDetailActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/activityItemDetail_toolbar"
-        style="@style/ItemDetailActivity_ActionBar" />
+    <LinearLayout style="@style/Activity">
 
-    <LinearLayout style="@style/Contenu">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/activityItemDetail_toolbar"
+            style="@style/ToolBar"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:title="@string/itemDetailActivity_title" />
 
-        <TextView
-            android:id="@+id/activityItemDetail_textView_itemName"
-            style="@style/ItemDetailActivity_ItemName" />
+        <ScrollView style="@style/ScrollView">
 
-        <LinearLayout
-            android:id="@+id/activityItemDetail_linearLayout_itemBasic"
-            style="@style/ItemDetailActivity_Section">
-
-            <TextView style="@style/ItemDetailActivity_ItemBasic_Label" />
-
-            <TextView
-                android:id="@+id/activityItemDetail_textView_itemQuantityUnitValue"
-                style="@style/ItemDetailActivity_ItemBasic_Value" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/activityItemDetail_linearLayout_itemPack"
-            style="@style/ItemDetailActivity_Section">
-
-            <LinearLayout
-                style="@style/ItemDetailActivity_Section">
+            <LinearLayout style="@style/Content">
 
                 <TextView
-                    style="@style/ItemDetailActivity_ItemPack_QuantityOut_Label"/>
+                    android:id="@+id/activityItemDetail_textView_itemName"
+                    style="@style/TextView"
+                    android:text="@string/item_name"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:id="@+id/activityItemDetail_linearLayout_itemBasic"
+                    style="@style/ItemDetailActivity_Section">
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/quantityUnit_label" />
+
+                    <TextView
+                        android:id="@+id/activityItemDetail_textView_itemQuantityUnitValue"
+                        style="@style/TextView.Value"
+                        android:text="@string/quantityUnit_value" />
+
+                    <com.example.teststock.controllers.QuantityManager
+                        android:id="@+id/activityItemDetail_quantityManager_basicItem"
+                        style="@style/ItemDetailActivity_QuantityManager"
+                        app:validationTextAdd="@string/addQuantity"
+                        app:validationTextRemove="@string/removeQuantity" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/activityItemDetail_linearLayout_itemPack"
+                    style="@style/ItemDetailActivity_Section">
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/nbPack_label" />
+
+                    <TextView
+                        android:id="@+id/activityItemDetail_textView_nbPackValue"
+                        style="@style/TextView.Value"
+                        android:text="@string/nbPack_value" />
+
+                    <com.example.teststock.controllers.QuantityManager
+                        android:id="@+id/activityItemDetail_quantityManager_packItem_nbPack"
+                        style="@style/ItemDetailActivity_QuantityManager"
+                        app:validationTextAdd="@string/addPack"
+                        app:validationTextRemove="@string/removePack" />
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/quantityOut_label" />
+
+                    <TextView
+                        android:id="@+id/activityItemDetail_textView_itemQuantityUnitOutValue"
+                        style="@style/TextView.Value"
+                        android:text="@string/quantityOut_value" />
+
+                    <com.example.teststock.controllers.QuantityManager
+                        android:id="@+id/activityItemDetail_quantityManager_packItem_quantityOut"
+                        style="@style/ItemDetailActivity_QuantityManager"
+                        app:validationTextAdd="@string/addQuantityOut"
+                        app:validationTextRemove="@string/removeQuantityOut" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/activityItemDetail_textView_itemQuantityUnitOutValue"
-                    style="@style/ItemDetailActivity_ItemPack_QuantityOut_Value"/>
+                    style="@style/TextView"
+                    android:text="@string/notifThreshold_label" />
+
+                <TextView
+                    android:id="@+id/activityItemDetail_notificationThreshold"
+                    style="@style/TextView.Value"
+                    android:text="@string/notifThreshold_value" />
 
             </LinearLayout>
 
-            <LinearLayout
-                style="@style/ItemDetailActivity_Section">
-
-                <TextView
-                    style="@style/ItemDetailActivity_ItemPack_NbPack_Label"/>
-
-                <TextView
-                    android:id="@+id/activityItemDetail_textView_nbPackValue"
-                    style="@style/ItemDetailActivity_ItemPack_NbPack_Value"/>
-            </LinearLayout>
-
-        </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/activityItemDetail_floattingButton"
+        style="@style/FloatingButton"
+        android:contentDescription="@string/itemDetailActivity_floatingActionButton_contentDescription"
+        android:src="@drawable/ic_baseline_edit_24" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

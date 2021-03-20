@@ -1,11 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Gestion de Stock</string>
     <string name="item_name">Nom de l\'article</string>
-    <string name="quantityUnit_label">Quantitée :\u0020</string>
+    <string name="quantityUnit_label">Quantitée :</string>
     <string name="quantityUnit_value">0 unité(s)</string>
-    <string name="quantityOut_label">Quantitée restante dans le pack ouvert :\u0020</string>
+    <string name="quantityOut_label">Quantitée restante dans le paquet ouvert :</string>
     <string name="quantityOut_value">@string/quantityUnit_value</string>
-    <string name="nbPack_Label">Nombre de paquet(s) plein(s) :\u0020</string>
+    <string name="nbPack_label">Nombre de paquet(s) plein(s) :</string>
     <string name="nbPack_value">@string/quantityUnit_value</string>
     <string name="itemDetailActivity_title">Détails</string>
+    <string name="addQuantity">Ajouter</string>
+    <string name="removeQuantity">Retirer</string>
+    <string name="addQuantityOut">@string/addQuantity</string>
+    <string name="removeQuantityOut">@string/removeQuantity</string>
+    <string name="addPack">Ajouter paquet(s)</string>
+    <string name="removePack">Retirer paquet(s)</string>
+    <string name="notifThreshold_label">Seuil de notification :</string>
+    <string name="notifThreshold_value">1 unité(s)</string>
+    <string name="actionBar_modifyOrder">Modifier l\'ordre</string>
+    <string name="actionBar_removeItem">Supprimer</string>
+    <string name="actionBar_raz">RAZ</string>
+    <string name="ok">OK</string>
+    <string name="cancel">ANNULER</string>
+    <string name="edit_item">Édition</string>
+    <string name="label_name">Nom :</string>
+    <string name="mainActivity_floatingActionButton_contentDescription">Ajouter</string>
+    <string name="itemAdapter_floatingActionButton_contentDescription">Action</string>
+    <string name="itemDetailActivity_floatingActionButton_contentDescription">Éditer</string>
+    <string name="type">Type :</string>
+    <string name="simpleItem">Article simple</string>
+    <string name="packItem">Article en lot</string>
+    <string name="unit_label">Unité :</string>
+    <string name="unit_value">unité(s)</string>
+    <string name="threshold">Seuil :</string>
+    <string name="unitPack">Nom du lot :</string>
+    <string name="unitPackExample">paquet(s), boîte(s), etc…</string>
+    <string name="quantityMaxInPack">Quantitée max dans le lot :</string>
+    <string name="unitInPack">Unitée dans le lot :</string>
+    <string name="preview">Aperçu :</string>
+    <string name="example_label">Exemple :</string>
+    <string name="example_value">5 boites de 50 gants:</string>
+    <string name="save">Enregistrer</string>
 </resources>

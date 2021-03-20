@@ -4,12 +4,14 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TestStock">
-        <activity android:name=".controllers.ItemDetailActivity"></activity>
+        <activity android:name=".controllers.EditItemActivity" />
+        <activity android:name=".controllers.ItemDetailActivity" />
         <activity android:name=".controllers.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

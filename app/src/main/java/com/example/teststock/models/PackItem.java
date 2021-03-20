@@ -1,14 +1,24 @@
 package com.example.teststock.models;
 
-public class PackItem extends Item{
-    private Integer quantityOut;
-    private final String unitInPack;
-    private Integer nbPackFull;
-    private final String packUnit;
-    private final Integer quantityMaxInPack;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    public PackItem(String name, Integer quantityOut, String unitInPack, Integer nbPackFull, String packUnit, Integer quantityMaxInPack) {
-        super(name);
+import java.util.Locale;
+
+public class PackItem extends Item{
+    private static final String JSON_KEY_QUANTITYOUT = "JSON_KEY_QUANTITYOUT";
+    private static final String JSON_KEY_UNITINPACK = "JSON_KEY_UNITINPACK";
+    private static final String JSON_KEY_NBPACKFULL = "JSON_KEY_NBPACKFULL";
+    private static final String JSON_KEY_PACKUNIT = "JSON_KEY_PACKUNIT";
+    private static final String JSON_KEY_QUANTITYMAXINPACK = "JSON_KEY_QUANTITYMAXINPACK";
+    private final int quantityMaxInPack;
+    private int quantityOut;
+    private final String unitInPack;
+    private final String packUnit;
+    private int nbPackFull;
+
+    public PackItem(int ID, String name, int quantityOut, String unitInPack, int nbPackFull, String packUnit, int quantityMaxInPack, int seuil){
+        super(ID, name, seuil);
         this.quantityOut = quantityOut;
         this.unitInPack = unitInPack;
         this.nbPackFull = nbPackFull;
@@ -16,47 +26,24 @@ public class PackItem extends Item{
         this.quantityMaxInPack = quantityMaxInPack;
     }
 
-    private void addQuantity(Integer quantityToAdd){
-        if(quantityToAdd > 0){
-            quantityOut += quantityToAdd;
-            if(quantityOut >= quantityMaxInPack){
-                Integer nbPackToAdd = (int)(quantityOut/quantityMaxInPack);
-                quantityOut -= nbPackToAdd * quantityMaxInPack;
-                addPack(nbPackToAdd);
+    public static PackItem fromJSON(JSONObject json) throws JSONException{
+        return new PackItem(json.getInt(JSON_KEY_ID), json.getString(JSON_KEY_NAME), json.getInt(JSON_KEY_QUANTITYOUT), json.getString(JSON_KEY_UNITINPACK), json.getInt(JSON_KEY_NBPACKFULL), json.getString(JSON_KEY_PACKUNIT), json.getInt(JSON_KEY_QUANTITYMAXINPACK), json.getInt(JSON_KEY_SEUIL));
+    }
+
+    public int modifyNbPack(int quantity){
+        this.nbPackFull += quantity;
+        if(this.nbPackFull > seuil){
+            return 0;
+        }else{
+            if(this.nbPackFull < 0){
+                this.quantityOut = 0;
+                this.nbPackFull = 0;
             }
+            return 1;
         }
     }
 
-    private void removeQuantity(Integer quantityToRemove){
-        if(quantityToRemove > 0){
-            //quantityOut -= quantityToRemove;
-            if(quantityOut - quantityToRemove < 0){
-                Integer nbPackToRemove = (int)(((quantityToRemove - quantityOut)/quantityMaxInPack)) + 1;
-                if(nbPackToRemove <= nbPackFull){
-                    quantityOut += nbPackToRemove*quantityMaxInPack - quantityToRemove;
-                    if(nbPackToRemove > 0 && nbPackToRemove <= nbPackFull){
-                        nbPackFull -= nbPackToRemove;
-                    }
-                }
-            }else{
-                quantityOut -= quantityToRemove;
-            }
-        }
-    }
-
-    private void addPack(Integer nbPackToAdd){
-        if(nbPackToAdd > 0){
-            nbPackFull += nbPackToAdd;
-        }
-    }
-
-    private void removePack(Integer nbPackToRemove){
-        if(nbPackToRemove > 0 && nbPackToRemove <= nbPackFull){
-            nbPackFull -= nbPackToRemove;
-        }
-    }
-
-    public Integer getQuantityOut(){
+    public int getQuantityOut(){
         return quantityOut;
     }
 
@@ -64,7 +51,22 @@ public class PackItem extends Item{
         return unitInPack;
     }
 
-    public Integer getNbPackFull(){
+    public int modifyQuantityOut(int quantity){
+        this.quantityOut += quantity;
+        while(this.quantityOut < 0){
+            if(modifyNbPack(-1) == 1){
+                return 1;
+            }
+            this.quantityOut += quantityMaxInPack;
+        }
+        while(this.quantityOut >= quantityMaxInPack){
+            modifyNbPack(1);
+            this.quantityOut -= quantityMaxInPack;
+        }
+        return 0;
+    }
+
+    public int getNbPackFull(){
         return nbPackFull;
     }
 
@@ -72,20 +74,44 @@ public class PackItem extends Item{
         return packUnit;
     }
 
-    public Integer getQuantityMaxInPack(){
+    public int getQuantityMaxInPack(){
         return quantityMaxInPack;
     }
 
     @Override
+    public String getSeuilFormated(){
+        return String.format(Locale.getDefault(), "%d %s de %d %s", getSeuil(), getPackUnit(), getQuantityMaxInPack(), getUnitInPack());
+    }
+
+    public String getQuantityOutFormated(){
+        return String.format(Locale.getDefault(), "%d %s", getQuantityOut(), getUnitInPack());
+    }
+
+    public String getNbPackFullFormated(){
+        return String.format(Locale.getDefault(), "%d %s de %d %s", getNbPackFull(), getPackUnit(), getQuantityMaxInPack(), getUnitInPack());
+    }
+
+    @Override
+    public String getQuantityLeftFormated(){
+        return getNbPackFullFormated();
+    }
+
+    public JSONObject toJSON() throws JSONException{
+        JSONObject json = super.toJSON();
+        json.put(JSON_KEY_QUANTITYOUT, quantityOut);
+        json.put(JSON_KEY_UNITINPACK, unitInPack);
+        json.put(JSON_KEY_NBPACKFULL, nbPackFull);
+        json.put(JSON_KEY_PACKUNIT, packUnit);
+        json.put(JSON_KEY_QUANTITYMAXINPACK, quantityMaxInPack);
+        return json;
+    }
+
+    @Override
     public String toString(){
-        return "PackItem{" +
-                "\tID=" + getID() + ",\n" +
-                "\tname='" + getName() + "',\n" +
-                "\tquantityOut=" + quantityOut + ",\n" +
-                "\tunitInPack='" + unitInPack + "',\n" +
-                "\tnbPackFull=" + nbPackFull + ",\n" +
-                "\tpackUnit='" + packUnit + "',\n" +
-                "\tquantityMaxInPack=" + quantityMaxInPack + "\n" +
-                "}\n";
+        try{
+            return toJSON().toString();
+        }catch(JSONException e){
+            return "";
+        }
     }
 }
