@@ -24,8 +24,9 @@ public class ItemDetailActivity extends ItemManagerActivity{
     private static final String BUNDLE_STATE_ITEM_ID = "BUNDLE_STATE_ITEM_ID";
     private static final String BUNDLE_BASIC_ITEM_QUANTITY_MANAGER = "BUNDLE_BASIC_ITEM_QUANTITY_MANAGER";
     private static final String BUNDLE_PACK_ITEM_QUANTITY_OUT_QUANTITY_MANAGER = "BUNDLE_PACK_ITEM_QUANTITY_OUT_QUANTITY_MANAGER";
-    private Item item;
     private static final String BUNDLE_PACK_ITEM_NB_PACK_QUANTITY_MANAGER = "BUNDLE_PACK_ITEM_NB_PACK_QUANTITY_MANAGER";
+
+    private Item item;
     private TextView quantityText;
     private TextView quantityOutText;
     private TextView quantityPackText;

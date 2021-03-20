@@ -48,6 +48,7 @@
                         style="@style/TextView.Value"
                         android:onClick="onRadioButtonClicked"
                         android:text="@string/packItem" />
+
                 </RadioGroup>
 
                 <LinearLayout
@@ -81,6 +82,7 @@
                             android:id="@+id/activityEditItem_textView_basicItem_unit_for_seuil"
                             style="@style/TextView"
                             android:text="@string/unit_value" />
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -126,6 +128,7 @@
                             android:id="@+id/activityEditItem_textView_packItem_unit_for_quantityMaxInPack"
                             style="@style/TextView"
                             android:text="@string/unit_value" />
+
                     </LinearLayout>
 
                     <TextView
@@ -143,6 +146,7 @@
                             android:id="@+id/activityEditItem_textView_packItem_unit_for_seuil"
                             style="@style/TextView"
                             android:text="@string/unitPackExample" />
+
                     </LinearLayout>
 
                     <TextView
@@ -173,6 +177,7 @@
                     android:text="@string/save" />
 
             </LinearLayout>
+
         </ScrollView>
 
     </LinearLayout>

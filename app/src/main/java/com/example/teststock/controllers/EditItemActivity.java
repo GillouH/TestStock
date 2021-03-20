@@ -37,6 +37,7 @@ public class EditItemActivity extends ItemManagerActivity{
     private static final String BUNDLE_STATE_PACK_ITEM_UNIT = "BUNDLE_STATE_PACK_ITEM_UNIT";
     private static final String BUNDLE_STATE_PACK_ITEM_QUANTITY_MAX_IN_PACK = "BUNDLE_STATE_PACK_ITEM_QUANTITY_MAX_IN_PACK";
     private static final String BUNDLE_STATE_PACK_ITEM_SEUIL = "BUNDLE_STATE_PACK_ITEM_SEUIL";
+
     private EditText
             editTextItemName,
             editTextBasicItemUnit,

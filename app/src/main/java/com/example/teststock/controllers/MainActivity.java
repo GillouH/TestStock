@@ -25,11 +25,13 @@ import java.util.List;
 
 // TODO: 18/03/2021 Gestion de compte ?
 // TODO: 18/03/2021 Mise en réseau avec serveur
+// TODO: 20/03/2021 Build config
 
 public class MainActivity extends ItemManagerActivity implements StartDragListener{
     private static final String BUNDLE_STATE_MODE = "BUNDLE_STATE_MODE";
-    private ItemAdapter itemAdapter;
     private static final String BUNDLE_STATE_ITEM_LIST = "BUNDLE_STATE_ITEM_LIST";
+
+    private ItemAdapter itemAdapter;
     private List<Item> itemList;
     private ItemTouchHelper touchHelper;
     private boolean showMenu;

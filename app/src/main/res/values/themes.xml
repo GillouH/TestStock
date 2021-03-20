@@ -1,5 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
+
     <style name="Theme.TestStock" parent="Theme.AppCompat.NoActionBar">
         <!-- Couleur de la barre de notification -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
@@ -9,8 +11,9 @@
         <item name="colorControlNormal">@color/white</item>
         <!-- Couleur de fond des activitées -->
         <item name="android:windowBackground">@color/black</item>
-        <!-- #FF424242-->
     </style>
+
+    <!-- Base application theme. /-->
 
     <!-- Composant Quantity Manager -->
 

@@ -215,7 +215,9 @@ public class ItemManagerActivity extends AppCompatActivity{
     @Override
     public boolean onSupportNavigateUp(){
         log(TYPE.CLICK, "clickNavigateUpButton");
-        finish();
+        if(!super.onSupportNavigateUp()){
+            finish();
+        }
         return true;
     }
 
