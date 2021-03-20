@@ -4,13 +4,13 @@
 
     <style name="Theme.TestStock" parent="Theme.AppCompat.NoActionBar">
         <!-- Couleur de la barre de notification -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/black</item>
         <!-- Taille standard du texte -->
         <item name="android:textSize">15sp</item>
         <!-- Couleur standard des boutons dans l'action bar -->
-        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlNormal">@android:color/white</item>
         <!-- Couleur de fond des activitées -->
-        <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowBackground">@android:color/black</item>
     </style>
 
     <!-- Base application theme. /-->
@@ -29,7 +29,7 @@
     <style name="TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="TextView.Value">
@@ -107,7 +107,7 @@
 
     <style name="ToolBar_Title">
         <item name="android:textSize">25sp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <!-- ToolBar /-->
