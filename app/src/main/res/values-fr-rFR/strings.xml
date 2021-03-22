@@ -4,9 +4,9 @@
     <string name="item_name">Nom de l\'article</string>
     <string name="quantityUnit_label">Quantitée :</string>
     <string name="quantityUnit_value">0 unité(s)</string>
-    <string name="quantityOut_label">Quantitée restante dans le paquet ouvert :</string>
+    <string name="quantityOut_label">Quantitée restante dans le lot ouvert :</string>
     <string name="quantityOut_value">@string/quantityUnit_value</string>
-    <string name="nbPack_label">Nombre de paquet(s) plein(s) :</string>
+    <string name="nbPack_label">Nombre de lot(s) plein(s) :</string>
     <string name="nbPack_value">@string/quantityUnit_value</string>
     <string name="itemDetailActivity_title">Détails</string>
     <string name="quantityManager_add">Ajouter</string>
@@ -15,8 +15,8 @@
     <string name="removeQuantity">@string/quantityManager_remove</string>
     <string name="addQuantityOut">@string/addQuantity</string>
     <string name="removeQuantityOut">@string/removeQuantity</string>
-    <string name="addPack">Ajouter paquet(s)</string>
-    <string name="removePack">Retirer paquet(s)</string>
+    <string name="addPack">Ajouter lot(s)</string>
+    <string name="removePack">Retirer lot(s)</string>
     <string name="notifThreshold_label">Seuil de notification :</string>
     <string name="notifThreshold_value">1 unité(s)</string>
     <string name="actionBar_modifyOrder">Modifier l\'ordre</string>

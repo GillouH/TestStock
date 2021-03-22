@@ -4,7 +4,8 @@
     android:id="@+id/itemAdapter_cardView"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="@color/colorSecondary">
 
     <RelativeLayout
         android:layout_width="match_parent"
