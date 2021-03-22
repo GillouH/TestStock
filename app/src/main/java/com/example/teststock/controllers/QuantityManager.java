@@ -2,9 +2,12 @@ package com.example.teststock.controllers;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -16,11 +19,13 @@ import androidx.annotation.Nullable;
 import com.example.teststock.R;
 
 public class QuantityManager extends RelativeLayout{
+    private static final String BUNDLE_STATE_SUPER_STATE = "BUNDLE_STATE_SUPER_STATE";
+    private static final String BUNDLE_STATE_NUMBER = "BUNDLE_STATE_QUANTITY";
 
     private Button validtionButton;
     private EditText numberEditText;
     private String validationTextAdd, validationTextRemove;
-    private String numberEditTextDefaultValue;
+    private int numberDefaultValue;
 
     public QuantityManager(Context context){
         super(context);
@@ -43,11 +48,15 @@ public class QuantityManager extends RelativeLayout{
 
         TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.QuantityManager);
 
-        if(typedArray.getString(R.styleable.QuantityManager_validationTextAdd) != null)
+        if(typedArray.getString(R.styleable.QuantityManager_validationTextAdd) != null){
             validationTextAdd = typedArray.getString(R.styleable.QuantityManager_validationTextAdd);
+            validationTextAdd = getResources().getString(R.string.quantityManager_add);
+        }
 
-        if(typedArray.getString(R.styleable.QuantityManager_validationTextRemove) != null)
+        if(typedArray.getString(R.styleable.QuantityManager_validationTextRemove) != null){
             validationTextRemove = typedArray.getString(R.styleable.QuantityManager_validationTextRemove);
+            validationTextRemove = getResources().getString(R.string.quantityManager_remove);
+        }
 
         typedArray.recycle();
 
@@ -68,54 +77,79 @@ public class QuantityManager extends RelativeLayout{
 
             @Override
             public void afterTextChanged(Editable s){
-                try{
-                    validtionButton.setText(Integer.parseInt(s.toString()) >= 0 ? validationTextAdd : validationTextRemove);
-                }catch(NumberFormatException e){
-                    validtionButton.setText(validationTextAdd);
-                }
-                try{
-                    validtionButton.setEnabled(Integer.parseInt(s.toString()) != 0);
-                }catch(NumberFormatException e){
-                    validtionButton.setEnabled(false);
-                }
+                validtionButton.setText(getNumberSimple() >= 0 ? validationTextAdd : validationTextRemove);
+                validtionButton.setEnabled(getNumberSimple() != 0);
             }
         });
 
-        minusButton.setOnClickListener(v1->{
-            try{
-                numberEditText.setText(String.valueOf(getQuantity() - 1));
-            }catch(NumberFormatException e){
-                numberEditText.setText(null);
-            }
-        });
+        minusButton.setOnClickListener(v1->setNumber(getNumberSimple() - 1));
 
-        plusButton.setOnClickListener(v->{
-            try{
-                numberEditText.setText(String.valueOf(getQuantity() + 1));
-            }catch(NumberFormatException e){
-                numberEditText.setText(null);
-            }
-        });
+        plusButton.setOnClickListener(v->setNumber(getNumberSimple() + 1));
 
-        numberEditTextDefaultValue = numberEditText.getHint().toString();
+        numberDefaultValue = Integer.parseInt(numberEditText.getHint().toString());
     }
 
     public void setOnClickListener(@Nullable OnClickListener l){
         validtionButton.setOnClickListener(l);
     }
 
-    public int getQuantity(){
-        int quantity;
+    private Integer getNumberSimpleMayBeNull(){
         try{
-            quantity = Integer.parseInt(numberEditText.getText().toString());
+            return Integer.parseInt(numberEditText.getText().toString());
         }catch(NumberFormatException e){
-            quantity = Integer.parseInt(numberEditTextDefaultValue);
+            return null;
         }
-        numberEditText.setText(null);
-        return quantity;
     }
 
-    public void setText(CharSequence text){
-        numberEditText.setText(text);
+    private int getNumberSimple(){
+        Integer number = getNumberSimpleMayBeNull();
+        return number == null ? numberDefaultValue : number;
+    }
+
+    public int getNumber(){
+        int number = getNumberSimple();
+        setNumber(null);
+        return number;
+    }
+
+    public void setNumber(int number){
+        numberEditText.setText(String.valueOf(number));
+    }
+
+    public void setNumber(String text){
+        try{
+            setNumber(Integer.parseInt(text));
+        }catch(NumberFormatException e){
+            numberEditText.setText(null);
+        }
+    }
+
+    @Nullable
+    @Override
+    protected Parcelable onSaveInstanceState(){
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BUNDLE_STATE_SUPER_STATE, super.onSaveInstanceState());
+        bundle.putParcelable(BUNDLE_STATE_NUMBER, numberEditText.onSaveInstanceState());
+        return bundle;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state){
+        if(state instanceof Bundle){
+            Bundle bundle = (Bundle)state;
+            state = bundle.getParcelable(BUNDLE_STATE_SUPER_STATE);
+            numberEditText.onRestoreInstanceState(bundle.getParcelable(BUNDLE_STATE_NUMBER));
+        }
+        super.onRestoreInstanceState(state);
+    }
+
+    @Override
+    protected void dispatchSaveInstanceState(SparseArray<Parcelable> container){
+        dispatchFreezeSelfOnly(container);
+    }
+
+    @Override
+    protected void dispatchRestoreInstanceState(SparseArray<Parcelable> container){
+        dispatchThawSelfOnly(container);
     }
 }
