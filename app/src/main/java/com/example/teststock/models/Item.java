@@ -1,5 +1,6 @@
 package com.example.teststock.models;
 
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 

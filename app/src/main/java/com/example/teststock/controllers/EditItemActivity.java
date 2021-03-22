@@ -22,22 +22,8 @@ import com.example.teststock.models.PackItem;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
-import java.util.Objects;
 
-public class EditItemActivity extends ItemManagerActivity{
-    private static final String BUNDLE_STATE_ITEM_ID = "BUNDLE_STATE_ITEM_ID";
-    private static final String BUNDLE_STATE_ITEM_NAME = "BUNDLE_STATE_ITEM_NAME";
-    private static final String BUNDLE_STATE_ITEM_TYPE = "BUNDLE_STATE_ITEM_TYPE";
-    private static final String BUNDLE_STATE_ITEM_TYPE_UNDEFINED = "BUNDLE_STATE_ITEM_TYPE_UNDEFINED";
-    private static final String BUNDLE_STATE_ITEM_TYPE_BASIC = "BUNDLE_STATE_ITEM_TYPE_BASIC";
-    private static final String BUNDLE_STATE_ITEM_TYPE_PACKED = "BUNDLE_STATE_ITEM_TYPE_PACKED";
-    private static final String BUNDLE_STATE_BASIC_ITEM_UNIT = "BUNDLE_STATE_BASIC_ITEM_UNIT";
-    private static final String BUNDLE_STATE_BASIC_ITEM_SEUIL = "BUNDLE_STATE_BASIC_ITEM_SEUIL";
-    private static final String BUNDLE_STATE_PACK_ITEM_UNIT_PACK = "BUNDLE_STATE_PACK_ITEM_UNIT_PACK";
-    private static final String BUNDLE_STATE_PACK_ITEM_UNIT = "BUNDLE_STATE_PACK_ITEM_UNIT";
-    private static final String BUNDLE_STATE_PACK_ITEM_QUANTITY_MAX_IN_PACK = "BUNDLE_STATE_PACK_ITEM_QUANTITY_MAX_IN_PACK";
-    private static final String BUNDLE_STATE_PACK_ITEM_SEUIL = "BUNDLE_STATE_PACK_ITEM_SEUIL";
-
+public class EditItemActivity extends OneItemManagerActivity{
     private EditText
             editTextItemName,
             editTextBasicItemUnit,
@@ -50,7 +36,6 @@ public class EditItemActivity extends ItemManagerActivity{
     private LinearLayout linearLayoutBasicItem, packItemLinearLayout;
     private TextView textViewPackItemExample;
     private Button buttonSave;
-    private int itemID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -76,10 +61,6 @@ public class EditItemActivity extends ItemManagerActivity{
         buttonSave = findViewById(R.id.activityEditItem_button_save);
 
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-
-        linearLayoutBasicItem.setVisibility(View.GONE);
-        packItemLinearLayout.setVisibility(View.GONE);
 
         createTextListener(editTextItemName, null, false);
         createTextListener(editTextBasicItemUnit, textViewBasicItemUnitForSeuil, false);
@@ -88,24 +69,9 @@ public class EditItemActivity extends ItemManagerActivity{
         createTextListener(editTextPackItemQuantityMaxInPack, null, true);
         createTextListener(editTextPackItemUnitPack, textViewPackItemUnitForSeuil, true);
         createTextListener(editTextPackItemSeuil, null, false);
-        setPreviewText();
 
-        if(savedInstanceState != null){
-            itemID = savedInstanceState.getInt(BUNDLE_STATE_ITEM_ID);
-            editTextItemName.setText(savedInstanceState.getString(BUNDLE_STATE_ITEM_NAME));
-            String itemType = savedInstanceState.getString(BUNDLE_STATE_ITEM_TYPE);
-            editTextBasicItemUnit.setText(savedInstanceState.getString(BUNDLE_STATE_BASIC_ITEM_UNIT));
-            editTextBasicItemSeuil.setText(savedInstanceState.getString(BUNDLE_STATE_BASIC_ITEM_SEUIL));
-            editTextPackItemUnitPack.setText(savedInstanceState.getString(BUNDLE_STATE_PACK_ITEM_UNIT_PACK));
-            editTextPackItemUnit.setText(savedInstanceState.getString(BUNDLE_STATE_PACK_ITEM_UNIT));
-            editTextPackItemQuantityMaxInPack.setText(savedInstanceState.getString(BUNDLE_STATE_PACK_ITEM_QUANTITY_MAX_IN_PACK));
-            editTextPackItemSeuil.setText(savedInstanceState.getString(BUNDLE_STATE_PACK_ITEM_SEUIL));
-            if(itemType.equals(BUNDLE_STATE_ITEM_TYPE_BASIC)){
-                onRadioButtonClicked(radioButtonBasicItem);
-            }else if(itemType.equals(BUNDLE_STATE_ITEM_TYPE_PACKED)){
-                onRadioButtonClicked(radioButtonPackItem);
-            }
-        }else{
+        if(savedInstanceState == null){
+            setPreviewText();
             itemID = getIntent().getIntExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, -1);
             if(itemID != -1){
                 Item item = getItem(itemID);
@@ -128,29 +94,34 @@ public class EditItemActivity extends ItemManagerActivity{
                 finish();
             }
         });
+
         enableSaveButton();
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull @NotNull Bundle outState){
-        outState.putInt(BUNDLE_STATE_ITEM_ID, itemID);
-        outState.putString(BUNDLE_STATE_ITEM_NAME, editTextItemName.getText().toString());
-        String itemType;
+        String itemType = BUNDLE_VALUE_ITEM_TYPE_UNDEFINED;
         if(radioButtonBasicItem.isChecked()){
-            itemType = BUNDLE_STATE_ITEM_TYPE_BASIC;
+            itemType = BUNDLE_VALUE_ITEM_TYPE_BASIC;
         }else if(radioButtonPackItem.isChecked()){
-            itemType = BUNDLE_STATE_ITEM_TYPE_PACKED;
-        }else{
-            itemType = BUNDLE_STATE_ITEM_TYPE_UNDEFINED;
+            itemType = BUNDLE_VALUE_ITEM_TYPE_PACKED;
         }
-        outState.putString(BUNDLE_STATE_ITEM_TYPE, itemType);
-        outState.putString(BUNDLE_STATE_BASIC_ITEM_UNIT, editTextBasicItemUnit.getText().toString());
-        outState.putString(BUNDLE_STATE_BASIC_ITEM_SEUIL, editTextBasicItemSeuil.getText().toString());
-        outState.putString(BUNDLE_STATE_PACK_ITEM_UNIT_PACK, editTextPackItemUnitPack.getText().toString());
-        outState.putString(BUNDLE_STATE_PACK_ITEM_UNIT, editTextPackItemUnit.getText().toString());
-        outState.putString(BUNDLE_STATE_PACK_ITEM_QUANTITY_MAX_IN_PACK, editTextPackItemQuantityMaxInPack.getText().toString());
-        outState.putString(BUNDLE_STATE_PACK_ITEM_SEUIL, editTextPackItemSeuil.getText().toString());
+        outState.putString(BUNDLE_KEY_ITEM_TYPE, itemType);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        String itemType = savedInstanceState.getString(BUNDLE_KEY_ITEM_TYPE);
+        if(itemType.equals(BUNDLE_VALUE_ITEM_TYPE_BASIC)){
+            onRadioButtonClicked(radioButtonBasicItem);
+        }else if(itemType.equals(BUNDLE_VALUE_ITEM_TYPE_PACKED)){
+            onRadioButtonClicked(radioButtonPackItem);
+        }else{
+            linearLayoutBasicItem.setVisibility(View.GONE);
+            packItemLinearLayout.setVisibility(View.GONE);
+        }
     }
 
     public void onRadioButtonClicked(View view){

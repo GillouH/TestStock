@@ -25,7 +25,9 @@ import java.util.List;
 
 // TODO: 18/03/2021 Gestion de compte ?
 // TODO: 18/03/2021 Mise en réseau avec serveur
-// TODO: 20/03/2021 Build config
+// TODO: 20/03/2021 Bouton rappel notification
+// TODO: 20/03/2021 dictionnaire pluriel-singuliers
+// TODO: 21/03/2021 Tableau, comment fonctionne streched
 
 public class MainActivity extends ItemManagerActivity implements StartDragListener{
     private static final String BUNDLE_STATE_MODE = "BUNDLE_STATE_MODE";
@@ -48,6 +50,9 @@ public class MainActivity extends ItemManagerActivity implements StartDragListen
         RecyclerView recyclerView = findViewById(R.id.activityMain_recyclerView);
         addButton = findViewById(R.id.activityMain_floattingButton);
 
+
+        setSupportActionBar(toolbar);
+
         if(savedInstanceState != null){
             mode = MODE.valueOf(savedInstanceState.getString(BUNDLE_STATE_MODE));
             itemList = convertJSONArrayToItemList(convertJSONArrayAsStringToJSONArray(savedInstanceState.getString(BUNDLE_STATE_ITEM_LIST)));
@@ -60,7 +65,6 @@ public class MainActivity extends ItemManagerActivity implements StartDragListen
         ItemAdapter.setDeleteDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_delete_24));
 
         showMenu = mode == MODE.NORMAL;
-        setSupportActionBar(toolbar);
 
         itemAdapter = new ItemAdapter(itemList, mode, this);
         callback = new ItemMoveCallback(itemAdapter);

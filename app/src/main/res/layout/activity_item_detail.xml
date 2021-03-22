@@ -9,8 +9,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/activityItemDetail_toolbar"
-            style="@style/ToolBar"
-            app:navigationIcon="?attr/homeAsUpIndicator"
+            style="@style/ToolBar.NotMainActivity"
             app:title="@string/itemDetailActivity_title" />
 
         <ScrollView style="@style/ScrollView">

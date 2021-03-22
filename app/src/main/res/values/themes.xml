@@ -30,6 +30,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:freezesText">true</item>
     </style>
 
     <style name="TextView.Value">
@@ -103,6 +104,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/colorPrimary</item>
         <item name="titleTextAppearance">@style/ToolBar_Title</item>
+    </style>
+
+    <style name="ToolBar.NotMainActivity">
+        <item name="navigationIcon">?attr/homeAsUpIndicator</item>
     </style>
 
     <style name="ToolBar_Title">
