@@ -14,18 +14,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.Nullable;
-
 import com.example.teststock.R;
+
+import org.jetbrains.annotations.NotNull;
 
 public class QuantityManager extends RelativeLayout{
     private static final String BUNDLE_STATE_SUPER_STATE = "BUNDLE_STATE_SUPER_STATE";
     private static final String BUNDLE_STATE_NUMBER = "BUNDLE_STATE_QUANTITY";
+    private static final String BUNDLE_STATE_MIN = "BUNDLE_STATE_MIN";
+    private static final String BUNDLE_STATE_MAX = "BUNDLE_STATE_MAX";
 
     private Button validtionButton;
     private EditText numberEditText;
     private String validationTextAdd, validationTextRemove;
     private int numberDefaultValue;
+    private Integer min = null, max = null;
 
     public QuantityManager(Context context){
         super(context);
@@ -41,7 +44,7 @@ public class QuantityManager extends RelativeLayout{
         init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attributeSet){
+    private void init(@NotNull Context context, AttributeSet attributeSet){
         LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater != null ? layoutInflater.inflate(R.layout.quantity_manager, findViewById(R.id.QuantityManager_Root)) : null;
         addView(view);
@@ -76,18 +79,26 @@ public class QuantityManager extends RelativeLayout{
             }
         });
 
-        minusButton.setOnClickListener(v1->setNumber(getNumberSimple() - 1));
+        minusButton.setOnClickListener(v->{
+            if(min == null || getNumberSimple() > min){
+                setNumber(getNumberSimple() - 1);
+            }
+        });
 
-        plusButton.setOnClickListener(v->setNumber(getNumberSimple() + 1));
+        plusButton.setOnClickListener(v->{
+            if(max == null || getNumberSimple() < max){
+                setNumber(getNumberSimple() + 1);
+            }
+        });
 
         numberDefaultValue = Integer.parseInt(numberEditText.getHint().toString());
     }
 
-    public void setOnClickListener(@Nullable OnClickListener l){
+    public void setOnClickListener(OnClickListener l){
         validtionButton.setOnClickListener(l);
     }
 
-    private Integer getNumberSimpleMayBeNull(){
+    private @org.jetbrains.annotations.Nullable Integer getNumberSimpleMayBeNull(){
         try{
             return Integer.parseInt(numberEditText.getText().toString());
         }catch(NumberFormatException e){
@@ -118,12 +129,22 @@ public class QuantityManager extends RelativeLayout{
         }
     }
 
-    @Nullable
+    public void setMin(Integer min){
+        this.min = min;
+    }
+
+    @SuppressWarnings({"unused", "RedundantSuppression"})
+    public void setMax(Integer max){
+        this.max = max;
+    }
+
     @Override
     protected Parcelable onSaveInstanceState(){
         Bundle bundle = new Bundle();
         bundle.putParcelable(BUNDLE_STATE_SUPER_STATE, super.onSaveInstanceState());
         bundle.putParcelable(BUNDLE_STATE_NUMBER, numberEditText.onSaveInstanceState());
+        bundle.putInt(BUNDLE_STATE_MIN, min);
+        bundle.putInt(BUNDLE_STATE_MAX, max);
         return bundle;
     }
 
@@ -133,6 +154,8 @@ public class QuantityManager extends RelativeLayout{
             Bundle bundle = (Bundle)state;
             state = bundle.getParcelable(BUNDLE_STATE_SUPER_STATE);
             numberEditText.onRestoreInstanceState(bundle.getParcelable(BUNDLE_STATE_NUMBER));
+            min = bundle.getInt(BUNDLE_STATE_MIN);
+            max = bundle.getInt(BUNDLE_STATE_MAX);
         }
         super.onRestoreInstanceState(state);
     }

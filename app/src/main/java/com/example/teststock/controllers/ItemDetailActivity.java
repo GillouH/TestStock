@@ -83,33 +83,39 @@ public class ItemDetailActivity extends OneItemManagerActivity{
         linearLayout_itemPack.setVisibility(itemType.equals(BUNDLE_VALUE_ITEM_TYPE_PACKED) ? View.VISIBLE : View.GONE);
     }
 
-    private void fillBasicItemForm(BasicItem item){
+    private void fillBasicItemForm(@NotNull BasicItem item){
         quantityText.setText(item.getQuantityFormated());
+        basicItemQuantityManager.setMin(-item.getQuantity());
         basicItemQuantityManager.setOnClickListener(v->{
             if(item.modifyQuantity(basicItemQuantityManager.getNumber()) == 1){
                 sendNotification(item);
             }
             modifyItemInItemList(item);
+            basicItemQuantityManager.setMin(-item.getQuantity());
             quantityText.setText(item.getQuantityFormated());
         });
     }
 
-    private void fillPackItemForm(PackItem item){
+    private void fillPackItemForm(@NotNull PackItem item){
         quantityOutText.setText(item.getQuantityOutFormated());
+        packItemQuantityOutQuantityManager.setMin(-item.getQuantityOut());
         packItemQuantityOutQuantityManager.setOnClickListener(v->{
             if(item.modifyQuantityOut(packItemQuantityOutQuantityManager.getNumber()) == 1){
                 sendNotification(item);
             }
             modifyItemInItemList(item);
+            packItemQuantityOutQuantityManager.setMin(-item.getQuantityOut());
             updateQuantityPackItemText(item);
         });
 
         quantityPackText.setText(item.getNbPackFullFormated());
+        packItemNbPackQuantityManager.setMin(-item.getNbPackFull());
         packItemNbPackQuantityManager.setOnClickListener(v->{
             if(item.modifyNbPack(packItemNbPackQuantityManager.getNumber()) == 1){
                 sendNotification(item);
             }
             modifyItemInItemList(item);
+            packItemNbPackQuantityManager.setMin(-item.getNbPackFull());
             updateQuantityPackItemText(item);
         });
     }
