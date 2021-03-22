@@ -15,7 +15,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/activityMain_recyclerView"
-            style="@style/Content"
+            style="@style/Section.Principal"
             android:paddingVertical="8dp"
             android:scrollbars="vertical"
             tools:listitem="@layout/item_adapter" />

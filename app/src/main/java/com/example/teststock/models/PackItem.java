@@ -1,5 +1,6 @@
 package com.example.teststock.models;
 
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,8 +27,12 @@ public class PackItem extends Item{
         this.quantityMaxInPack = quantityMaxInPack;
     }
 
-    public static PackItem fromJSON(JSONObject json) throws JSONException{
-        return new PackItem(json.getInt(JSON_KEY_ID), json.getString(JSON_KEY_NAME), json.getInt(JSON_KEY_QUANTITYOUT), json.getString(JSON_KEY_UNITINPACK), json.getInt(JSON_KEY_NBPACKFULL), json.getString(JSON_KEY_PACKUNIT), json.getInt(JSON_KEY_QUANTITYMAXINPACK), json.getInt(JSON_KEY_SEUIL));
+    public static @Nullable PackItem fromJSON(JSONObject json){
+        try{
+            return new PackItem(json.getInt(JSON_KEY_ID), json.getString(JSON_KEY_NAME), json.getInt(JSON_KEY_QUANTITYOUT), json.getString(JSON_KEY_UNITINPACK), json.getInt(JSON_KEY_NBPACKFULL), json.getString(JSON_KEY_PACKUNIT), json.getInt(JSON_KEY_QUANTITYMAXINPACK), json.getInt(JSON_KEY_SEUIL));
+        }catch(Exception ignored){
+        }
+        return null;
     }
 
     public int modifyNbPack(int quantity){
@@ -96,22 +101,21 @@ public class PackItem extends Item{
         return getNbPackFullFormated();
     }
 
-    public JSONObject toJSON() throws JSONException{
+    public JSONObject toJSON(){
         JSONObject json = super.toJSON();
-        json.put(JSON_KEY_QUANTITYOUT, quantityOut);
-        json.put(JSON_KEY_UNITINPACK, unitInPack);
-        json.put(JSON_KEY_NBPACKFULL, nbPackFull);
-        json.put(JSON_KEY_PACKUNIT, packUnit);
-        json.put(JSON_KEY_QUANTITYMAXINPACK, quantityMaxInPack);
+        try{
+            json.put(JSON_KEY_QUANTITYOUT, quantityOut);
+            json.put(JSON_KEY_UNITINPACK, unitInPack);
+            json.put(JSON_KEY_NBPACKFULL, nbPackFull);
+            json.put(JSON_KEY_PACKUNIT, packUnit);
+            json.put(JSON_KEY_QUANTITYMAXINPACK, quantityMaxInPack);
+        }catch(JSONException ignored){
+        }
         return json;
     }
 
     @Override
     public String toString(){
-        try{
-            return toJSON().toString();
-        }catch(JSONException e){
-            return "";
-        }
+        return toJSON().toString();
     }
 }

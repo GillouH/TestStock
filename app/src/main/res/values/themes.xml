@@ -57,9 +57,7 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="Activity">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+    <style name="Activity" parent="Root">
         <item name="android:orientation">vertical</item>
     </style>
 
@@ -68,12 +66,28 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="Content">
-        <item name="android:layout_marginLeft">5sp</item>
-        <item name="android:layout_marginRight">5sp</item>
+    <style name="Section">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Section.Principal">
+        <item name="android:layout_marginLeft">5sp</item>
+        <item name="android:layout_marginRight">5sp</item>
+    </style>
+
+    <style name="Container">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Container.LabelValue">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Container.ValueUnit">
+        <item name="android:orientation">horizontal</item>
     </style>
 
     <style name="FloatingButton">
@@ -84,15 +98,6 @@
         <item name="android:backgroundTint">@color/colorPrimary</item>
         <item name="backgroundTint">@color/colorPrimary</item>
         <item name="maxImageSize">48dp</item>
-    </style>
-
-    <style name="Container">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="Container.EditItemActivity">
-        <item name="android:orientation">horizontal</item>
     </style>
 
     <!-- Général /-->
@@ -119,17 +124,8 @@
 
     <!-- Item Detail Activity -->
 
-    <style name="ItemDetailActivity_Section">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-
-    <style name="ItemDetailActivity_QuantityManager">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
+    <style name="ItemDetailActivity_QuantityManager" parent="Container">
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <!-- Item Detail Activity /-->

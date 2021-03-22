@@ -19,10 +19,16 @@ public abstract class Item{
         this.seuil = seuil;
     }
 
-    public static Item fromJSON(JSONObject json) throws JSONException{
-        if(json.getString(Item.JSON_KEY_CLASS).equals(BasicItem.class.getSimpleName())){
+    public static @Nullable Item fromJSON(JSONObject json){
+        String itemClass;
+        try{
+            itemClass = json.getString(JSON_KEY_CLASS);
+        }catch(Exception e){
+            return null;
+        }
+        if(itemClass.equals(BasicItem.class.getSimpleName())){
             return BasicItem.fromJSON(json);
-        }else if(json.getString(Item.JSON_KEY_CLASS).equals(PackItem.class.getSimpleName())){
+        }else if(itemClass.equals(PackItem.class.getSimpleName())){
             return PackItem.fromJSON(json);
         }else{
             return null;
@@ -49,21 +55,20 @@ public abstract class Item{
 
     public abstract String getQuantityLeftFormated();
 
-    public JSONObject toJSON() throws JSONException{
+    public JSONObject toJSON(){
         JSONObject json = new JSONObject();
-        json.put(JSON_KEY_CLASS, getClass().getSimpleName());
-        json.put(JSON_KEY_ID, ID);
-        json.put(JSON_KEY_NAME, name);
-        json.put(JSON_KEY_SEUIL, seuil);
+        try{
+            json.put(JSON_KEY_CLASS, getClass().getSimpleName());
+            json.put(JSON_KEY_ID, ID);
+            json.put(JSON_KEY_NAME, name);
+            json.put(JSON_KEY_SEUIL, seuil);
+        }catch(JSONException ignored){
+        }
         return json;
     }
 
     @Override
     public String toString(){
-        try{
-            return toJSON().toString();
-        }catch(JSONException e){
-            return "";
-        }
+        return toJSON().toString();
     }
 }

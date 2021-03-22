@@ -14,7 +14,7 @@
 
         <ScrollView style="@style/ScrollView">
 
-            <LinearLayout style="@style/Content">
+            <LinearLayout style="@style/Section.Principal">
 
                 <TextView
                     android:id="@+id/activityItemDetail_textView_itemName"
@@ -24,16 +24,24 @@
 
                 <LinearLayout
                     android:id="@+id/activityItemDetail_linearLayout_itemBasic"
-                    style="@style/ItemDetailActivity_Section">
+                    style="@style/Section">
 
-                    <TextView
-                        style="@style/TextView"
-                        android:text="@string/quantityUnit_label" />
+                    <LinearLayout style="@style/Container.LabelValue">
 
-                    <TextView
-                        android:id="@+id/activityItemDetail_textView_itemQuantityUnitValue"
-                        style="@style/TextView.Value"
-                        android:text="@string/quantityUnit_value" />
+                        <TextView
+                            style="@style/TextView"
+                            android:text="@string/quantityUnit_label" />
+
+                        <LinearLayout style="@style/Container.ValueUnit">
+
+                            <TextView
+                                android:id="@+id/activityItemDetail_textView_itemQuantityUnitValue"
+                                style="@style/TextView.Value"
+                                android:text="@string/quantityUnit_value" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <com.example.teststock.controllers.QuantityManager
                         android:id="@+id/activityItemDetail_quantityManager_basicItem"
@@ -43,16 +51,24 @@
 
                 <LinearLayout
                     android:id="@+id/activityItemDetail_linearLayout_itemPack"
-                    style="@style/ItemDetailActivity_Section">
+                    style="@style/Section">
 
-                    <TextView
-                        style="@style/TextView"
-                        android:text="@string/nbPack_label" />
+                    <LinearLayout style="@style/Container.LabelValue">
 
-                    <TextView
-                        android:id="@+id/activityItemDetail_textView_nbPackValue"
-                        style="@style/TextView.Value"
-                        android:text="@string/nbPack_value" />
+                        <TextView
+                            style="@style/TextView"
+                            android:text="@string/nbPack_label" />
+
+                        <LinearLayout style="@style/Container.ValueUnit">
+
+                            <TextView
+                                android:id="@+id/activityItemDetail_textView_nbPackValue"
+                                style="@style/TextView.Value"
+                                android:text="@string/nbPack_value" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <com.example.teststock.controllers.QuantityManager
                         android:id="@+id/activityItemDetail_quantityManager_packItem_nbPack"
@@ -60,14 +76,22 @@
                         app:validationTextAdd="@string/addPack"
                         app:validationTextRemove="@string/removePack" />
 
-                    <TextView
-                        style="@style/TextView"
-                        android:text="@string/quantityOut_label" />
+                    <LinearLayout style="@style/Container.LabelValue">
 
-                    <TextView
-                        android:id="@+id/activityItemDetail_textView_itemQuantityUnitOutValue"
-                        style="@style/TextView.Value"
-                        android:text="@string/quantityOut_value" />
+                        <TextView
+                            style="@style/TextView"
+                            android:text="@string/quantityOut_label" />
+
+                        <LinearLayout style="@style/Container.ValueUnit">
+
+                            <TextView
+                                android:id="@+id/activityItemDetail_textView_itemQuantityUnitOutValue"
+                                style="@style/TextView.Value"
+                                android:text="@string/quantityOut_value" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <com.example.teststock.controllers.QuantityManager
                         android:id="@+id/activityItemDetail_quantityManager_packItem_quantityOut"
@@ -75,14 +99,18 @@
 
                 </LinearLayout>
 
-                <TextView
-                    style="@style/TextView"
-                    android:text="@string/notifThreshold_label" />
+                <LinearLayout style="@style/Container.LabelValue">
 
-                <TextView
-                    android:id="@+id/activityItemDetail_notificationThreshold"
-                    style="@style/TextView.Value"
-                    android:text="@string/notifThreshold_value" />
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/notifThreshold_label" />
+
+                    <TextView
+                        android:id="@+id/activityItemDetail_notificationThreshold"
+                        style="@style/TextView.Value"
+                        android:text="@string/notifThreshold_value" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -40,10 +40,7 @@ public class ItemManagerActivity extends AppCompatActivity{
     protected JSONArray convertItemListToJSONArray(List<Item> itemList){
         JSONArray jsonArray = new JSONArray();
         for(Item item : itemList){
-            try{
-                jsonArray.put(item.toJSON());
-            }catch(JSONException ignored){
-            }
+            jsonArray.put(item.toJSON());
         }
         return jsonArray;
     }

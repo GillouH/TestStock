@@ -1,5 +1,6 @@
 package com.example.teststock.models;
 
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,8 +18,12 @@ public class BasicItem extends Item{
         this.unit = unit;
     }
 
-    public static BasicItem fromJSON(JSONObject json) throws JSONException{
-        return new BasicItem(json.getInt(JSON_KEY_ID), json.getString(JSON_KEY_NAME), json.getInt(JSON_KEY_QUANTITY), json.getString(JSON_KEY_UNIT), json.getInt(JSON_KEY_SEUIL));
+    public static @Nullable BasicItem fromJSON(JSONObject json){
+        try{
+            return new BasicItem(json.getInt(JSON_KEY_ID), json.getString(JSON_KEY_NAME), json.getInt(JSON_KEY_QUANTITY), json.getString(JSON_KEY_UNIT), json.getInt(JSON_KEY_SEUIL));
+        }catch(Exception ignored){
+        }
+        return null;
     }
 
     public int getQuantity(){
@@ -55,19 +60,18 @@ public class BasicItem extends Item{
         return getQuantityFormated();
     }
 
-    public JSONObject toJSON() throws JSONException{
+    public JSONObject toJSON(){
         JSONObject json = super.toJSON();
-        json.put(JSON_KEY_QUANTITY, quantity);
-        json.put(JSON_KEY_UNIT, unit);
+        try{
+            json.put(JSON_KEY_QUANTITY, quantity);
+            json.put(JSON_KEY_UNIT, unit);
+        }catch(JSONException ignored){
+        }
         return json;
     }
 
     @Override
     public String toString(){
-        try{
-            return toJSON().toString();
-        }catch(JSONException e){
-            return "";
-        }
+        return toJSON().toString();
     }
 }

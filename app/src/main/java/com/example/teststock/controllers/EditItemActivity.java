@@ -27,13 +27,16 @@ public class EditItemActivity extends OneItemManagerActivity{
     private EditText
             editTextItemName,
             editTextBasicItemUnit,
+            editTextBasicItemQuantity,
             editTextBasicItemSeuil,
             editTextPackItemUnitPack,
             editTextPackItemUnit,
             editTextPackItemQuantityMaxInPack,
+            editTextPackItemQuantityOut,
+            editTextPackItemNbPack,
             editTextPackItemSeuil;
     private RadioButton radioButtonBasicItem, radioButtonPackItem;
-    private LinearLayout linearLayoutBasicItem, packItemLinearLayout;
+    private LinearLayout linearLayoutBasicItem, linearLayoutPackItem;
     private TextView textViewPackItemExample;
     private Button buttonSave;
 
@@ -48,13 +51,19 @@ public class EditItemActivity extends OneItemManagerActivity{
         radioButtonPackItem = findViewById(R.id.activityEditItem_radioButton_packItem);
         linearLayoutBasicItem = findViewById(R.id.activityEditItem_linearLayout_basicItem);
         editTextBasicItemUnit = findViewById(R.id.activityEditItem_editText_basicItem_unit);
+        editTextBasicItemQuantity = findViewById(R.id.activityEditItem_editText_basicItem_quantity);
+        TextView textViewBasicItemUnitForQuantity = findViewById(R.id.activityEditItem_textView_basicItem_unit_for_quantity);
         editTextBasicItemSeuil = findViewById(R.id.activityEditItem_editText_basicItem_seuil);
         TextView textViewBasicItemUnitForSeuil = findViewById(R.id.activityEditItem_textView_basicItem_unit_for_seuil);
-        packItemLinearLayout = findViewById(R.id.activityEditItem_linearLayout_packItem);
+        linearLayoutPackItem = findViewById(R.id.activityEditItem_linearLayout_packItem);
         editTextPackItemUnitPack = findViewById(R.id.activityEditItem_editText_packItem_unitPack);
         editTextPackItemUnit = findViewById(R.id.activityEditItem_editText_packItem_unit);
         editTextPackItemQuantityMaxInPack = findViewById(R.id.activityEditItem_editText_packItem_quantityMaxInPack);
         TextView textViewPackItemUnitForQuantityMaxInPack = findViewById(R.id.activityEditItem_textView_packItem_unit_for_quantityMaxInPack);
+        editTextPackItemQuantityOut = findViewById(R.id.activityEditItem_editText_packItem_quantityOut);
+        TextView textViewPackItemUnitForQuantityOut = findViewById(R.id.activityEditItem_textView_packItem_unit_for_quantityOut);
+        editTextPackItemNbPack = findViewById(R.id.activityEditItem_editText_packItem_nbPack);
+        TextView textViewPackItemUnitForNbPack = findViewById(R.id.activityEditItem_textView_packItem_unit_for_nbPack);
         editTextPackItemSeuil = findViewById(R.id.activityEditItem_editText_packItem_seuil);
         TextView textViewPackItemUnitForSeuil = findViewById(R.id.activityEditItem_textView_packItem_unit_for_seuil);
         textViewPackItemExample = findViewById(R.id.activityEditItem_textView_packItem_example);
@@ -63,11 +72,11 @@ public class EditItemActivity extends OneItemManagerActivity{
         setSupportActionBar(toolbar);
 
         createTextListener(editTextItemName, null, false);
-        createTextListener(editTextBasicItemUnit, textViewBasicItemUnitForSeuil, false);
+        createTextListener(editTextBasicItemUnit, new TextView[]{textViewBasicItemUnitForQuantity, textViewBasicItemUnitForSeuil}, false);
         createTextListener(editTextBasicItemSeuil, null, false);
-        createTextListener(editTextPackItemUnit, textViewPackItemUnitForQuantityMaxInPack, true);
+        createTextListener(editTextPackItemUnit, new TextView[]{textViewPackItemUnitForQuantityMaxInPack, textViewPackItemUnitForQuantityOut}, true);
         createTextListener(editTextPackItemQuantityMaxInPack, null, true);
-        createTextListener(editTextPackItemUnitPack, textViewPackItemUnitForSeuil, true);
+        createTextListener(editTextPackItemUnitPack, new TextView[]{textViewPackItemUnitForNbPack, textViewPackItemUnitForSeuil}, true);
         createTextListener(editTextPackItemSeuil, null, false);
 
         if(savedInstanceState == null){
@@ -75,24 +84,33 @@ public class EditItemActivity extends OneItemManagerActivity{
             itemID = getIntent().getIntExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, -1);
             if(itemID != -1){
                 Item item = getItem(itemID);
-                fillForm(item);
+                editTextItemName.setText(item.getName());
+                if(item.getClass().equals(BasicItem.class)){
+                    fillBasicItemForm((BasicItem)item);
+                }else if(item.getClass().equals(PackItem.class)){
+                    fillPackItemForm((PackItem)item);
+                }
+            }else{
+                linearLayoutBasicItem.setVisibility(View.GONE);
+                linearLayoutPackItem.setVisibility(View.GONE);
+                editTextBasicItemQuantity.setText(String.format(Locale.getDefault(), "%d", 0));
+                editTextPackItemQuantityOut.setText(String.format(Locale.getDefault(), "%d", 0));
+                editTextPackItemNbPack.setText(String.format(Locale.getDefault(), "%d", 0));
             }
         }
 
         buttonSave.setOnClickListener(v->{
             log(TYPE.CLICK, "clickSaveButton");
             Item item = createItemFromForm();
-            if(item != null){
-                if(itemID == -1){
-                    addItemInItemList(item);
-                }else{
-                    modifyItemInItemList(item);
-                }
+            if(itemID == -1){
+                addItemInItemList(item);
                 Intent itemDetailActivity = new Intent(EditItemActivity.this, ItemDetailActivity.class);
                 itemDetailActivity.putExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, item.getID());
                 startActivity(itemDetailActivity);
-                finish();
+            }else{
+                modifyItemInItemList(item);
             }
+            finish();
         });
 
         enableSaveButton();
@@ -120,7 +138,7 @@ public class EditItemActivity extends OneItemManagerActivity{
             onRadioButtonClicked(radioButtonPackItem);
         }else{
             linearLayoutBasicItem.setVisibility(View.GONE);
-            packItemLinearLayout.setVisibility(View.GONE);
+            linearLayoutPackItem.setVisibility(View.GONE);
         }
     }
 
@@ -130,39 +148,37 @@ public class EditItemActivity extends OneItemManagerActivity{
             radioButtonPackItem.setChecked(view.getId() == R.id.activityEditItem_radioButton_packItem);
 
             linearLayoutBasicItem.setVisibility(view.getId() == R.id.activityEditItem_radioButton_basicItem ? View.VISIBLE : View.GONE);
-            packItemLinearLayout.setVisibility(view.getId() == R.id.activityEditItem_radioButton_packItem ? View.VISIBLE : View.GONE);
+            linearLayoutPackItem.setVisibility(view.getId() == R.id.activityEditItem_radioButton_packItem ? View.VISIBLE : View.GONE);
         }
     }
 
     private boolean isBasicItemFormFill(){
         boolean isBasicItemFormFill = radioButtonBasicItem.isChecked();
         isBasicItemFormFill = isBasicItemFormFill && editTextBasicItemUnit.getText().length() > 0;
+        int seuil, quantity;
         try{
-            int seuil = Integer.parseInt(editTextBasicItemSeuil.getText().toString());
-            isBasicItemFormFill = isBasicItemFormFill && seuil > 0;
+            quantity = Integer.parseInt(editTextBasicItemQuantity.getText().toString());
+            seuil = Integer.parseInt(editTextBasicItemSeuil.getText().toString());
         }catch(NumberFormatException e){
-            isBasicItemFormFill = false;
+            return false;
         }
-        return isBasicItemFormFill;
+        return isBasicItemFormFill && seuil > 0 && quantity >= 0;
     }
 
     private boolean isPackItemFormFill(){
         boolean isPackItemFormFill = radioButtonPackItem.isChecked();
         isPackItemFormFill = isPackItemFormFill && editTextPackItemUnit.getText().length() > 0;
-        try{
-            int quantityMaxInPack = Integer.parseInt(editTextPackItemQuantityMaxInPack.getText().toString());
-            isPackItemFormFill = isPackItemFormFill && quantityMaxInPack > 0;
-        }catch(NumberFormatException e){
-            isPackItemFormFill = false;
-        }
         isPackItemFormFill = isPackItemFormFill && editTextPackItemUnitPack.getText().length() > 0;
+        int quantityMaxInPack, quantityOut, nbPack, seuil;
         try{
-            int seuil = Integer.parseInt(editTextPackItemSeuil.getText().toString());
-            isPackItemFormFill = isPackItemFormFill && seuil > 0;
+            quantityMaxInPack = Integer.parseInt(editTextPackItemQuantityMaxInPack.getText().toString());
+            quantityOut = Integer.parseInt(editTextPackItemQuantityOut.getText().toString());
+            nbPack = Integer.parseInt(editTextPackItemNbPack.getText().toString());
+            seuil = Integer.parseInt(editTextPackItemSeuil.getText().toString());
         }catch(NumberFormatException e){
-            isPackItemFormFill = false;
+            return false;
         }
-        return isPackItemFormFill;
+        return isPackItemFormFill && quantityMaxInPack > 0 && seuil > 0 && quantityOut >= 0 && nbPack >= 0;
     }
 
     private void enableSaveButton(){
@@ -178,7 +194,7 @@ public class EditItemActivity extends OneItemManagerActivity{
         textViewPackItemExample.setText(String.format("5 %s de %s %s", unitPack, quantityMaxInPack, unitInPack));
     }
 
-    private void createTextListener(EditText editText, TextView textView, boolean packField){
+    private void createTextListener(EditText editText, TextView[] textViewList, boolean packField){
         if(editText != null){
             editText.addTextChangedListener(new TextWatcher(){
                 @Override
@@ -191,8 +207,10 @@ public class EditItemActivity extends OneItemManagerActivity{
 
                 @Override
                 public void afterTextChanged(Editable s){
-                    if(textView != null){
-                        textView.setText(s);
+                    if(textViewList != null){
+                        for(TextView textView : textViewList){
+                            textView.setText(s);
+                        }
                     }
                     if(packField){
                         setPreviewText();
@@ -203,57 +221,44 @@ public class EditItemActivity extends OneItemManagerActivity{
         }
     }
 
-    private void fillForm(Item item){
-        if(item != null){
-            editTextItemName.setText(item.getName());
-            if(item.getClass().equals(BasicItem.class)){
-                BasicItem basicItem = (BasicItem)item;
-                editTextBasicItemUnit.setText(basicItem.getUnit());
-                int seuil = basicItem.getSeuil();
-                if(seuil != -1){
-                    editTextBasicItemSeuil.setText(String.format(Locale.getDefault(), "%d", basicItem.getSeuil()));
-                }
-                onRadioButtonClicked(radioButtonBasicItem);
-            }else if(item.getClass().equals(PackItem.class)){
-                PackItem packItem = (PackItem)item;
-                editTextPackItemUnit.setText(packItem.getUnitInPack());
-                int quantityMaxInPack = packItem.getQuantityMaxInPack();
-                if(quantityMaxInPack != -1){
-                    editTextPackItemQuantityMaxInPack.setText(String.format(Locale.getDefault(), "%d", packItem.getQuantityMaxInPack()));
-                }
-                editTextPackItemUnitPack.setText(packItem.getPackUnit());
-                int seuil = packItem.getSeuil();
-                if(seuil != -1){
-                    editTextPackItemSeuil.setText(String.format(Locale.getDefault(), "%d", packItem.getSeuil()));
-                }
-                onRadioButtonClicked(radioButtonPackItem);
-            }
-        }
+    private void fillBasicItemForm(BasicItem item){
+        editTextBasicItemUnit.setText(item.getUnit());
+        editTextBasicItemQuantity.setText(String.format(Locale.getDefault(), "%d", item.getQuantity()));
+        editTextBasicItemSeuil.setText(String.format(Locale.getDefault(), "%d", item.getSeuil()));
+        onRadioButtonClicked(radioButtonBasicItem);
+    }
+
+    private void fillPackItemForm(PackItem item){
+        editTextPackItemUnit.setText(item.getUnitInPack());
+        editTextPackItemQuantityMaxInPack.setText(String.format(Locale.getDefault(), "%d", item.getQuantityMaxInPack()));
+        editTextPackItemUnitPack.setText(item.getPackUnit());
+        editTextPackItemQuantityOut.setText(String.format(Locale.getDefault(), "%d", item.getQuantityOut()));
+        editTextPackItemNbPack.setText(String.format(Locale.getDefault(), "%d", item.getNbPackFull()));
+        editTextPackItemSeuil.setText(String.format(Locale.getDefault(), "%d", item.getSeuil()));
+        onRadioButtonClicked(radioButtonPackItem);
     }
 
     private Item createItemFromForm(){
         Item item = null;
         if(radioButtonBasicItem.isChecked()){
-            int seuil;
-            try{
-                seuil = Integer.parseInt(editTextBasicItemSeuil.getText().toString());
-            }catch(NumberFormatException e){
-                seuil = -1;
-            }
-            item = new BasicItem(itemID, editTextItemName.getText().toString(), 0, editTextBasicItemUnit.getText().toString(), seuil);
+            item = new BasicItem(
+                    itemID,
+                    editTextItemName.getText().toString(),
+                    Integer.parseInt(editTextBasicItemQuantity.getText().toString()),
+                    editTextBasicItemUnit.getText().toString(),
+                    Integer.parseInt(editTextBasicItemSeuil.getText().toString())
+            );
         }else if(radioButtonPackItem.isChecked()){
-            int quantityMaxInPack, seuil;
-            try{
-                quantityMaxInPack = Integer.parseInt(editTextPackItemQuantityMaxInPack.getText().toString());
-            }catch(NumberFormatException e){
-                quantityMaxInPack = -1;
-            }
-            try{
-                seuil = Integer.parseInt(editTextPackItemSeuil.getText().toString());
-            }catch(NumberFormatException e){
-                seuil = -1;
-            }
-            item = new PackItem(itemID, editTextItemName.getText().toString(), 0, editTextPackItemUnit.getText().toString(), 0, editTextPackItemUnitPack.getText().toString(), quantityMaxInPack, seuil);
+            item = new PackItem(
+                    itemID,
+                    editTextItemName.getText().toString(),
+                    Integer.parseInt(editTextPackItemQuantityOut.getText().toString()),
+                    editTextPackItemUnit.getText().toString(),
+                    Integer.parseInt(editTextPackItemNbPack.getText().toString()),
+                    editTextPackItemUnitPack.getText().toString(),
+                    Integer.parseInt(editTextPackItemQuantityMaxInPack.getText().toString()),
+                    Integer.parseInt(editTextPackItemSeuil.getText().toString())
+            );
         }
         return item;
     }
