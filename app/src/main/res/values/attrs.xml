@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<declare-styleable name="QuantityManager">
+    <declare-styleable name="QuantityManager">
         <attr name="onClickValidationButton" format="reference" />
-        <attr name="validationTextAdd" format="string" required="true" />
+        <attr name="validationTextAdd" format="string" />
         <attr name="validationTextRemove" format="string" />
     </declare-styleable>
 

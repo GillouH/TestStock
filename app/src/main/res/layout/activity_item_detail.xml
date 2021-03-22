@@ -37,9 +37,7 @@
 
                     <com.example.teststock.controllers.QuantityManager
                         android:id="@+id/activityItemDetail_quantityManager_basicItem"
-                        style="@style/ItemDetailActivity_QuantityManager"
-                        app:validationTextAdd="@string/addQuantity"
-                        app:validationTextRemove="@string/removeQuantity" />
+                        style="@style/ItemDetailActivity_QuantityManager" />
 
                 </LinearLayout>
 
@@ -73,9 +71,7 @@
 
                     <com.example.teststock.controllers.QuantityManager
                         android:id="@+id/activityItemDetail_quantityManager_packItem_quantityOut"
-                        style="@style/ItemDetailActivity_QuantityManager"
-                        app:validationTextAdd="@string/addQuantityOut"
-                        app:validationTextRemove="@string/removeQuantityOut" />
+                        style="@style/ItemDetailActivity_QuantityManager" />
 
                 </LinearLayout>
 

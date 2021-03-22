@@ -46,23 +46,17 @@ public class QuantityManager extends RelativeLayout{
         View view = layoutInflater != null ? layoutInflater.inflate(R.layout.quantity_manager, findViewById(R.id.QuantityManager_Root)) : null;
         addView(view);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.QuantityManager);
-
-        if(typedArray.getString(R.styleable.QuantityManager_validationTextAdd) != null){
-            validationTextAdd = typedArray.getString(R.styleable.QuantityManager_validationTextAdd);
-            validationTextAdd = getResources().getString(R.string.quantityManager_add);
-        }
-
-        if(typedArray.getString(R.styleable.QuantityManager_validationTextRemove) != null){
-            validationTextRemove = typedArray.getString(R.styleable.QuantityManager_validationTextRemove);
-            validationTextRemove = getResources().getString(R.string.quantityManager_remove);
-        }
-
-        typedArray.recycle();
-
         Button minusButton = findViewById(R.id.QuantityManager_ButtonMinus);
         Button plusButton = findViewById(R.id.QuantityManager_ButtonPlus);
         validtionButton = findViewById(R.id.QuantityManager_ButtonValidation);
+
+        TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.QuantityManager);
+        String arg = typedArray.getString(R.styleable.QuantityManager_validationTextAdd);
+        validationTextAdd = arg != null ? arg : getResources().getString(R.string.quantityManager_add);
+        arg = typedArray.getString(R.styleable.QuantityManager_validationTextRemove);
+        validationTextRemove = arg != null ? arg : getResources().getString(R.string.quantityManager_remove);
+        typedArray.recycle();
+
         validtionButton.setText(validationTextAdd);
         numberEditText = findViewById(R.id.QuantityManager_EditTextNumber);
 
