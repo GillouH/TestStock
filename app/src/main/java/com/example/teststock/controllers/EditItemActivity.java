@@ -104,9 +104,9 @@ public class EditItemActivity extends OneItemManagerActivity{
             Item item = createItemFromForm();
             if(itemID == -1){
                 addItemInItemList(item);
-                Intent itemDetailActivity = new Intent(EditItemActivity.this, ItemDetailActivity.class);
-                itemDetailActivity.putExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, item.getID());
-                startActivity(itemDetailActivity);
+                Intent intent = new Intent(this, ItemDetailActivity.class);
+                intent.putExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, item.getID());
+                startActivity(intent);
             }else{
                 modifyItemInItemList(item);
             }

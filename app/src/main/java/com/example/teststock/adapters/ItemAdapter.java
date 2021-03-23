@@ -70,9 +70,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         switch(mode){
             case NORMAL:
                 holder.itemView.setOnClickListener(v->{
-                    Intent itemDetailActivity = new Intent(holder.itemView.getContext(), ItemDetailActivity.class);
-                    itemDetailActivity.putExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, item.getID());
-                    startActivity(holder.itemView.getContext(), itemDetailActivity, null);
+                    Intent intent = new Intent(holder.itemView.getContext(), ItemDetailActivity.class);
+                    intent.putExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, item.getID());
+                    startActivity(holder.itemView.getContext(), intent, null);
                 });
                 break;
             case MOVE:

@@ -149,8 +149,8 @@ public class MainActivity extends ItemManagerActivity implements StartDragListen
 
     private void addAction(){
         log(TYPE.CLICK, "clickAddButton");
-        Intent editItemActivity = new Intent(MainActivity.this, EditItemActivity.class);
-        startActivity(editItemActivity);
+        Intent intent = new Intent(this, EditItemActivity.class);
+        startActivity(intent);
     }
 
     @Override

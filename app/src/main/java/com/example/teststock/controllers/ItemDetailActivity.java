@@ -129,8 +129,8 @@ public class ItemDetailActivity extends OneItemManagerActivity{
 
     private void editAction(View view){
         log(TYPE.CLICK, "clickEditButton");
-        Intent editItemActivity = new Intent(ItemDetailActivity.this, EditItemActivity.class);
-        editItemActivity.putExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, itemID);
-        startActivity(editItemActivity);
+        Intent intent = new Intent(this, EditItemActivity.class);
+        intent.putExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, itemID);
+        startActivity(intent);
     }
 }
