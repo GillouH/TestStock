@@ -8,10 +8,8 @@
     <string name="nbPack_label">Quantity of full pack:</string>
     <string name="nbPack_value">@string/quantityUnit_value</string>
     <string name="itemDetailActivity_title">Details</string>
-    <string name="quantityManager_add">Add</string>
-    <string name="quantityManager_remove">Remove</string>
-    <string name="addQuantity">@string/quantityManager_add</string>
-    <string name="removeQuantity">@string/quantityManager_remove</string>
+    <string name="addQuantity">Add</string>
+    <string name="removeQuantity">Remove</string>
     <string name="addQuantityOut">@string/addQuantity</string>
     <string name="removeQuantityOut">@string/removeQuantity</string>
     <string name="addPack">Add pack(s)</string>

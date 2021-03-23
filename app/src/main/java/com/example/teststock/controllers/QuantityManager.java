@@ -24,6 +24,9 @@ public class QuantityManager extends RelativeLayout{
     private static final String BUNDLE_STATE_MIN = "BUNDLE_STATE_MIN";
     private static final String BUNDLE_STATE_MAX = "BUNDLE_STATE_MAX";
 
+    private static final String validationTextAddDefault = "Add";
+    private static final String validationTextRemoveDefault = "Remove";
+
     private Button validtionButton;
     private EditText numberEditText;
     private String validationTextAdd, validationTextRemove;
@@ -55,9 +58,9 @@ public class QuantityManager extends RelativeLayout{
 
         TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.QuantityManager);
         String arg = typedArray.getString(R.styleable.QuantityManager_validationTextAdd);
-        validationTextAdd = arg != null ? arg : getResources().getString(R.string.quantityManager_add);
+        validationTextAdd = arg != null ? arg : validationTextAddDefault;
         arg = typedArray.getString(R.styleable.QuantityManager_validationTextRemove);
-        validationTextRemove = arg != null ? arg : getResources().getString(R.string.quantityManager_remove);
+        validationTextRemove = arg != null ? arg : validationTextRemoveDefault;
         typedArray.recycle();
 
         validtionButton.setText(validationTextAdd);
@@ -94,8 +97,13 @@ public class QuantityManager extends RelativeLayout{
         numberDefaultValue = Integer.parseInt(numberEditText.getHint().toString());
     }
 
-    public void setOnClickListener(OnClickListener l){
+    public void setOnValidationClickListener(OnClickListener l){
         validtionButton.setOnClickListener(l);
+    }
+
+    @Override
+    public void setOnClickListener(OnClickListener l){
+        setOnValidationClickListener(l);
     }
 
     private @org.jetbrains.annotations.Nullable Integer getNumberSimpleMayBeNull(){

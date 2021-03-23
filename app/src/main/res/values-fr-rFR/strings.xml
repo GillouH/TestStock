@@ -9,10 +9,8 @@
     <string name="nbPack_label">Nombre de lot(s) plein(s) :</string>
     <string name="nbPack_value">@string/quantityUnit_value</string>
     <string name="itemDetailActivity_title">Détails</string>
-    <string name="quantityManager_add">Ajouter</string>
-    <string name="quantityManager_remove">Retirer</string>
-    <string name="addQuantity">@string/quantityManager_add</string>
-    <string name="removeQuantity">@string/quantityManager_remove</string>
+    <string name="addQuantity">Ajouter</string>
+    <string name="removeQuantity">Retirer</string>
     <string name="addQuantityOut">@string/addQuantity</string>
     <string name="removeQuantityOut">@string/removeQuantity</string>
     <string name="addPack">Ajouter lot(s)</string>
