@@ -61,8 +61,10 @@ public class MainActivity extends ItemManagerActivity implements StartDragListen
             itemList = getItemList(false);
         }
 
-        ItemAdapter.setMoveDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_pan_tool_24));
-        ItemAdapter.setDeleteDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_delete_24));
+        ItemAdapter.setImageDrawableMove(ContextCompat.getDrawable(this, R.drawable.ic_baseline_pan_tool_24));
+        ItemAdapter.setImageDrawableDelete(ContextCompat.getDrawable(this, R.drawable.ic_baseline_delete_24));
+        ItemAdapter.setContentDescriptionMove(getString(R.string.move));
+        ItemAdapter.setContentDescriptionDelete(getString(R.string.delete));
 
         showMenu = mode == MODE.NORMAL;
 

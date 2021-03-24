@@ -29,9 +29,10 @@ import static androidx.core.content.ContextCompat.startActivity;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> implements ItemMoveCallback.ItemTouchHelperContract{
     private List<Item> itemList;
-    private static Drawable move, delete;
+    private static Drawable imageDrawableMove, imageDrawableDelete;
     private final StartDragListener startDragListener;
     private MainActivity.MODE mode;
+    private static String contentDescriptionMove, contentDescriptionDelete;
 
     public ItemAdapter(java.util.List<Item> itemList, MainActivity.MODE mode, StartDragListener startDragListener){
         this.itemList = itemList;
@@ -39,12 +40,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         this.startDragListener = startDragListener;
     }
 
-    public static void setMoveDrawable(Drawable move){
-        ItemAdapter.move = move;
+    public static void setImageDrawableMove(Drawable move){
+        ItemAdapter.imageDrawableMove = move;
     }
 
-    public static void setDeleteDrawable(Drawable delete){
-        ItemAdapter.delete = delete;
+    public static void setImageDrawableDelete(Drawable delete){
+        ItemAdapter.imageDrawableDelete = delete;
+    }
+
+    public static void setContentDescriptionMove(String contentDescriptionMove){
+        ItemAdapter.contentDescriptionMove = contentDescriptionMove;
+    }
+
+    public static void setContentDescriptionDelete(String contentDescriptionDelete){
+        ItemAdapter.contentDescriptionDelete = contentDescriptionDelete;
     }
 
     @NonNull
@@ -76,7 +85,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 });
                 break;
             case MOVE:
-                holder.imageView.setImageDrawable(move);
+                holder.imageView.setImageDrawable(imageDrawableMove);
+                holder.imageView.setContentDescription(contentDescriptionMove);
                 holder.imageView.setOnTouchListener((v, event)->{
                     v.performClick();
                     if(event.getAction() == MotionEvent.ACTION_DOWN){
@@ -86,7 +96,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 });
                 break;
             case DELETE:
-                holder.imageView.setImageDrawable(delete);
+                holder.imageView.setImageDrawable(imageDrawableDelete);
+                holder.imageView.setContentDescription(contentDescriptionDelete);
                 holder.imageView.setOnClickListener(v->{
                     int index = itemList.indexOf(item);
                     itemList.remove(index);
