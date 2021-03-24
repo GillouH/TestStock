@@ -26,9 +26,48 @@
 
     <!-- Général -->
 
-    <style name="TextView">
+    <style name="Root">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Activity" parent="Root">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="FillHorizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Section" parent="FillHorizontal">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Section.Principal">
+        <item name="android:layout_marginLeft">5sp</item>
+        <item name="android:layout_marginRight">5sp</item>
+    </style>
+
+    <style name="Container">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Container.Background">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+    </style>
+
+    <style name="Container.LabelValue">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Container.ValueUnit">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="TextView" parent="Container">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:freezesText">true</item>
     </style>
@@ -52,51 +91,18 @@
         <item name="android:hint">@string/number0</item>
     </style>
 
-    <style name="Root">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+    <style name="ImageView" parent="Container">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:tint">@color/colorPrimary</item>
     </style>
 
-    <style name="Activity" parent="Root">
-        <item name="android:orientation">vertical</item>
+    <style name="SimpleButton" parent="Container.Background">
+        <item name="android:layout_gravity">center</item>
     </style>
 
-    <style name="ScrollView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="Section">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="Section.Principal">
-        <item name="android:layout_marginLeft">5sp</item>
-        <item name="android:layout_marginRight">5sp</item>
-    </style>
-
-    <style name="Container">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="Container.LabelValue">
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="Container.ValueUnit">
-        <item name="android:orientation">horizontal</item>
-    </style>
-
-    <style name="FloatingButton">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="FloatingButton" parent="Container.Background">
         <item name="android:layout_gravity">bottom|right</item>
         <item name="android:layout_margin">16dp</item>
-        <item name="android:backgroundTint">@color/colorPrimary</item>
-        <item name="backgroundTint">@color/colorPrimary</item>
         <item name="maxImageSize">48dp</item>
     </style>
 
@@ -104,9 +110,7 @@
 
     <!-- ToolBar -->
 
-    <style name="ToolBar">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="ToolBar" parent="FillHorizontal">
         <item name="android:background">@color/colorPrimary</item>
         <item name="titleTextAppearance">@style/ToolBar_Title</item>
     </style>
@@ -129,5 +133,19 @@
     </style>
 
     <!-- Item Detail Activity /-->
+
+    <!-- Dictionary Activity -->
+
+    <style name="DictionaryActivity_TableLayout_TextView" parent="TextView">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="DictionaryActivity_TableRow_Header_TextView" parent="DictionaryActivity_TableLayout_TextView">
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Dictionary Activity /-->
 
 </resources>

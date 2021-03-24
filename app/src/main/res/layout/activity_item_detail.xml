@@ -12,7 +12,7 @@
             style="@style/ToolBar.NotMainActivity"
             app:title="@string/itemDetailActivity_title" />
 
-        <ScrollView style="@style/ScrollView">
+        <ScrollView style="@style/FillHorizontal">
 
             <LinearLayout style="@style/Section.Principal">
 

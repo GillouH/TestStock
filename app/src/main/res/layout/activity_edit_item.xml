@@ -12,7 +12,7 @@
             style="@style/ToolBar.NotMainActivity"
             app:title="@string/edit_item" />
 
-        <ScrollView style="@style/ScrollView">
+        <ScrollView style="@style/FillHorizontal">
 
             <LinearLayout
                 style="@style/Section.Principal"
@@ -270,10 +270,7 @@
 
                 <Button
                     android:id="@+id/activityEditItem_button_save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/colorPrimary"
+                    style="@style/SimpleButton"
                     android:enabled="false"
                     android:text="@string/save" />
 
