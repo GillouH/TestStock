@@ -17,7 +17,9 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.teststock.R;
 import com.example.teststock.models.BasicItem;
 import com.example.teststock.models.Item;
+import com.example.teststock.models.ItemManager;
 import com.example.teststock.models.PackItem;
+import com.example.teststock.models.PersonalLog;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -81,9 +83,9 @@ public class EditItemActivity extends OneItemManagerActivity{
 
         if(savedInstanceState == null){
             setPreviewText();
-            itemID = getIntent().getIntExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, -1);
+            itemID = getIntent().getIntExtra(ItemManager.INTENT_EXTRA_DATA_KEY_ID, -1);
             if(itemID != -1){
-                Item item = getItem(itemID);
+                Item item = itemManager.getItem(itemID);
                 editTextItemName.setText(item.getName());
                 if(item.getClass().equals(BasicItem.class)){
                     fillBasicItemForm((BasicItem)item);
@@ -100,15 +102,15 @@ public class EditItemActivity extends OneItemManagerActivity{
         }
 
         buttonSave.setOnClickListener(v->{
-            log(TYPE.CLICK, "clickSaveButton");
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickSaveButton");
             Item item = createItemFromForm();
             if(itemID == -1){
-                addItemInItemList(item);
+                itemManager.addItemInItemList(item);
                 Intent intent = new Intent(this, ItemDetailActivity.class);
-                intent.putExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, item.getID());
+                intent.putExtra(ItemManager.INTENT_EXTRA_DATA_KEY_ID, item.getID());
                 startActivity(intent);
             }else{
-                modifyItemInItemList(item);
+                itemManager.modifyItemInItemList(item);
             }
             finish();
         });
@@ -132,10 +134,12 @@ public class EditItemActivity extends OneItemManagerActivity{
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState){
         super.onRestoreInstanceState(savedInstanceState);
         String itemType = savedInstanceState.getString(BUNDLE_KEY_ITEM_TYPE);
-        if(itemType.equals(BUNDLE_VALUE_ITEM_TYPE_BASIC)){
-            onRadioButtonClicked(radioButtonBasicItem);
-        }else if(itemType.equals(BUNDLE_VALUE_ITEM_TYPE_PACKED)){
-            onRadioButtonClicked(radioButtonPackItem);
+        if(itemType != null){
+            if(itemType.equals(BUNDLE_VALUE_ITEM_TYPE_BASIC)){
+                onRadioButtonClicked(radioButtonBasicItem);
+            }else if(itemType.equals(BUNDLE_VALUE_ITEM_TYPE_PACKED)){
+                onRadioButtonClicked(radioButtonPackItem);
+            }
         }else{
             linearLayoutBasicItem.setVisibility(View.GONE);
             linearLayoutPackItem.setVisibility(View.GONE);
@@ -222,20 +226,24 @@ public class EditItemActivity extends OneItemManagerActivity{
     }
 
     private void fillBasicItemForm(BasicItem item){
-        editTextBasicItemUnit.setText(item.getUnit());
-        editTextBasicItemQuantity.setText(String.format(Locale.getDefault(), "%d", item.getQuantity()));
-        editTextBasicItemSeuil.setText(String.format(Locale.getDefault(), "%d", item.getSeuil()));
-        onRadioButtonClicked(radioButtonBasicItem);
+        if(item != null){
+            editTextBasicItemUnit.setText(item.getUnit());
+            editTextBasicItemQuantity.setText(String.format(Locale.getDefault(), "%d", item.getQuantity()));
+            editTextBasicItemSeuil.setText(String.format(Locale.getDefault(), "%d", item.getSeuil()));
+            onRadioButtonClicked(radioButtonBasicItem);
+        }
     }
 
     private void fillPackItemForm(PackItem item){
-        editTextPackItemUnit.setText(item.getUnitInPack());
-        editTextPackItemQuantityMaxInPack.setText(String.format(Locale.getDefault(), "%d", item.getQuantityMaxInPack()));
-        editTextPackItemUnitPack.setText(item.getPackUnit());
-        editTextPackItemQuantityOut.setText(String.format(Locale.getDefault(), "%d", item.getQuantityOut()));
-        editTextPackItemNbPack.setText(String.format(Locale.getDefault(), "%d", item.getNbPackFull()));
-        editTextPackItemSeuil.setText(String.format(Locale.getDefault(), "%d", item.getSeuil()));
-        onRadioButtonClicked(radioButtonPackItem);
+        if(item != null){
+            editTextPackItemUnit.setText(item.getUnitInPack());
+            editTextPackItemQuantityMaxInPack.setText(String.format(Locale.getDefault(), "%d", item.getQuantityMaxInPack()));
+            editTextPackItemUnitPack.setText(item.getPackUnit());
+            editTextPackItemQuantityOut.setText(String.format(Locale.getDefault(), "%d", item.getQuantityOut()));
+            editTextPackItemNbPack.setText(String.format(Locale.getDefault(), "%d", item.getNbPackFull()));
+            editTextPackItemSeuil.setText(String.format(Locale.getDefault(), "%d", item.getSeuil()));
+            onRadioButtonClicked(radioButtonPackItem);
+        }
     }
 
     private Item createItemFromForm(){

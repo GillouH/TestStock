@@ -17,6 +17,7 @@ import com.example.teststock.adapters.ItemAdapter;
 import com.example.teststock.adapters.ItemMoveCallback;
 import com.example.teststock.adapters.StartDragListener;
 import com.example.teststock.models.Item;
+import com.example.teststock.models.PersonalLog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +28,8 @@ import java.util.List;
 // TODO: 18/03/2021 Mise en réseau avec serveur
 // TODO: 20/03/2021 Bouton rappel notification
 // TODO: 20/03/2021 dictionnaire pluriel-singuliers
-// TODO: 21/03/2021 Tableau, comment fonctionne streched
+// TODO: 24/03/2021 Class fille de RecyclerView pour gérer onSaveInstanceState
+// TODO: 24/03/2021 Simplifier ligne 60
 
 public class MainActivity extends ItemManagerActivity implements StartDragListener{
     private static final String BUNDLE_STATE_MODE = "BUNDLE_STATE_MODE";
@@ -55,10 +57,10 @@ public class MainActivity extends ItemManagerActivity implements StartDragListen
 
         if(savedInstanceState != null){
             mode = MODE.valueOf(savedInstanceState.getString(BUNDLE_STATE_MODE));
-            itemList = convertJSONArrayToItemList(convertJSONArrayAsStringToJSONArray(savedInstanceState.getString(BUNDLE_STATE_ITEM_LIST)));
+            itemList = itemManager.convertJSONArrayToItemList(itemManager.convertJSONArrayAsStringToJSONArray(savedInstanceState.getString(BUNDLE_STATE_ITEM_LIST)));
         }else{
             mode = MODE.NORMAL;
-            itemList = getItemList(false);
+            itemList = itemManager.getItemList(false);
         }
 
         ItemAdapter.setImageDrawableMove(ContextCompat.getDrawable(this, R.drawable.ic_baseline_pan_tool_24));
@@ -82,7 +84,7 @@ public class MainActivity extends ItemManagerActivity implements StartDragListen
     }
 
     private void refresh(){
-        log(TYPE.METHOD, "refresh()");
+        personalLog.write(PersonalLog.TYPE.METHOD, getClass(), "refresh()");
         showMenu = mode == MODE.NORMAL;
         this.invalidateOptionsMenu();
         itemAdapter.setItemList(itemList);
@@ -95,7 +97,7 @@ public class MainActivity extends ItemManagerActivity implements StartDragListen
     @Override
     protected void onRestart(){
         super.onRestart();
-        itemList = getItemList(false);
+        itemList = itemManager.getItemList(false);
         mode = MODE.NORMAL;
         refresh();
     }
@@ -103,7 +105,7 @@ public class MainActivity extends ItemManagerActivity implements StartDragListen
     @Override
     protected void onSaveInstanceState(@NotNull Bundle outState){
         outState.putString(BUNDLE_STATE_MODE, mode.toString());
-        outState.putString(BUNDLE_STATE_ITEM_LIST, convertItemListToJSONArray(itemList).toString());
+        outState.putString(BUNDLE_STATE_ITEM_LIST, itemManager.convertItemListToJSONArray(itemList).toString());
         super.onSaveInstanceState(outState);
     }
 
@@ -116,41 +118,40 @@ public class MainActivity extends ItemManagerActivity implements StartDragListen
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(@NotNull MenuItem item){
         int itemId = item.getItemId();
         if(itemId == R.id.actionBar_menu_modifyOrder){
-            log(TYPE.CLICK, "clickModifyOrderButton");
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickModifyOrderButton");
             mode = MODE.MOVE;
             refresh();
         }else if(itemId == R.id.actionBar_menu_removeItem){
-            log(TYPE.CLICK, "clickRemoveItemButton");
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickRemoveItemButton");
             mode = MODE.DELETE;
             refresh();
         }else if(itemId == R.id.actionBar_menu_razButton){
-            log(TYPE.CLICK, "clickRazButton");
-            itemList = getItemList(true);
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickRazButton");
+            itemList = itemManager.getItemList(true);
             mode = MODE.NORMAL;
             refresh();
         }else if(itemId == R.id.action_bar_actionButton_ok){
-            log(TYPE.CLICK, "clickOkButton");
-            updateListOrder(itemList);
-            saveItemList(itemList);
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickOkButton");
+            itemManager.updateListOrder(itemList);
+            itemManager.saveItemList(itemList);
             mode = MODE.NORMAL;
             refresh();
         }else if(itemId == R.id.action_bar_actionButton_cancel){
-            log(TYPE.CLICK, "clickCancelButton");
-            itemList = getItemList(false);
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickCancelButton");
+            itemList = itemManager.getItemList(false);
             mode = MODE.NORMAL;
             refresh();
         }else{
-            log(TYPE.CLICK, "clickAnyMenuButton");
             return super.onOptionsItemSelected(item);
         }
         return true;
     }
 
     private void addAction(){
-        log(TYPE.CLICK, "clickAddButton");
+        personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickAddButton");
         Intent intent = new Intent(this, EditItemActivity.class);
         startActivity(intent);
     }

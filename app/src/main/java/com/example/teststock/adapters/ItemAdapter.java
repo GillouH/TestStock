@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teststock.R;
 import com.example.teststock.controllers.ItemDetailActivity;
-import com.example.teststock.controllers.ItemManagerActivity;
 import com.example.teststock.controllers.MainActivity;
 import com.example.teststock.models.Item;
+import com.example.teststock.models.ItemManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -80,7 +80,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             case NORMAL:
                 holder.itemView.setOnClickListener(v->{
                     Intent intent = new Intent(holder.itemView.getContext(), ItemDetailActivity.class);
-                    intent.putExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, item.getID());
+                    intent.putExtra(ItemManager.INTENT_EXTRA_DATA_KEY_ID, item.getID());
                     startActivity(holder.itemView.getContext(), intent, null);
                 });
                 break;

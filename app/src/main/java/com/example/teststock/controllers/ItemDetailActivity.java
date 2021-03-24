@@ -13,7 +13,9 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.teststock.R;
 import com.example.teststock.models.BasicItem;
 import com.example.teststock.models.Item;
+import com.example.teststock.models.ItemManager;
 import com.example.teststock.models.PackItem;
+import com.example.teststock.models.PersonalLog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
@@ -47,8 +49,8 @@ public class ItemDetailActivity extends OneItemManagerActivity{
         setSupportActionBar(toolbar);
 
         if(savedInstanceState == null){
-            itemID = getIntent().getIntExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, -1);
-            Item item = getItem(itemID);
+            itemID = getIntent().getIntExtra(ItemManager.INTENT_EXTRA_DATA_KEY_ID, -1);
+            Item item = itemManager.getItem(itemID);
             nameText.setText(item.getName());
             if(item.getClass().equals(BasicItem.class)){
                 fillBasicItemForm((BasicItem)item);
@@ -79,8 +81,13 @@ public class ItemDetailActivity extends OneItemManagerActivity{
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState){
         super.onRestoreInstanceState(savedInstanceState);
         String itemType = savedInstanceState.getString(BUNDLE_KEY_ITEM_TYPE);
-        linearLayout_itemBasic.setVisibility(itemType.equals(BUNDLE_VALUE_ITEM_TYPE_BASIC) ? View.VISIBLE : View.GONE);
-        linearLayout_itemPack.setVisibility(itemType.equals(BUNDLE_VALUE_ITEM_TYPE_PACKED) ? View.VISIBLE : View.GONE);
+        if(itemType != null){
+            linearLayout_itemBasic.setVisibility(itemType.equals(BUNDLE_VALUE_ITEM_TYPE_BASIC) ? View.VISIBLE : View.GONE);
+            linearLayout_itemPack.setVisibility(itemType.equals(BUNDLE_VALUE_ITEM_TYPE_PACKED) ? View.VISIBLE : View.GONE);
+        }else{
+            linearLayout_itemBasic.setVisibility(View.GONE);
+            linearLayout_itemPack.setVisibility(View.GONE);
+        }
     }
 
     private void fillBasicItemForm(@NotNull BasicItem item){
@@ -88,9 +95,9 @@ public class ItemDetailActivity extends OneItemManagerActivity{
         basicItemQuantityManager.setMin(-item.getQuantity());
         basicItemQuantityManager.setOnValidationClickListener(v->{
             if(item.modifyQuantity(basicItemQuantityManager.getNumber()) == 1){
-                sendNotification(item);
+                itemManager.sendNotification(item);
             }
-            modifyItemInItemList(item);
+            itemManager.modifyItemInItemList(item);
             basicItemQuantityManager.setMin(-item.getQuantity());
             quantityText.setText(item.getQuantityFormated());
         });
@@ -101,9 +108,9 @@ public class ItemDetailActivity extends OneItemManagerActivity{
         packItemQuantityOutQuantityManager.setMin(-item.getQuantityOut());
         packItemQuantityOutQuantityManager.setOnValidationClickListener(v->{
             if(item.modifyQuantityOut(packItemQuantityOutQuantityManager.getNumber()) == 1){
-                sendNotification(item);
+                itemManager.sendNotification(item);
             }
-            modifyItemInItemList(item);
+            itemManager.modifyItemInItemList(item);
             packItemQuantityOutQuantityManager.setMin(-item.getQuantityOut());
             updateQuantityPackItemText(item);
         });
@@ -112,9 +119,9 @@ public class ItemDetailActivity extends OneItemManagerActivity{
         packItemNbPackQuantityManager.setMin(-item.getNbPackFull());
         packItemNbPackQuantityManager.setOnValidationClickListener(v->{
             if(item.modifyNbPack(packItemNbPackQuantityManager.getNumber()) == 1){
-                sendNotification(item);
+                itemManager.sendNotification(item);
             }
-            modifyItemInItemList(item);
+            itemManager.modifyItemInItemList(item);
             packItemNbPackQuantityManager.setMin(-item.getNbPackFull());
             updateQuantityPackItemText(item);
         });
@@ -128,9 +135,9 @@ public class ItemDetailActivity extends OneItemManagerActivity{
     }
 
     private void editAction(View view){
-        log(TYPE.CLICK, "clickEditButton");
+        personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickEditButton");
         Intent intent = new Intent(this, EditItemActivity.class);
-        intent.putExtra(ItemManagerActivity.INTENT_EXTRA_DATA_KEY_ID, itemID);
+        intent.putExtra(ItemManager.INTENT_EXTRA_DATA_KEY_ID, itemID);
         startActivity(intent);
     }
 }
