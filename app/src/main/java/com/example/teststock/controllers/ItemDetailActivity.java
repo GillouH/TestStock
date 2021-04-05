@@ -94,7 +94,7 @@ public class ItemDetailActivity extends OneItemManagerActivity{
         quantityText.setText(item.getQuantityFormated());
         basicItemQuantityManager.setMin(-item.getQuantity());
         basicItemQuantityManager.setOnValidationClickListener(v->{
-            if(item.modifyQuantity(basicItemQuantityManager.getNumber()) == 1){
+            if(item.modifyQuantity(basicItemQuantityManager.getNumber()).equals(Item.SEND_NOTIFICATION.YES)){
                 itemManager.sendNotification(item);
             }
             itemManager.modifyItemInItemList(item);
@@ -107,7 +107,7 @@ public class ItemDetailActivity extends OneItemManagerActivity{
         quantityOutText.setText(item.getQuantityOutFormated());
         packItemQuantityOutQuantityManager.setMin(-item.getQuantityOut());
         packItemQuantityOutQuantityManager.setOnValidationClickListener(v->{
-            if(item.modifyQuantityOut(packItemQuantityOutQuantityManager.getNumber()) == 1){
+            if(item.modifyQuantityOut(packItemQuantityOutQuantityManager.getNumber()).equals(Item.SEND_NOTIFICATION.YES)){
                 itemManager.sendNotification(item);
             }
             itemManager.modifyItemInItemList(item);
@@ -118,7 +118,7 @@ public class ItemDetailActivity extends OneItemManagerActivity{
         quantityPackText.setText(item.getNbPackFullFormated());
         packItemNbPackQuantityManager.setMin(-item.getNbPackFull());
         packItemNbPackQuantityManager.setOnValidationClickListener(v->{
-            if(item.modifyNbPack(packItemNbPackQuantityManager.getNumber()) == 1){
+            if(item.modifyNbPack(packItemNbPackQuantityManager.getNumber()).equals(Item.SEND_NOTIFICATION.YES)){
                 itemManager.sendNotification(item);
             }
             itemManager.modifyItemInItemList(item);

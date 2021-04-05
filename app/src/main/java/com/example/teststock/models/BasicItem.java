@@ -34,15 +34,23 @@ public class BasicItem extends Item{
         return this.unit;
     }
 
-    public int modifyQuantity(int quantity){
+    public String getUnit(DictionaryManager.NOMBRE nombre){
+        if(nombre.equals(DictionaryManager.NOMBRE.PLURAL)){
+            return unitPlural;
+        }else{ // if(nombre.equals(DictionaryManager.NOMBRE.SINGULAR))
+            return unitSingular;
+        }
+    }
+
+    public SEND_NOTIFICATION modifyQuantity(int quantity){
         this.quantity += quantity;
         if(this.quantity > seuil){
-            return 0;
+            return SEND_NOTIFICATION.NO;
         }else{
             if(this.quantity < 0){
                 this.quantity = 0;
             }
-            return 1;
+            return SEND_NOTIFICATION.YES;
         }
     }
 

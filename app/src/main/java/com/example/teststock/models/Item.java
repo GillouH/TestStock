@@ -71,4 +71,9 @@ public abstract class Item{
     public String toString(){
         return toJSON().toString();
     }
+
+    public enum SEND_NOTIFICATION{
+        YES,
+        NO
+    }
 }

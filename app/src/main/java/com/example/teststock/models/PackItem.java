@@ -35,16 +35,24 @@ public class PackItem extends Item{
         return null;
     }
 
-    public int modifyNbPack(int quantity){
+    public String getUnitInPack(DictionaryManager.NOMBRE nombre){
+        if(nombre.equals(DictionaryManager.NOMBRE.PLURAL)){
+            return unitInPackPlural;
+        }else{ // if(nombre.equals(DictionaryManager.NOMBRE.SINGULAR))
+            return unitInPackSingular;
+        }
+    }
+
+    public SEND_NOTIFICATION modifyNbPack(int quantity){
         this.nbPackFull += quantity;
         if(this.nbPackFull > seuil){
-            return 0;
+            return SEND_NOTIFICATION.NO;
         }else{
             if(this.nbPackFull < 0){
                 this.quantityOut = 0;
                 this.nbPackFull = 0;
             }
-            return 1;
+            return SEND_NOTIFICATION.YES;
         }
     }
 
@@ -56,11 +64,11 @@ public class PackItem extends Item{
         return unitInPack;
     }
 
-    public int modifyQuantityOut(int quantity){
+    public SEND_NOTIFICATION modifyQuantityOut(int quantity){
         this.quantityOut += quantity;
         while(this.quantityOut < 0){
-            if(modifyNbPack(-1) == 1){
-                return 1;
+            if(modifyNbPack(-1) == SEND_NOTIFICATION.YES){
+                return SEND_NOTIFICATION.YES;
             }
             this.quantityOut += quantityMaxInPack;
         }
@@ -68,7 +76,7 @@ public class PackItem extends Item{
             modifyNbPack(1);
             this.quantityOut -= quantityMaxInPack;
         }
-        return 0;
+        return SEND_NOTIFICATION.NO;
     }
 
     public int getNbPackFull(){
