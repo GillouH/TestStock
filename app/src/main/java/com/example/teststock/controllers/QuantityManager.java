@@ -151,8 +151,8 @@ public class QuantityManager extends RelativeLayout{
         Bundle bundle = new Bundle();
         bundle.putParcelable(BUNDLE_STATE_SUPER_STATE, super.onSaveInstanceState());
         bundle.putParcelable(BUNDLE_STATE_NUMBER, numberEditText.onSaveInstanceState());
-        bundle.putInt(BUNDLE_STATE_MIN, min);
-        bundle.putInt(BUNDLE_STATE_MAX, max);
+        bundle.putString(BUNDLE_STATE_MIN, min != null ? min.toString() : "");
+        bundle.putString(BUNDLE_STATE_MAX, max != null ? max.toString() : "");
         return bundle;
     }
 
@@ -162,8 +162,10 @@ public class QuantityManager extends RelativeLayout{
             Bundle bundle = (Bundle)state;
             state = bundle.getParcelable(BUNDLE_STATE_SUPER_STATE);
             numberEditText.onRestoreInstanceState(bundle.getParcelable(BUNDLE_STATE_NUMBER));
-            min = bundle.getInt(BUNDLE_STATE_MIN);
-            max = bundle.getInt(BUNDLE_STATE_MAX);
+            String minStr = bundle.getString(BUNDLE_STATE_MIN);
+            String maxStr = bundle.getString(BUNDLE_STATE_MAX);
+            min = minStr.equals("") ? null : Integer.parseInt(minStr);
+            max = maxStr.equals("") ? null : Integer.parseInt(maxStr);
         }
         super.onRestoreInstanceState(state);
     }
