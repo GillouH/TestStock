@@ -14,9 +14,7 @@
 
         <ScrollView style="@style/FillHorizontal">
 
-            <LinearLayout
-                style="@style/Section.Principal"
-                android:scrollbars="vertical">
+            <LinearLayout style="@style/Section.Principal">
 
                 <LinearLayout style="@style/Container.LabelValue">
 
