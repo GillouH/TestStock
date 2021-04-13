@@ -57,42 +57,29 @@ public class PersonalActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(@NotNull MenuItem item){
         int itemID = item.getItemId();
-        ArrayList<Integer> menuItemsID = new ArrayList<>(
-                Arrays.asList(
-                        R.id.menu_button_cancel,
-                        R.id.menu_button_ok,
-                        R.id.menu_submenu_button_modifyOrder,
-                        R.id.menu_submenu_button_edit,
-                        R.id.menu_submenu_button_removeItem,
-                        R.id.menu_submenu_button_resetButton,
-                        R.id.menu_submenu_button_dictionary
-                )
-        );
-        if(menuItemsID.contains(itemID)){
-            ArrayList<Integer> menuItemsIDToActionModeNormal = new ArrayList<>(Arrays.asList(R.id.menu_button_cancel, R.id.menu_button_ok, R.id.menu_submenu_button_resetButton));
-            if(menuItemsIDToActionModeNormal.contains(itemID)){
-                actionMode = PersonalActivity.ACTION_MODE.NORMAL;
-                if(itemID == R.id.menu_button_cancel){
-                    personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickCancelButton");
-                }else if(itemID == R.id.menu_button_ok){
-                    personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickOkButton");
-                }else if(itemID == R.id.menu_submenu_button_resetButton){
-                    personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickResetButton");
-                }
-            }else if(itemID == R.id.menu_submenu_button_modifyOrder){
-                personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickModifyOrderButton");
-                actionMode = PersonalActivity.ACTION_MODE.MOVE;
-            }else if(itemID == R.id.menu_submenu_button_edit){
-                personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickEditButton");
-                actionMode = PersonalActivity.ACTION_MODE.EDIT;
-            }else if(itemID == R.id.menu_submenu_button_removeItem){
-                personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickRemoveItemButton");
-                actionMode = PersonalActivity.ACTION_MODE.DELETE;
-            }else if(itemID == R.id.menu_submenu_button_dictionary){
-                personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickDictionaryButton");
-                Intent intent = new Intent(this, DictionaryActivity.class);
-                startActivity(intent);
+        ArrayList<Integer> menuItemsIDToActionModeNormal = new ArrayList<>(Arrays.asList(R.id.menu_button_cancel, R.id.menu_button_ok, R.id.menu_submenu_button_resetButton));
+        if(menuItemsIDToActionModeNormal.contains(itemID)){
+            actionMode = PersonalActivity.ACTION_MODE.NORMAL;
+            if(itemID == R.id.menu_button_cancel){
+                personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickCancelButton");
+            }else if(itemID == R.id.menu_button_ok){
+                personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickOkButton");
+            }else if(itemID == R.id.menu_submenu_button_resetButton){
+                personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickResetButton");
             }
+        }else if(itemID == R.id.menu_submenu_button_modifyOrder){
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickModifyOrderButton");
+            actionMode = PersonalActivity.ACTION_MODE.MOVE;
+        }else if(itemID == R.id.menu_submenu_button_edit){
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickEditButton");
+            actionMode = PersonalActivity.ACTION_MODE.EDIT;
+        }else if(itemID == R.id.menu_submenu_button_removeItem){
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickRemoveItemButton");
+            actionMode = PersonalActivity.ACTION_MODE.DELETE;
+        }else if(itemID == R.id.menu_submenu_button_dictionary){
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickDictionaryButton");
+            Intent intent = new Intent(this, DictionaryActivity.class);
+            startActivity(intent);
         }else{
             return super.onOptionsItemSelected(item);
         }
