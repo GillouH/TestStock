@@ -50,6 +50,8 @@ public class EditItemActivity extends OneItemManagerActivity{
     private Button buttonSave;
     private String[] unitList;
 
+    private final int REQUEST_CODE_DICTIONARY = 10;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -341,7 +343,7 @@ public class EditItemActivity extends OneItemManagerActivity{
                         intent.putExtra(DictionaryManager.INTENT_EXTRA_DATA_UNIT_ID, unitIDInDictionary);
                     }
                     intent.putExtra(DictionaryManager.INTENT_EXTRA_DATA_EDIT_TEXT_ID, unitInput.getId());
-                    startActivityForResult(intent, 10);
+                    startActivityForResult(intent, REQUEST_CODE_DICTIONARY);
                 });
             }
             if(valueUnitInputs != null){
@@ -381,7 +383,7 @@ public class EditItemActivity extends OneItemManagerActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-        if(resultCode == RESULT_OK && requestCode == 10 && data != null){
+        if(requestCode == REQUEST_CODE_DICTIONARY && resultCode == RESULT_OK && data != null){
             String unit = data.getStringExtra(DictionaryManager.INTENT_EXTRA_DATA_UNIT);
             int editTextId = data.getIntExtra(DictionaryManager.INTENT_EXTRA_DATA_EDIT_TEXT_ID, -1);
             if(editTextId != -1){
