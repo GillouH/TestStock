@@ -10,9 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TestStock">
-        <activity android:name=".controllers.EditItemActivity" />
-        <activity android:name=".controllers.ItemDetailActivity" />
-        <activity android:name=".controllers.MainActivity">
+        <activity android:name=".controllers.activities.DictionaryActivity" />
+        <activity android:name=".controllers.activities.EditItemActivity" />
+        <activity android:name=".controllers.activities.ItemDetailActivity" />
+        <activity android:name=".controllers.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

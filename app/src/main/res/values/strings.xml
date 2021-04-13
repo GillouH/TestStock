@@ -18,6 +18,7 @@
     <string name="singular">Singular</string>
     <string name="plural">Plural</string>
     <string name="reset">Reset</string>
+    <string name="warning">Warning</string>
 
     <string name="item_name">Item name</string>
     <string name="quantityUnit_label">Quantity:</string>
@@ -55,4 +56,6 @@
     <string name="preview">Preview:</string>
     <string name="example_label">Example:</string>
     <string name="example_value">5 box of 50 gloves:</string>
+    <string name="addInDictionary">Add in dictionary</string>
+    <string name="editInDictionary">Edit in dictionary</string>
 </resources>

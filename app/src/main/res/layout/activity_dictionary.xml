@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Root"
+    tools:context=".controllers.activities.DictionaryActivity">
+
+    <LinearLayout style="@style/Activity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/activityDictionary_toolbar"
+            style="@style/ToolBar.NotMainActivity"
+            app:menu="@menu/menu"
+            app:title="@string/dictionary" />
+
+        <ScrollView style="@style/FillHorizontal">
+
+            <LinearLayout style="@style/Section.Principal">
+
+                <TableLayout
+                    android:id="@+id/activityDictionary_tableLayout"
+                    style="@style/FillHorizontal"
+                    android:stretchColumns="0,1">
+
+                    <TableRow android:layout_marginBottom="20sp">
+
+                        <TextView
+                            style="@style/DictionaryActivity_TableRow_Header_TextView"
+                            android:text="@string/singular" />
+
+                        <TextView
+                            style="@style/DictionaryActivity_TableRow_Header_TextView"
+                            android:text="@string/plural" />
+
+                    </TableRow>
+
+                </TableLayout>
+
+                <LinearLayout
+                    style="@style/Container"
+                    android:layout_gravity="center">
+
+                    <Button
+                        android:id="@+id/activityDictionary_cancelButton"
+                        style="@style/SimpleButton"
+                        android:text="@string/cancel"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/activityDictionary_addSaveButton"
+                        style="@style/SimpleButton"
+                        android:text="@string/add" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

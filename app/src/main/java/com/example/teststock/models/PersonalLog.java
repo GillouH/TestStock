@@ -13,13 +13,16 @@ public class PersonalLog{
                 format = "%s : %s";
             }else if(type.equals(TYPE.METHOD)){
                 format = "%s.%s";
+            }else if(type.equals(TYPE.INFO)){
+                format = "%s - %s";
             }
         }
-        Log.d(PERSO, String.format(format, classToLog.getSimpleName(), msg));
+        Log.d(PERSO, String.format(format, classToLog.getSimpleName(), msg != null ? msg : ""));
     }
 
     public enum TYPE{
         CLICK,
-        METHOD
+        METHOD,
+        INFO
     }
 }

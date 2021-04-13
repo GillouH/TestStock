@@ -164,8 +164,8 @@ public class QuantityManager extends RelativeLayout{
             numberEditText.onRestoreInstanceState(bundle.getParcelable(BUNDLE_STATE_NUMBER));
             String minStr = bundle.getString(BUNDLE_STATE_MIN);
             String maxStr = bundle.getString(BUNDLE_STATE_MAX);
-            min = minStr.equals("") ? null : Integer.parseInt(minStr);
-            max = maxStr.equals("") ? null : Integer.parseInt(maxStr);
+            min = minStr == null || minStr.equals("") ? null : Integer.parseInt(minStr);
+            max = maxStr == null || maxStr.equals("") ? null : Integer.parseInt(maxStr);
         }
         super.onRestoreInstanceState(state);
     }

@@ -1,8 +1,7 @@
-package com.example.teststock.controllers;
+package com.example.teststock.controllers.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -16,32 +15,30 @@ import com.example.teststock.R;
 import com.example.teststock.adapters.ItemAdapter;
 import com.example.teststock.adapters.ItemMoveCallback;
 import com.example.teststock.adapters.StartDragListener;
-import com.example.teststock.models.Item;
+import com.example.teststock.controllers.PersonalActivity;
 import com.example.teststock.models.PersonalLog;
+import com.example.teststock.models.items.Item;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 
-// TODO: 18/03/2021 Gestion de compte ?
+// TODO: 18/03/2021 Gestion de compte
 // TODO: 18/03/2021 Mise en réseau avec serveur
 // TODO: 20/03/2021 Bouton rappel notification
-// TODO: 20/03/2021 dictionnaire pluriel-singuliers
-// TODO: 24/03/2021 Class fille de RecyclerView pour gérer onSaveInstanceState
-// TODO: 24/03/2021 Simplifier ligne 60
+// TODO: 12/04/2021 Liste d'item -> image
+// TODO: 12/04/2021 partage de liste
 
-public class MainActivity extends ItemManagerActivity implements StartDragListener{
-    private static final String BUNDLE_STATE_MODE = "BUNDLE_STATE_MODE";
+public class MainActivity extends PersonalActivity implements StartDragListener{
     private static final String BUNDLE_STATE_ITEM_LIST = "BUNDLE_STATE_ITEM_LIST";
 
     private ItemAdapter itemAdapter;
     private List<Item> itemList;
     private ItemTouchHelper touchHelper;
-    private boolean showMenu;
     private FloatingActionButton addButton;
     private ItemMoveCallback callback;
-    private MODE mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -52,15 +49,16 @@ public class MainActivity extends ItemManagerActivity implements StartDragListen
         RecyclerView recyclerView = findViewById(R.id.activityMain_recyclerView);
         addButton = findViewById(R.id.activityMain_floattingButton);
 
-
+        hasMenu = true;
+        subMenuItemToShow = Arrays.asList(R.id.menu_submenu_button_modifyOrder, R.id.menu_submenu_button_removeItem, R.id.menu_submenu_button_dictionary);
         setSupportActionBar(toolbar);
 
         if(savedInstanceState != null){
-            mode = MODE.valueOf(savedInstanceState.getString(BUNDLE_STATE_MODE));
-            itemList = itemManager.convertJSONArrayToItemList(itemManager.convertJSONArrayAsStringToJSONArray(savedInstanceState.getString(BUNDLE_STATE_ITEM_LIST)));
+            actionMode = ACTION_MODE.valueOf(savedInstanceState.getString(BUNDLE_STATE_MODE));
+            itemList = itemManager.convertStringToList(savedInstanceState.getString(BUNDLE_STATE_ITEM_LIST));
         }else{
-            mode = MODE.NORMAL;
-            itemList = itemManager.getItemList(false);
+            actionMode = ACTION_MODE.NORMAL;
+            itemList = itemManager.getList();
         }
 
         ItemAdapter.setImageDrawableMove(ContextCompat.getDrawable(this, R.drawable.ic_baseline_pan_tool_24));
@@ -68,86 +66,63 @@ public class MainActivity extends ItemManagerActivity implements StartDragListen
         ItemAdapter.setContentDescriptionMove(getString(R.string.move));
         ItemAdapter.setContentDescriptionDelete(getString(R.string.delete));
 
-        showMenu = mode == MODE.NORMAL;
+        showSubMenu = actionMode.equals(ACTION_MODE.NORMAL);
 
-        itemAdapter = new ItemAdapter(itemList, mode, this);
+        itemAdapter = new ItemAdapter(itemList, actionMode, this);
         callback = new ItemMoveCallback(itemAdapter);
-        callback.setLongPressDragEnabled(mode == MODE.MOVE);
+        callback.setLongPressDragEnabled(actionMode.equals(ACTION_MODE.MOVE));
         touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(itemAdapter);
 
-        addButton.setVisibility(mode == MODE.NORMAL ? View.VISIBLE : View.GONE);
+        addButton.setVisibility(actionMode.equals(ACTION_MODE.NORMAL) ? View.VISIBLE : View.GONE);
         addButton.setOnClickListener(view->addAction());
     }
 
     private void refresh(){
         personalLog.write(PersonalLog.TYPE.METHOD, getClass(), "refresh()");
-        showMenu = mode == MODE.NORMAL;
-        this.invalidateOptionsMenu();
+        showSubMenu = actionMode.equals(ACTION_MODE.NORMAL);
+        invalidateOptionsMenu();
         itemAdapter.setItemList(itemList);
-        itemAdapter.setMode(mode);
+        itemAdapter.setMode(actionMode);
         itemAdapter.notifyDataSetChanged();
-        callback.setLongPressDragEnabled(mode == MODE.MOVE);
-        addButton.setVisibility(mode == MODE.NORMAL ? View.VISIBLE : View.GONE);
+        callback.setLongPressDragEnabled(actionMode.equals(ACTION_MODE.MOVE));
+        addButton.setVisibility(actionMode.equals(ACTION_MODE.NORMAL) ? View.VISIBLE : View.GONE);
     }
 
     @Override
     protected void onRestart(){
         super.onRestart();
-        itemList = itemManager.getItemList(false);
-        mode = MODE.NORMAL;
+        itemList = itemManager.getList();
+        actionMode = ACTION_MODE.NORMAL;
         refresh();
     }
 
     @Override
     protected void onSaveInstanceState(@NotNull Bundle outState){
-        outState.putString(BUNDLE_STATE_MODE, mode.toString());
-        outState.putString(BUNDLE_STATE_ITEM_LIST, itemManager.convertItemListToJSONArray(itemList).toString());
+        outState.putString(BUNDLE_STATE_MODE, actionMode.toString());
+        outState.putString(BUNDLE_STATE_ITEM_LIST, itemManager.convertListToString(itemList));
         super.onSaveInstanceState(outState);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.activity_main_menu, menu);
-        menu.setGroupVisible(R.id.action_bar_menu, showMenu);
-        menu.setGroupVisible(R.id.action_bar_actionButton, !showMenu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(@NotNull MenuItem item){
-        int itemId = item.getItemId();
-        if(itemId == R.id.actionBar_menu_modifyOrder){
-            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickModifyOrderButton");
-            mode = MODE.MOVE;
-            refresh();
-        }else if(itemId == R.id.actionBar_menu_removeItem){
-            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickRemoveItemButton");
-            mode = MODE.DELETE;
-            refresh();
-        }else if(itemId == R.id.actionBar_menu_razButton){
-            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickRazButton");
-            itemList = itemManager.getItemList(true);
-            mode = MODE.NORMAL;
-            refresh();
-        }else if(itemId == R.id.action_bar_actionButton_ok){
-            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickOkButton");
+        boolean result = super.onOptionsItemSelected(item);
+        int itemID = item.getItemId();
+        if(itemID == R.id.menu_submenu_button_resetButton){
+            itemList = itemManager.getList(true);
+        }else if(itemID == R.id.menu_button_ok){
             itemManager.updateListOrder(itemList);
-            itemManager.saveItemList(itemList);
-            mode = MODE.NORMAL;
-            refresh();
-        }else if(itemId == R.id.action_bar_actionButton_cancel){
-            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickCancelButton");
-            itemList = itemManager.getItemList(false);
-            mode = MODE.NORMAL;
-            refresh();
-        }else{
-            return super.onOptionsItemSelected(item);
+            itemManager.saveList(itemList);
+        }else if(itemID == R.id.menu_button_cancel){
+            itemList = itemManager.getList();
         }
-        return true;
+        if(itemID != R.id.menu_submenu_button_dictionary){
+            refresh();
+        }
+        return result;
     }
 
     private void addAction(){
@@ -159,11 +134,5 @@ public class MainActivity extends ItemManagerActivity implements StartDragListen
     @Override
     public void requestDrag(RecyclerView.ViewHolder viewHolder){
         touchHelper.startDrag(viewHolder);
-    }
-
-    public enum MODE{
-        NORMAL,
-        MOVE,
-        DELETE
     }
 }

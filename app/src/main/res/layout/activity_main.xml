@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Root"
-    tools:context=".controllers.MainActivity">
+    tools:context=".controllers.activities.MainActivity">
 
     <LinearLayout style="@style/Activity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/activityMain_toolbar"
             style="@style/ToolBar"
-            app:menu="@menu/activity_main_menu"
+            app:menu="@menu/menu"
             app:title="@string/app_name" />
 
         <androidx.recyclerview.widget.RecyclerView

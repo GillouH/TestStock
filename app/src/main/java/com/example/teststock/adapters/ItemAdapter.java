@@ -17,10 +17,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teststock.R;
-import com.example.teststock.controllers.ItemDetailActivity;
-import com.example.teststock.controllers.MainActivity;
-import com.example.teststock.models.Item;
-import com.example.teststock.models.ItemManager;
+import com.example.teststock.controllers.PersonalActivity.ACTION_MODE;
+import com.example.teststock.controllers.activities.ItemDetailActivity;
+import com.example.teststock.models.items.Item;
+import com.example.teststock.models.managers.ItemManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,10 +31,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private List<Item> itemList;
     private static Drawable imageDrawableMove, imageDrawableDelete;
     private final StartDragListener startDragListener;
-    private MainActivity.MODE mode;
+    private ACTION_MODE mode;
     private static String contentDescriptionMove, contentDescriptionDelete;
 
-    public ItemAdapter(java.util.List<Item> itemList, MainActivity.MODE mode, StartDragListener startDragListener){
+    public ItemAdapter(java.util.List<Item> itemList, ACTION_MODE mode, StartDragListener startDragListener){
         this.itemList = itemList;
         this.mode = mode;
         this.startDragListener = startDragListener;
@@ -74,7 +74,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         final Item item = itemList.get(position);
         holder.name.setText(item.getName());
         holder.itemView.setClickable(false);
-        holder.imageView.setVisibility(mode == MainActivity.MODE.NORMAL ? View.GONE : View.VISIBLE);
+        holder.imageView.setVisibility(mode.equals(ACTION_MODE.NORMAL) ? View.GONE : View.VISIBLE);
 
         switch(mode){
             case NORMAL:
@@ -133,7 +133,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         itemViewHolder.cardView.setCardBackgroundColor(itemViewHolder.cardViewBackgroundColorStateList);
     }
 
-    public void setMode(MainActivity.MODE mode){
+    public void setMode(ACTION_MODE mode){
         this.mode = mode;
     }
 

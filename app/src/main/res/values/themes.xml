@@ -96,6 +96,14 @@
         <item name="android:tint">@color/colorPrimary</item>
     </style>
 
+    <style name="ImageButton">
+        <item name="srcCompat">@drawable/ic_baseline_add_24</item>
+        <item name="android:layout_width">40sp</item>
+        <item name="android:layout_height">50sp</item>
+        <item name="android:layout_marginLeft">15sp</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
     <style name="SimpleButton" parent="Container.Background">
         <item name="android:layout_gravity">center</item>
     </style>
@@ -138,12 +146,16 @@
 
     <style name="DictionaryActivity_TableLayout_TextView" parent="TextView">
         <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="DictionaryActivity_TableRow_Header_TextView" parent="DictionaryActivity_TableLayout_TextView">
-        <item name="android:textSize">20sp</item>
-        <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="DictionaryActivity_TableLayout_EditText" parent="DictionaryActivity_TableLayout_TextView">
+        <item name="singleLine">true</item>
+        <item name="android:inputType">text</item>
     </style>
 
     <!-- Dictionary Activity /-->

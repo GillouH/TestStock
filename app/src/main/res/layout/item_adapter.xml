@@ -25,14 +25,10 @@
 
         <ImageView
             android:id="@+id/item_Adapter_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/ImageView"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:contentDescription="@string/itemAdapter_imageView_contentDescription"
-            android:padding="8dp"
-            android:src="@drawable/ic_baseline_pan_tool_24"
-            app:tint="@color/colorPrimary" />
+            android:src="@drawable/ic_baseline_pan_tool_24" />
 
     </RelativeLayout>
 

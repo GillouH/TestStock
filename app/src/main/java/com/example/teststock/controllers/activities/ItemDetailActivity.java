@@ -1,4 +1,4 @@
-package com.example.teststock.controllers;
+package com.example.teststock.controllers.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -11,11 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.teststock.R;
-import com.example.teststock.models.BasicItem;
-import com.example.teststock.models.Item;
-import com.example.teststock.models.ItemManager;
-import com.example.teststock.models.PackItem;
+import com.example.teststock.controllers.OneItemManagerActivity;
+import com.example.teststock.controllers.QuantityManager;
 import com.example.teststock.models.PersonalLog;
+import com.example.teststock.models.items.BasicItem;
+import com.example.teststock.models.items.Item;
+import com.example.teststock.models.items.PackItem;
+import com.example.teststock.models.managers.ItemManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
@@ -50,7 +52,7 @@ public class ItemDetailActivity extends OneItemManagerActivity{
 
         if(savedInstanceState == null){
             itemID = getIntent().getIntExtra(ItemManager.INTENT_EXTRA_DATA_KEY_ID, -1);
-            Item item = itemManager.getItem(itemID);
+            Item item = itemManager.get(itemID);
             nameText.setText(item.getName());
             if(item.getClass().equals(BasicItem.class)){
                 fillBasicItemForm((BasicItem)item);
@@ -58,8 +60,6 @@ public class ItemDetailActivity extends OneItemManagerActivity{
                 fillPackItemForm((PackItem)item);
             }
             notificationTresholdText.setText(item.getSeuilFormated());
-            linearLayout_itemBasic.setVisibility(item.getClass().equals(BasicItem.class) ? View.VISIBLE : View.GONE);
-            linearLayout_itemPack.setVisibility(item.getClass().equals(PackItem.class) ? View.VISIBLE : View.GONE);
         }
 
         editButton.setOnClickListener(this::editAction);
@@ -97,10 +97,13 @@ public class ItemDetailActivity extends OneItemManagerActivity{
             if(item.modifyQuantity(basicItemQuantityManager.getNumber()).equals(Item.SEND_NOTIFICATION.YES)){
                 itemManager.sendNotification(item);
             }
-            itemManager.modifyItemInItemList(item);
+            itemManager.replaceInList(item);
             basicItemQuantityManager.setMin(-item.getQuantity());
             quantityText.setText(item.getQuantityFormated());
         });
+
+        linearLayout_itemBasic.setVisibility(View.VISIBLE);
+        linearLayout_itemPack.setVisibility(View.GONE);
     }
 
     private void fillPackItemForm(@NotNull PackItem item){
@@ -110,7 +113,7 @@ public class ItemDetailActivity extends OneItemManagerActivity{
             if(item.modifyQuantityOut(packItemQuantityOutQuantityManager.getNumber()).equals(Item.SEND_NOTIFICATION.YES)){
                 itemManager.sendNotification(item);
             }
-            itemManager.modifyItemInItemList(item);
+            itemManager.replaceInList(item);
             packItemQuantityOutQuantityManager.setMin(-item.getQuantityOut());
             updateQuantityPackItemText(item);
         });
@@ -121,10 +124,13 @@ public class ItemDetailActivity extends OneItemManagerActivity{
             if(item.modifyNbPack(packItemNbPackQuantityManager.getNumber()).equals(Item.SEND_NOTIFICATION.YES)){
                 itemManager.sendNotification(item);
             }
-            itemManager.modifyItemInItemList(item);
+            itemManager.replaceInList(item);
             packItemNbPackQuantityManager.setMin(-item.getNbPackFull());
             updateQuantityPackItemText(item);
         });
+
+        linearLayout_itemBasic.setVisibility(View.GONE);
+        linearLayout_itemPack.setVisibility(View.VISIBLE);
     }
 
     private void updateQuantityPackItemText(PackItem packItem){

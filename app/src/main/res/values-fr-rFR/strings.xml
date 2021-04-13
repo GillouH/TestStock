@@ -17,6 +17,7 @@
     <string name="singular">Singulier</string>
     <string name="plural">Pluriel</string>
     <string name="reset">Réinitialiser</string>
+    <string name="warning">Attention</string>
 
     <string name="item_name">Nom de l\'article</string>
     <string name="quantityUnit_label">Quantitée :</string>
@@ -35,7 +36,7 @@
     <string name="notifThreshold_label">Seuil de notification :</string>
     <string name="notifThreshold_value">1 unité(s)</string>
     <string name="actionBar_modifyOrder">Modifier l\'ordre</string>
-    <string name="actionBar_removeItem">@string/remove</string>
+    <string name="actionBar_removeItem">@string/delete</string>
     <string name="edit_item">@string/editing</string>
     <string name="label_name">Nom :</string>
     <string name="mainActivity_floatingActionButton_contentDescription">@string/add</string>
@@ -54,4 +55,6 @@
     <string name="preview">Aperçu :</string>
     <string name="example_label">Exemple :</string>
     <string name="example_value">5 boites de 50 gants:</string>
+    <string name="addInDictionary">Ajouter dans le dictionnaire</string>
+    <string name="editInDictionary">Modifier dans le dictionnaire</string>
 </resources>

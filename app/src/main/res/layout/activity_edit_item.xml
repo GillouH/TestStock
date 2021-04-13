@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Root"
-    tools:context=".controllers.EditItemActivity">
+    tools:context=".controllers.activities.EditItemActivity">
 
     <LinearLayout style="@style/Activity">
 
@@ -62,11 +62,20 @@
                             style="@style/TextView"
                             android:text="@string/unit_label" />
 
-                        <EditText
-                            android:id="@+id/activityEditItem_editText_basicItem_unit"
-                            style="@style/EditText.Text"
-                            android:hint="@string/unit_value"
-                            tools:ignore="Autofill" />
+                        <LinearLayout style="@style/Container.ValueUnit">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/activityEditItem_autoCompleteTextView_basicItem_unit"
+                                style="@style/EditText.Text"
+                                android:hint="@string/unit_value"
+                                tools:ignore="Autofill" />
+
+                            <ImageButton
+                                android:id="@+id/activityEditItem_imageButton_basicItem_unit"
+                                style="@style/ImageButton"
+                                android:contentDescription="@string/addInDictionary" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -128,11 +137,20 @@
                             style="@style/TextView"
                             android:text="@string/unitPack" />
 
-                        <EditText
-                            android:id="@+id/activityEditItem_editText_packItem_unitPack"
-                            style="@style/EditText.Text"
-                            android:hint="@string/unitPackExample"
-                            tools:ignore="Autofill" />
+                        <LinearLayout style="@style/Container.ValueUnit">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/activityEditItem_autoCompleteTextView_packItem_unitPack"
+                                style="@style/EditText.Text"
+                                android:hint="@string/unitPackExample"
+                                tools:ignore="Autofill" />
+
+                            <ImageButton
+                                android:id="@+id/activityEditItem_imageButton_packItem_unitPack"
+                                style="@style/ImageButton"
+                                android:contentDescription="@string/addInDictionary" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -142,11 +160,20 @@
                             style="@style/TextView"
                             android:text="@string/unitInPack" />
 
-                        <EditText
-                            android:id="@+id/activityEditItem_editText_packItem_unit"
-                            style="@style/EditText.Text"
-                            android:hint="@string/unit_value"
-                            tools:ignore="Autofill" />
+                        <LinearLayout style="@style/Container.ValueUnit">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/activityEditItem_autoCompleteTextView_packItem_unit"
+                                style="@style/EditText.Text"
+                                android:hint="@string/unit_value"
+                                tools:ignore="Autofill" />
+
+                            <ImageButton
+                                android:id="@+id/activityEditItem_imageButton_packItem_unit"
+                                style="@style/ImageButton"
+                                android:contentDescription="@string/addInDictionary" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -242,7 +269,9 @@
 
                     </LinearLayout>
 
-                    <LinearLayout style="@style/Container.LabelValue">
+                    <LinearLayout
+                        style="@style/Container.LabelValue"
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/TextView"
@@ -254,7 +283,9 @@
 
                     </LinearLayout>
 
-                    <LinearLayout style="@style/Container.LabelValue">
+                    <LinearLayout
+                        style="@style/Container.LabelValue"
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/TextView"
