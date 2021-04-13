@@ -1,6 +1,5 @@
 package com.example.teststock.controllers.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,20 +22,20 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.jetbrains.annotations.NotNull;
 
 public class ItemDetailActivity extends OneItemManagerActivity{
+    private TextView nameText, notificationTresholdText;
     private LinearLayout linearLayout_itemBasic, linearLayout_itemPack;
     private TextView quantityText;
     private TextView quantityOutText;
     private TextView quantityPackText;
     private QuantityManager basicItemQuantityManager, packItemQuantityOutQuantityManager, packItemNbPackQuantityManager;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
 
         Toolbar toolbar = findViewById(R.id.activityItemDetail_toolbar);
-        TextView nameText = findViewById(R.id.activityItemDetail_textView_itemName);
+        nameText = findViewById(R.id.activityItemDetail_textView_itemName);
         linearLayout_itemBasic = findViewById(R.id.activityItemDetail_linearLayout_itemBasic);
         quantityText = findViewById(R.id.activityItemDetail_textView_itemQuantityUnitValue);
         basicItemQuantityManager = findViewById(R.id.activityItemDetail_quantityManager_basicItem);
@@ -45,24 +44,23 @@ public class ItemDetailActivity extends OneItemManagerActivity{
         packItemQuantityOutQuantityManager = findViewById(R.id.activityItemDetail_quantityManager_packItem_quantityOut);
         quantityPackText = findViewById(R.id.activityItemDetail_textView_nbPackValue);
         packItemNbPackQuantityManager = findViewById(R.id.activityItemDetail_quantityManager_packItem_nbPack);
-        TextView notificationTresholdText = findViewById(R.id.activityItemDetail_notificationThreshold);
+        notificationTresholdText = findViewById(R.id.activityItemDetail_notificationThreshold);
         FloatingActionButton editButton = findViewById(R.id.activityItemDetail_floattingButton);
 
         setSupportActionBar(toolbar);
 
         if(savedInstanceState == null){
             itemID = getIntent().getIntExtra(ItemManager.INTENT_EXTRA_DATA_KEY_ID, -1);
-            Item item = itemManager.get(itemID);
-            nameText.setText(item.getName());
-            if(item.getClass().equals(BasicItem.class)){
-                fillBasicItemForm((BasicItem)item);
-            }else if(item.getClass().equals(PackItem.class)){
-                fillPackItemForm((PackItem)item);
-            }
-            notificationTresholdText.setText(item.getSeuilFormated());
+            fillItemForm(itemID);
         }
 
         editButton.setOnClickListener(this::editAction);
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        fillItemForm(itemID);
     }
 
     @Override
@@ -88,6 +86,17 @@ public class ItemDetailActivity extends OneItemManagerActivity{
             linearLayout_itemBasic.setVisibility(View.GONE);
             linearLayout_itemPack.setVisibility(View.GONE);
         }
+    }
+
+    protected void fillItemForm(int itemID){
+        Item item = itemManager.get(itemID);
+        nameText.setText(item.getName());
+        if(item.getClass().equals(BasicItem.class)){
+            fillBasicItemForm((BasicItem)item);
+        }else if(item.getClass().equals(PackItem.class)){
+            fillPackItemForm((PackItem)item);
+        }
+        notificationTresholdText.setText(item.getSeuilFormated());
     }
 
     private void fillBasicItemForm(@NotNull BasicItem item){
