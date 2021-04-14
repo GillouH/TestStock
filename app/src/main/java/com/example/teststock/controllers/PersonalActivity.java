@@ -38,6 +38,7 @@ public class PersonalActivity extends AppCompatActivity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
+        personalLog.write(PersonalLog.TYPE.METHOD, getClass(), String.format("onCreateOptionsMenu(%b)", hasMenu));
         if(hasMenu){
             getMenuInflater().inflate(R.menu.menu, menu);
             menu.setGroupVisible(R.id.menu_submenu_buttons, showSubMenu);
@@ -56,6 +57,7 @@ public class PersonalActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(@NotNull MenuItem item){
+        personalLog.write(PersonalLog.TYPE.METHOD, getClass(), "onOptionsItemSelected()");
         int itemID = item.getItemId();
         ArrayList<Integer> menuItemsIDToActionModeNormal = new ArrayList<>(Arrays.asList(R.id.menu_button_cancel, R.id.menu_button_ok, R.id.menu_submenu_button_resetButton));
         if(menuItemsIDToActionModeNormal.contains(itemID)){
