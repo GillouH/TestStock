@@ -82,8 +82,12 @@ public class PackItem extends Item{
         }
     }
 
+    public String getUnitInPack(int nombre){
+        return getUnitInPack(DictionaryManager.getNombre(nombre));
+    }
+
     public String getUnitInPack(){
-        return getUnitInPack(DictionaryManager.getNombre(getQuantityOut()));
+        return getUnitInPack(getQuantityOut());
     }
 
     public boolean useUnitInPack(Couple couple){
@@ -142,8 +146,12 @@ public class PackItem extends Item{
         }
     }
 
+    public String getPackUnit(int nombre){
+        return getPackUnit(DictionaryManager.getNombre(nombre));
+    }
+
     public String getPackUnit(){
-        return getPackUnit(DictionaryManager.getNombre(getNbPackFull()));
+        return getPackUnit(getNbPackFull());
     }
 
     public boolean usePackUnit(Couple couple){
@@ -183,7 +191,7 @@ public class PackItem extends Item{
 
     @Override
     public String getSeuilFormated(){
-        return String.format(Locale.getDefault(), "%d %s de %d %s", getSeuil(), getPackUnit(DictionaryManager.getNombre(getSeuil())), getQuantityMaxInPack(), getUnitInPack(DictionaryManager.getNombre(getQuantityMaxInPack())));
+        return String.format(Locale.getDefault(), "%d %s de %d %s", getSeuil(), getPackUnit(getSeuil()), getQuantityMaxInPack(), getUnitInPack(getQuantityMaxInPack()));
     }
 
     public String getQuantityOutFormated(){
@@ -191,7 +199,7 @@ public class PackItem extends Item{
     }
 
     public String getNbPackFullFormated(){
-        return String.format(Locale.getDefault(), "%d %s de %d %s", getNbPackFull(), getPackUnit(), getQuantityMaxInPack(), getUnitInPack(DictionaryManager.getNombre(getQuantityMaxInPack())));
+        return String.format(Locale.getDefault(), "%d %s de %d %s", getNbPackFull(), getPackUnit(), getQuantityMaxInPack(), getUnitInPack(getQuantityMaxInPack()));
     }
 
     @Override

@@ -64,8 +64,12 @@ public class BasicItem extends Item{
         }
     }
 
+    public String getUnit(int nombre){
+        return getUnit(DictionaryManager.getNombre(nombre));
+    }
+
     public String getUnit(){
-        return getUnit(DictionaryManager.getNombre(getQuantity()));
+        return getUnit(getQuantity());
     }
 
     public void setUnitCouple(Couple coupleUnit){
@@ -93,7 +97,7 @@ public class BasicItem extends Item{
 
     @Override
     public String getSeuilFormated(){
-        return String.format(Locale.getDefault(), "%d %s", getSeuil(), getUnit(DictionaryManager.getNombre(getSeuil())));
+        return String.format(Locale.getDefault(), "%d %s", getSeuil(), getUnit(getSeuil()));
     }
 
     public String getQuantityFormated(){
