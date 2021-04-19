@@ -139,11 +139,17 @@ public class QuantityManager extends RelativeLayout{
 
     public void setMin(Integer min){
         this.min = min;
+        if(min != null && getNumberSimple() < min){
+            setNumber(min);
+        }
     }
 
     @SuppressWarnings({"unused", "RedundantSuppression"})
     public void setMax(Integer max){
         this.max = max;
+        if(max != null && getNumberSimple() > max){
+            setNumber(max);
+        }
     }
 
     @Override
