@@ -119,8 +119,7 @@ public class EditItemActivity extends OneItemManagerActivity{
         linkElements(
                 autoCompleteTextViewPackItemUnitPack,
                 new NodeEditTextAndTextView[]{
-                        new NodeEditTextAndTextView(editTextPackItemNbPack, textViewPackItemUnitForNbPack),
-                        new NodeEditTextAndTextView(editTextPackItemSeuil, textViewPackItemUnitForSeuil)
+                        new NodeEditTextAndTextView(editTextPackItemNbPack, textViewPackItemUnitForNbPack)
                 },
                 imageButtonPackItemUnitPack,
                 true
@@ -129,7 +128,8 @@ public class EditItemActivity extends OneItemManagerActivity{
                 autoCompleteTextViewPackItemUnit,
                 new NodeEditTextAndTextView[]{
                         new NodeEditTextAndTextView(editTextPackItemQuantityOut, textViewPackItemUnitForQuantityOut),
-                        new NodeEditTextAndTextView(editTextPackItemQuantityMaxInPack, textViewPackItemUnitForQuantityMaxInPack)
+                        new NodeEditTextAndTextView(editTextPackItemQuantityMaxInPack, textViewPackItemUnitForQuantityMaxInPack),
+                        new NodeEditTextAndTextView(editTextPackItemSeuil, textViewPackItemUnitForSeuil)
                 },
                 imageButtonPackItemUnit,
                 true

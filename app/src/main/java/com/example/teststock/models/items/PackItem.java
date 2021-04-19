@@ -95,18 +95,22 @@ public class PackItem extends Item{
     }
 
     public SEND_NOTIFICATION modifyQuantityOut(int quantity){
-        this.quantityOut += quantity;
-        while(this.quantityOut < 0){
-            if(modifyNbPack(-1) == SEND_NOTIFICATION.YES){
-                return SEND_NOTIFICATION.YES;
+        SEND_NOTIFICATION sendNotification = SEND_NOTIFICATION.NO;
+        if(quantity > 0 || -quantity <= quantityOut + quantityMaxInPack * nbPackFull){
+            this.quantityOut += quantity;
+            while(quantityOut < 0){
+                modifyNbPack(-1);
+                quantityOut += quantityMaxInPack;
             }
-            this.quantityOut += quantityMaxInPack;
+            while(quantityOut >= quantityMaxInPack){
+                modifyNbPack(1);
+                quantityOut -= quantityMaxInPack;
+            }
+            if(getTotalQuantity() <= seuil){
+                sendNotification = SEND_NOTIFICATION.YES;
+            }
         }
-        while(this.quantityOut >= quantityMaxInPack){
-            modifyNbPack(1);
-            this.quantityOut -= quantityMaxInPack;
-        }
-        return SEND_NOTIFICATION.NO;
+        return sendNotification;
     }
 
     public int getNbPackFull(){
@@ -159,16 +163,10 @@ public class PackItem extends Item{
     }
 
     public SEND_NOTIFICATION modifyNbPack(int quantity){
-        this.nbPackFull += quantity;
-        if(this.nbPackFull > seuil){
-            return SEND_NOTIFICATION.NO;
-        }else{
-            if(this.nbPackFull < 0){
-                this.quantityOut = 0;
-                this.nbPackFull = 0;
-            }
-            return SEND_NOTIFICATION.YES;
+        if(quantity > 0 || -quantity <= nbPackFull){
+            nbPackFull += quantity;
         }
+        return getTotalQuantity() <= seuil ? SEND_NOTIFICATION.YES : SEND_NOTIFICATION.NO;
     }
 
     @SuppressWarnings({"unused", "RedundantSuppression"})
@@ -191,7 +189,7 @@ public class PackItem extends Item{
 
     @Override
     public String getSeuilFormated(){
-        return String.format(Locale.getDefault(), "%d %s de %d %s", getSeuil(), getPackUnit(getSeuil()), getQuantityMaxInPack(), getUnitInPack(getQuantityMaxInPack()));
+        return String.format(Locale.getDefault(), "%d %s", getSeuil(), getUnitInPack(getSeuil()));
     }
 
     public String getQuantityOutFormated(){
@@ -204,7 +202,7 @@ public class PackItem extends Item{
 
     @Override
     public String getQuantityLeftFormated(){
-        return getNbPackFullFormated();
+        return String.format(Locale.getDefault(), "%d %s", getTotalQuantity(), getUnitInPack(getTotalQuantity()));
     }
 
     public JSONObject toJSON(){
