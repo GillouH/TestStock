@@ -109,6 +109,10 @@ public class PackItem extends Item{
         return nbPackFull;
     }
 
+    public int getTotalQuantity(){
+        return quantityOut + quantityMaxInPack * nbPackFull;
+    }
+
     public Couple getPackUnitCouple(){
         return packUnitCouple;
     }

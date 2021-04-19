@@ -117,13 +117,14 @@ public class ItemDetailActivity extends OneItemManagerActivity{
 
     private void fillPackItemForm(@NotNull PackItem item){
         quantityOutText.setText(item.getQuantityOutFormated());
-        packItemQuantityOutQuantityManager.setMin(-item.getQuantityOut());
+        packItemQuantityOutQuantityManager.setMin(-item.getTotalQuantity());
         packItemQuantityOutQuantityManager.setOnValidationClickListener(v->{
             if(item.modifyQuantityOut(packItemQuantityOutQuantityManager.getNumber()).equals(Item.SEND_NOTIFICATION.YES)){
                 itemManager.sendNotification(item);
             }
             itemManager.replaceInList(item);
-            packItemQuantityOutQuantityManager.setMin(-item.getQuantityOut());
+            packItemQuantityOutQuantityManager.setMin(-item.getTotalQuantity());
+            packItemNbPackQuantityManager.setMin(-item.getNbPackFull());
             updateQuantityPackItemText(item);
         });
 
@@ -134,6 +135,7 @@ public class ItemDetailActivity extends OneItemManagerActivity{
                 itemManager.sendNotification(item);
             }
             itemManager.replaceInList(item);
+            packItemQuantityOutQuantityManager.setMin(-item.getTotalQuantity());
             packItemNbPackQuantityManager.setMin(-item.getNbPackFull());
             updateQuantityPackItemText(item);
         });
