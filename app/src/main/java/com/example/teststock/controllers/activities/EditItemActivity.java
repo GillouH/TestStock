@@ -186,7 +186,12 @@ public class EditItemActivity extends OneItemManagerActivity{
             imageViewItemPicture.setImageDrawable(imageDrawableDefaultItemPicture);
         }else{
             this.imageUriStr = imageUriStr;
-            imageViewItemPicture.setImageURI(Uri.parse(imageUriStr));
+            try{
+                imageViewItemPicture.setImageURI(Uri.parse(imageUriStr));
+            }catch(SecurityException e){
+                e.printStackTrace();
+                setNewPicture(null);
+            }
         }
     }
 

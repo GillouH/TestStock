@@ -73,7 +73,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         if(imageStr.equals(Item.JSON_VALUE_IMAGE_NULL)){
             holder.imageViewItemPicture.setImageDrawable(imageDrawableDefaultItemPicture);
         }else{
-            holder.imageViewItemPicture.setImageURI(Uri.parse(imageStr));
+            try{
+                holder.imageViewItemPicture.setImageURI(Uri.parse(imageStr));
+            }catch(SecurityException e){
+                e.printStackTrace();
+                holder.imageViewItemPicture.setImageDrawable(imageDrawableDefaultItemPicture);
+            }
         }
         holder.name.setText(item.getName());
         holder.itemView.setClickable(false);

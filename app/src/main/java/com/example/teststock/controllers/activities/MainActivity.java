@@ -27,7 +27,6 @@ import java.util.List;
 // TODO: 18/03/2021 Gestion de compte
 // TODO: 18/03/2021 Mise en réseau avec serveur
 // TODO: 20/03/2021 Bouton rappel notification
-// TODO: 12/04/2021 Liste d'item -> image
 // TODO: 12/04/2021 partage de liste
 
 public class MainActivity extends PersonalActivity implements StartDragListener{
