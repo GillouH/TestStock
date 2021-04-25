@@ -23,8 +23,8 @@ public class PackItem extends Item{
     private Couple packUnitCouple;
     private int nbPackFull;
 
-    public PackItem(int ID, String name, int quantityOut, Couple unitInPackCouple, int nbPackFull, Couple packUnitCouple, int quantityMaxInPack, int seuil){
-        super(ID, name, seuil);
+    public PackItem(int ID, String name, int quantityOut, Couple unitInPackCouple, int nbPackFull, Couple packUnitCouple, int quantityMaxInPack, int seuil, String image){
+        super(ID, name, seuil, image);
         this.quantityMaxInPack = quantityMaxInPack;
         this.quantityOut = quantityOut;
         this.unitInPackCouple = unitInPackCouple;
@@ -34,6 +34,13 @@ public class PackItem extends Item{
 
     public static @Nullable PackItem fromJSON(JSONObject json){
         try{
+            // TODO: 22/04/2021 Prochaine version, enlever la vérification
+            String imageStr;
+            if(json.has(JSON_KEY_IMAGE)){
+                imageStr = json.getString(JSON_KEY_IMAGE);
+            }else{
+                imageStr = null;
+            }
             return new PackItem(
                     json.getInt(JSON_KEY_ID),
                     json.getString(JSON_KEY_NAME),
@@ -42,7 +49,8 @@ public class PackItem extends Item{
                     json.getInt(JSON_KEY_NB_PACK_FULL),
                     (Couple)JSONable.fromJSON(json.getJSONObject(JSON_KEY_PACK_UNIT_COUPLE)),
                     json.getInt(JSON_KEY_QUANTITY_MAX_IN_PACK),
-                    json.getInt(JSON_KEY_SEUIL)
+                    json.getInt(JSON_KEY_SEUIL),
+                    imageStr
             );
         }catch(Exception ignored){
         }

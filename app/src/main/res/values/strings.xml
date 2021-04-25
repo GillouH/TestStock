@@ -19,6 +19,7 @@
     <string name="plural">Plural</string>
     <string name="reset">Reset</string>
     <string name="warning">Warning</string>
+    <string name="test">Test</string>
 
     <string name="item_name">Item name</string>
     <string name="quantityUnit_label">Quantity:</string>
@@ -40,9 +41,15 @@
     <string name="actionBar_removeItem">Remove item</string>
     <string name="edit_item">@string/editing</string>
     <string name="label_name">Name:</string>
+    <string name="label_picture">Picture:</string>
     <string name="mainActivity_floatingActionButton_contentDescription">@string/add</string>
     <string name="itemAdapter_imageView_contentDescription">@string/action</string>
     <string name="itemDetailActivity_floatingActionButton_contentDescription">@string/edit</string>
+    <string name="editItemActivity_imageView_contentDescription">Item Picture</string>
+    <string name="editItemActivity_button_choosePicture_text">Choose picture</string>
+    <string name="editItemActivity_button_choosePicture_contentDescription">Choose item picture</string>
+    <string name="editItemActivity_button_deletePicture_text">Delete picture</string>
+    <string name="editItemActivity_button_deletePicture_contentDescription">Choose item picture</string>
     <string name="type">Type :</string>
     <string name="simpleItem">Simple Item</string>
     <string name="packItem">Packed item</string>

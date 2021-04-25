@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.teststock.R;
 import com.example.teststock.controllers.activities.DictionaryActivity;
+import com.example.teststock.controllers.activities.TestActivity;
 import com.example.teststock.models.PersonalLog;
 import com.example.teststock.models.managers.DictionaryManager;
 import com.example.teststock.models.managers.ItemManager;
@@ -50,6 +51,7 @@ public class PersonalActivity extends AppCompatActivity{
                     menuItem.setVisible(subMenuItemToShow.contains(menuItem.getItemId()));
                 }
                 menu.findItem(R.id.menu_submenu_button_resetButton).setVisible(false);
+                menu.findItem(R.id.menu_submenu_button_test).setVisible(false);
             }
         }
         return super.onCreateOptionsMenu(menu);
@@ -81,6 +83,10 @@ public class PersonalActivity extends AppCompatActivity{
         }else if(itemID == R.id.menu_submenu_button_dictionary){
             personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickDictionaryButton");
             Intent intent = new Intent(this, DictionaryActivity.class);
+            startActivity(intent);
+        }else if(itemID == R.id.menu_submenu_button_test){
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickTestActivityButton");
+            Intent intent = new Intent(this, TestActivity.class);
             startActivity(intent);
         }else{
             return super.onOptionsItemSelected(item);

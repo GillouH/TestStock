@@ -30,6 +30,45 @@
 
                 </LinearLayout>
 
+                <LinearLayout style="@style/Container.LabelValue">
+
+                    <TextView
+                        style="@style/TextView"
+                        android:text="@string/label_picture" />
+
+                    <LinearLayout style="@style/Container.ValueUnit">
+
+                        <ImageView
+                            android:id="@+id/activityEditItem_imageView_itemPicture"
+                            style="@style/TextView.Value"
+                            android:layout_width="50sp"
+                            android:layout_height="50sp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/editItemActivity_imageView_contentDescription"
+                            android:src="@drawable/ic_baseline_photo_size_select_actual_24" />
+
+                        <Button
+                            android:id="@+id/activityEditItem_button_chooseItemPicture"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="20sp"
+                            android:contentDescription="@string/editItemActivity_button_choosePicture_contentDescription"
+                            android:text="@string/editItemActivity_button_choosePicture_text" />
+
+                        <Button
+                            android:id="@+id/activityEditItem_button_deleteItemPicture"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="20sp"
+                            android:contentDescription="@string/editItemActivity_button_deletePicture_contentDescription"
+                            android:text="@string/editItemActivity_button_deletePicture_text" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
                 <RadioGroup style="@style/Container.LabelValue">
 
                     <TextView

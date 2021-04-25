@@ -17,20 +17,28 @@ public class BasicItem extends Item{
     private int quantity;
     private Couple coupleUnit;
 
-    public BasicItem(int ID, String name, int quantity, Couple coupleUnit, int seuil){
-        super(ID, name, seuil);
+    public BasicItem(int ID, String name, int quantity, Couple coupleUnit, int seuil, String image){
+        super(ID, name, seuil, image);
         this.quantity = quantity;
         this.coupleUnit = coupleUnit;
     }
 
     public static @Nullable BasicItem fromJSON(JSONObject json){
         try{
+            // TODO: 22/04/2021 Prochaine version, enlever la vérification
+            String imageStr;
+            if(json.has(JSON_KEY_IMAGE)){
+                imageStr = json.getString(JSON_KEY_IMAGE);
+            }else{
+                imageStr = null;
+            }
             return new BasicItem(
                     json.getInt(JSONable.JSON_KEY_ID),
                     json.getString(JSON_KEY_NAME),
                     json.getInt(JSON_KEY_QUANTITY),
                     (Couple)JSONable.fromJSON(json.getJSONObject(JSON_KEY_UNIT_COUPLE)),
-                    json.getInt(JSON_KEY_SEUIL)
+                    json.getInt(JSON_KEY_SEUIL),
+                    imageStr
             );
         }catch(Exception ignored){
         }

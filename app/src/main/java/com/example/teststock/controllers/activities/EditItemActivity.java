@@ -2,7 +2,9 @@ package com.example.teststock.controllers.activities;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -34,6 +37,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Locale;
 
 public class EditItemActivity extends OneItemManagerActivity{
+    private static final String BUNDLE_KEY_ITEM_PICTURE = "BUNDLE_KEY_ITEM_PICTURE";
+
     private EditText
             editTextItemName,
             editTextBasicItemQuantity,
@@ -42,15 +47,18 @@ public class EditItemActivity extends OneItemManagerActivity{
             editTextPackItemQuantityOut,
             editTextPackItemNbPack,
             editTextPackItemSeuil;
+    private final int REQUEST_CODE_DICTIONARY = 1;
+    private final int REQUEST_CODE_PICTURE = 2;
+    private ImageView imageViewItemPicture;
     private AutoCompleteTextView autoCompleteTextViewBasicItemUnit, autoCompleteTextViewPackItemUnitPack, autoCompleteTextViewPackItemUnit;
     private RadioButton radioButtonBasicItem, radioButtonPackItem;
     private LinearLayout linearLayoutBasicItem, linearLayoutPackItem;
     private TextView textViewPackItemExample;
     private Drawable drawableEdit, drawableAdd;
-    private Button buttonSave;
+    private Drawable imageDrawableDefaultItemPicture;
     private String[] unitList;
-
-    private final int REQUEST_CODE_DICTIONARY = 10;
+    private String imageUriStr;
+    private Button buttonChoosetemPicture, buttonDeleteItemPicture, buttonSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -59,6 +67,9 @@ public class EditItemActivity extends OneItemManagerActivity{
 
         Toolbar toolbar = findViewById(R.id.activityEditItem_toolbar);
         editTextItemName = findViewById(R.id.activityEditItem_editText_itemName);
+        imageViewItemPicture = findViewById(R.id.activityEditItem_imageView_itemPicture);
+        buttonChoosetemPicture = findViewById(R.id.activityEditItem_button_chooseItemPicture);
+        buttonDeleteItemPicture = findViewById(R.id.activityEditItem_button_deleteItemPicture);
         radioButtonBasicItem = findViewById(R.id.activityEditItem_radioButton_basicItem);
         radioButtonPackItem = findViewById(R.id.activityEditItem_radioButton_packItem);
         linearLayoutBasicItem = findViewById(R.id.activityEditItem_linearLayout_basicItem);
@@ -84,6 +95,7 @@ public class EditItemActivity extends OneItemManagerActivity{
         textViewPackItemExample = findViewById(R.id.activityEditItem_textView_packItem_example);
         buttonSave = findViewById(R.id.activityEditItem_button_save);
 
+        imageDrawableDefaultItemPicture = ContextCompat.getDrawable(this, Item.drawableIDDefaultItemPicture);
         drawableEdit = ContextCompat.getDrawable(this, R.drawable.ic_baseline_edit_24);
         drawableAdd = ContextCompat.getDrawable(this, R.drawable.ic_baseline_add_24);
 
@@ -107,6 +119,10 @@ public class EditItemActivity extends OneItemManagerActivity{
                 enableSaveButton();
             }
         });
+
+        buttonChoosetemPicture.setOnClickListener(v->chooseItemPicture());
+        buttonDeleteItemPicture.setOnClickListener(v->deleteItemPicture());
+
         linkElements(
                 autoCompleteTextViewBasicItemUnit,
                 new NodeEditTextAndTextView[]{
@@ -142,6 +158,7 @@ public class EditItemActivity extends OneItemManagerActivity{
                 Item item = itemManager.get(itemID);
                 if(item != null){
                     editTextItemName.setText(item.getName());
+                    setNewPicture(item.getImage());
                     if(item.getClass().equals(BasicItem.class)){
                         fillBasicItemForm((BasicItem)item);
                     }else if(item.getClass().equals(PackItem.class)){
@@ -154,28 +171,28 @@ public class EditItemActivity extends OneItemManagerActivity{
                 editTextBasicItemQuantity.setText(String.format(Locale.getDefault(), "%d", 0));
                 editTextPackItemQuantityOut.setText(String.format(Locale.getDefault(), "%d", 0));
                 editTextPackItemNbPack.setText(String.format(Locale.getDefault(), "%d", 0));
+                setNewPicture(null);
             }
         }
 
-        buttonSave.setOnClickListener(v->{
-            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickSaveButton");
-            Item item = createItemFromForm();
-            if(itemID == -1){
-                itemManager.addInList(item);
-                Intent intent = new Intent(this, ItemDetailActivity.class);
-                intent.putExtra(ItemManager.INTENT_EXTRA_DATA_KEY_ID, item.getID());
-                startActivity(intent);
-            }else{
-                itemManager.replaceInList(item);
-            }
-            finish();
-        });
+        buttonSave.setOnClickListener(v->saveItem());
 
         enableSaveButton();
     }
 
+    private void setNewPicture(String imageUriStr){
+        if(imageUriStr == null || imageUriStr.equals(Item.JSON_VALUE_IMAGE_NULL)){
+            this.imageUriStr = Item.JSON_VALUE_IMAGE_NULL;
+            imageViewItemPicture.setImageDrawable(imageDrawableDefaultItemPicture);
+        }else{
+            this.imageUriStr = imageUriStr;
+            imageViewItemPicture.setImageURI(Uri.parse(imageUriStr));
+        }
+    }
+
     @Override
     protected void onSaveInstanceState(@NonNull @NotNull Bundle outState){
+        outState.putString(BUNDLE_KEY_ITEM_PICTURE, imageUriStr);
         String itemType = BUNDLE_VALUE_ITEM_TYPE_UNDEFINED;
         if(radioButtonBasicItem.isChecked()){
             itemType = BUNDLE_VALUE_ITEM_TYPE_BASIC;
@@ -189,6 +206,7 @@ public class EditItemActivity extends OneItemManagerActivity{
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState){
         super.onRestoreInstanceState(savedInstanceState);
+        setNewPicture(savedInstanceState.getString(BUNDLE_KEY_ITEM_PICTURE));
         String itemType = savedInstanceState.getString(BUNDLE_KEY_ITEM_TYPE);
         if(itemType != null){
             if(itemType.equals(BUNDLE_VALUE_ITEM_TYPE_BASIC)){
@@ -200,6 +218,16 @@ public class EditItemActivity extends OneItemManagerActivity{
             linearLayoutBasicItem.setVisibility(View.GONE);
             linearLayoutPackItem.setVisibility(View.GONE);
         }
+    }
+
+    private void chooseItemPicture(){
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intent, REQUEST_CODE_PICTURE);
+    }
+
+    private void deleteItemPicture(){
+        setNewPicture(null);
     }
 
     public void onRadioButtonClicked(View view){
@@ -383,15 +411,19 @@ public class EditItemActivity extends OneItemManagerActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-        if(requestCode == REQUEST_CODE_DICTIONARY && resultCode == RESULT_OK && data != null){
-            String unit = data.getStringExtra(DictionaryManager.INTENT_EXTRA_DATA_UNIT);
-            int editTextId = data.getIntExtra(DictionaryManager.INTENT_EXTRA_DATA_EDIT_TEXT_ID, -1);
-            if(editTextId != -1){
-                ((EditText)findViewById(editTextId)).setText(unit);
-            }
-            unitList = dictionaryManager.getUnitArray();
-        }
         super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && data != null){
+            if(requestCode == REQUEST_CODE_DICTIONARY){
+                String unit = data.getStringExtra(DictionaryManager.INTENT_EXTRA_DATA_UNIT);
+                int editTextId = data.getIntExtra(DictionaryManager.INTENT_EXTRA_DATA_EDIT_TEXT_ID, -1);
+                if(editTextId != -1){
+                    ((EditText)findViewById(editTextId)).setText(unit);
+                }
+                unitList = dictionaryManager.getUnitArray();
+            }else if(requestCode == REQUEST_CODE_PICTURE){
+                setNewPicture(data.getData().toString());
+            }
+        }
     }
 
     private void fillBasicItemForm(BasicItem item){
@@ -415,6 +447,20 @@ public class EditItemActivity extends OneItemManagerActivity{
         }
     }
 
+    private void saveItem(){
+        personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickSaveButton");
+        Item item = createItemFromForm();
+        if(itemID == -1){
+            itemManager.addInList(item);
+            Intent intent = new Intent(this, ItemDetailActivity.class);
+            intent.putExtra(ItemManager.INTENT_EXTRA_DATA_KEY_ID, item.getID());
+            startActivity(intent);
+        }else{
+            itemManager.replaceInList(item);
+        }
+        finish();
+    }
+
     private Item createItemFromForm(){
         Item item = null;
         if(radioButtonBasicItem.isChecked()){
@@ -423,7 +469,8 @@ public class EditItemActivity extends OneItemManagerActivity{
                     editTextItemName.getText().toString(),
                     Integer.parseInt(editTextBasicItemQuantity.getText().toString()),
                     dictionaryManager.getID(autoCompleteTextViewBasicItemUnit.getText().toString()),
-                    Integer.parseInt(editTextBasicItemSeuil.getText().toString())
+                    Integer.parseInt(editTextBasicItemSeuil.getText().toString()),
+                    imageUriStr
             );
         }else if(radioButtonPackItem.isChecked()){
             item = itemManager.createPackItem(
@@ -434,7 +481,8 @@ public class EditItemActivity extends OneItemManagerActivity{
                     Integer.parseInt(editTextPackItemNbPack.getText().toString()),
                     dictionaryManager.getID(autoCompleteTextViewPackItemUnitPack.getText().toString()),
                     Integer.parseInt(editTextPackItemQuantityMaxInPack.getText().toString()),
-                    Integer.parseInt(editTextPackItemSeuil.getText().toString())
+                    Integer.parseInt(editTextPackItemSeuil.getText().toString()),
+                    imageUriStr
             );
         }
         return item;
