@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,12 +37,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             drawableIDDelete = R.drawable.ic_baseline_delete_24,
             contentDescriptionMoveID = R.string.move,
             contentDescriptionDeleteID = R.string.delete;
-    private final Drawable imageDrawableMove, imageDrawableDelete;
+    private final Drawable imageDrawableDefaultItemPicture, imageDrawableMove, imageDrawableDelete;
     private final StartDragListener startDragListener;
     private ACTION_MODE mode;
     private static String contentDescriptionMove, contentDescriptionDelete;
 
     public ItemAdapter(Context context, java.util.List<Item> itemList, ACTION_MODE mode, StartDragListener startDragListener){
+        imageDrawableDefaultItemPicture = ContextCompat.getDrawable(context, Item.drawableIDDefaultItemPicture);
         imageDrawableMove = ContextCompat.getDrawable(context, drawableIDMove);
         contentDescriptionMove = context.getString(contentDescriptionMoveID);
         imageDrawableDelete = ContextCompat.getDrawable(context, drawableIDDelete);
@@ -67,9 +69,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     @Override
     public final void onBindViewHolder(@NonNull final ItemViewHolder holder, final int position){
         final Item item = itemList.get(position);
+        String imageStr = item.getImage();
+        if(imageStr.equals(Item.JSON_VALUE_IMAGE_NULL)){
+            holder.imageViewItemPicture.setImageDrawable(imageDrawableDefaultItemPicture);
+        }else{
+            holder.imageViewItemPicture.setImageURI(Uri.parse(imageStr));
+        }
         holder.name.setText(item.getName());
         holder.itemView.setClickable(false);
-        holder.imageView.setVisibility(mode.equals(ACTION_MODE.NORMAL) ? View.GONE : View.VISIBLE);
+        holder.imageViewAction.setVisibility(mode.equals(ACTION_MODE.NORMAL) ? View.GONE : View.VISIBLE);
 
         switch(mode){
             case NORMAL:
@@ -80,9 +88,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 });
                 break;
             case MOVE:
-                holder.imageView.setImageDrawable(imageDrawableMove);
-                holder.imageView.setContentDescription(contentDescriptionMove);
-                holder.imageView.setOnTouchListener((v, event)->{
+                holder.imageViewAction.setImageDrawable(imageDrawableMove);
+                holder.imageViewAction.setContentDescription(contentDescriptionMove);
+                holder.imageViewAction.setOnTouchListener((v, event)->{
                     v.performClick();
                     if(event.getAction() == MotionEvent.ACTION_DOWN){
                         startDragListener.requestDrag(holder);
@@ -91,9 +99,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 });
                 break;
             case DELETE:
-                holder.imageView.setImageDrawable(imageDrawableDelete);
-                holder.imageView.setContentDescription(contentDescriptionDelete);
-                holder.imageView.setOnClickListener(v->{
+                holder.imageViewAction.setImageDrawable(imageDrawableDelete);
+                holder.imageViewAction.setContentDescription(contentDescriptionDelete);
+                holder.imageViewAction.setOnClickListener(v->{
                     int index = itemList.indexOf(item);
                     itemList.remove(index);
                     notifyItemRemoved(index);
@@ -139,14 +147,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public final static class ItemViewHolder extends RecyclerView.ViewHolder{
         private final CardView cardView;
         private final TextView name;
-        private final ImageView imageView;
+        private final ImageView imageViewItemPicture, imageViewAction;
         private final ColorStateList cardViewBackgroundColorStateList;
 
         private ItemViewHolder(@NonNull View itemView){
             super(itemView);
             cardView = itemView.findViewById(R.id.itemAdapter_cardView);
+            imageViewItemPicture = itemView.findViewById(R.id.itemAdapter_imageView_itemPicture);
             name = itemView.findViewById(R.id.itemAdapter_textView);
-            imageView = itemView.findViewById(R.id.item_Adapter_imageView);
+            imageViewAction = itemView.findViewById(R.id.item_Adapter_imageView_action);
 
             cardViewBackgroundColorStateList = cardView.getCardBackgroundColor();
         }

@@ -23,6 +23,7 @@ public class ItemManager extends ListManager<Item>{
     public static final String INTENT_EXTRA_DATA_KEY_ID = "INTENT_EXTRA_DATA_KEY_ID";
     private static final String PREF_KEY_ITEM_LIST = "PREF_KEY_ITEM_LIST";
     private final DictionaryManager dictionaryManager;
+    private final static int defaultPicture = R.drawable.ic_baseline_photo_size_select_actual_24;
 
     public ItemManager(Context context){
         super(context);
@@ -34,7 +35,7 @@ public class ItemManager extends ListManager<Item>{
         return PREF_KEY_ITEM_LIST;
     }
 
-    public @Nullable BasicItem createBasicItem(int ID, String name, int quantity, Couple couple, int seuil){
+    public @Nullable BasicItem createBasicItem(int ID, String name, int quantity, Couple couple, int seuil, String image){
         if(couple == null){
             return null;
         }
@@ -45,16 +46,16 @@ public class ItemManager extends ListManager<Item>{
         if(unitIDInDictionary == -1){
             dictionaryManager.addInList(couple);
         }
-        return new BasicItem(ID, name, quantity, couple, seuil);
+        return new BasicItem(ID, name, quantity, couple, seuil, image);
     }
 
     @Nullable
-    public BasicItem createBasicItem(int ID, String name, int quantity, int unitIDInDictionary, int seuil){
+    public BasicItem createBasicItem(int ID, String name, int quantity, int unitIDInDictionary, int seuil, String image){
         Couple couple = dictionaryManager.get(unitIDInDictionary);
-        return couple != null ? createBasicItem(ID, name, quantity, couple, seuil) : null;
+        return couple != null ? createBasicItem(ID, name, quantity, couple, seuil, image) : null;
     }
 
-    public @Nullable PackItem createPackItem(int ID, String name, int quantityOut, Couple unitInPackCouple, int nbPackFull, Couple packUnitCouple, int quantityMaxInPack, int seuil){
+    public @Nullable PackItem createPackItem(int ID, String name, int quantityOut, Couple unitInPackCouple, int nbPackFull, Couple packUnitCouple, int quantityMaxInPack, int seuil, String image){
         if(unitInPackCouple == null || packUnitCouple == null){
             return null;
         }
@@ -70,10 +71,10 @@ public class ItemManager extends ListManager<Item>{
         if(packUnitIDInDictionary == -1){
             dictionaryManager.addInList(packUnitCouple);
         }
-        return new PackItem(ID, name, quantityOut, unitInPackCouple, nbPackFull, packUnitCouple, quantityMaxInPack, seuil);
+        return new PackItem(ID, name, quantityOut, unitInPackCouple, nbPackFull, packUnitCouple, quantityMaxInPack, seuil, image);
     }
 
-    public PackItem createPackItem(int ID, String name, int quantityOut, int unitInPackIndexInDictionary, int nbPackFull, int packUnitIndexInDictionary, int quantityMaxInPack, int seuil){
+    public PackItem createPackItem(int ID, String name, int quantityOut, int unitInPackIndexInDictionary, int nbPackFull, int packUnitIndexInDictionary, int quantityMaxInPack, int seuil, String image){
         Couple unitInPackCouple = dictionaryManager.get(unitInPackIndexInDictionary);
         Couple packUnitCouple = dictionaryManager.get(packUnitIndexInDictionary);
         return unitInPackCouple != null && packUnitCouple != null ? createPackItem(
@@ -84,7 +85,8 @@ public class ItemManager extends ListManager<Item>{
                 nbPackFull,
                 packUnitCouple,
                 quantityMaxInPack,
-                seuil
+                seuil,
+                image
         ) : null;
     }
 
@@ -104,16 +106,16 @@ public class ItemManager extends ListManager<Item>{
         List<Item> itemList = new ArrayList<>();
         int ID = 0;
 
-        itemList.add(createBasicItem(ID++, "Gel WC", 4, dictionaryManager.getID("bouteille"), 2));
-        itemList.add(createBasicItem(ID++, "Lingettes bébé", 2, dictionaryManager.getID("boite"), 1));
-        itemList.add(createBasicItem(ID++, "Lingettes desinfectante", 2, dictionaryManager.getID("boite"), 1));
-        itemList.add(createBasicItem(ID++, "Mouchoirs", 5, dictionaryManager.getID("boite"), 2));
-        itemList.add(createBasicItem(ID++, "Gants", 8, dictionaryManager.getID("boite"), 1));
-        itemList.add(createPackItem(ID++, "Papier toilette", 3, dictionaryManager.getID("rouleau"), 1, dictionaryManager.getID("paquet"), 8, 1));
-        itemList.add(createPackItem(ID++, "Essuie mains", 2, dictionaryManager.getID("rouleau"), 3, dictionaryManager.getID("paquet"), 6, 5));
-        itemList.add(createBasicItem(ID++, "Sacs poubelle (petit noir)", 5, dictionaryManager.getID("rouleau"), 3));
-        itemList.add(createBasicItem(ID++, "Sacs poubelle (grand noir)", 3, dictionaryManager.getID("rouleau"), 2));
-        itemList.add(createBasicItem(ID, "Sacs poubelle (blanc)", 1, dictionaryManager.getID("rouleau"), 1));
+        itemList.add(createBasicItem(ID++, "Gel WC", 4, dictionaryManager.getID("bouteille"), 2, null));
+        itemList.add(createBasicItem(ID++, "Lingettes bébé", 2, dictionaryManager.getID("boite"), 1, null));
+        itemList.add(createBasicItem(ID++, "Lingettes desinfectante", 2, dictionaryManager.getID("boite"), 1, null));
+        itemList.add(createBasicItem(ID++, "Mouchoirs", 5, dictionaryManager.getID("boite"), 2, null));
+        itemList.add(createBasicItem(ID++, "Gants", 8, dictionaryManager.getID("boite"), 1, null));
+        itemList.add(createPackItem(ID++, "Papier toilette", 3, dictionaryManager.getID("rouleau"), 1, dictionaryManager.getID("paquet"), 8, 1, null));
+        itemList.add(createPackItem(ID++, "Essuie mains", 2, dictionaryManager.getID("rouleau"), 3, dictionaryManager.getID("paquet"), 6, 5, null));
+        itemList.add(createBasicItem(ID++, "Sacs poubelle (petit noir)", 5, dictionaryManager.getID("rouleau"), 3, null));
+        itemList.add(createBasicItem(ID++, "Sacs poubelle (grand noir)", 3, dictionaryManager.getID("rouleau"), 2, null));
+        itemList.add(createBasicItem(ID, "Sacs poubelle (blanc)", 1, dictionaryManager.getID("rouleau"), 1, null));
 
         return itemList;
     }

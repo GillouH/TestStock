@@ -58,4 +58,10 @@
     <string name="example_value">5 boites de 50 gants:</string>
     <string name="addInDictionary">Ajouter dans le dictionnaire</string>
     <string name="editInDictionary">Modifier dans le dictionnaire</string>
+    <string name="label_picture">Image :</string>
+    <string name="editItemActivity_imageView_contentDescription">Image de l\'article</string>
+    <string name="editItemActivity_button_choosePicture_text">Choisir l\'image</string>
+    <string name="editItemActivity_button_choosePicture_contentDescription">Choisir l\'image de l\'article</string>
+    <string name="editItemActivity_button_deletePicture_text">Supprimer l\'image</string>
+    <string name="editItemActivity_button_deletePicture_contentDescription">Supprimer l\'image de l\'article</string>
 </resources>
