@@ -1,6 +1,7 @@
 package com.example.teststock.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teststock.R;
@@ -29,31 +31,24 @@ import static androidx.core.content.ContextCompat.startActivity;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> implements ItemMoveCallback.ItemTouchHelperContract{
     private List<Item> itemList;
-    private static Drawable imageDrawableMove, imageDrawableDelete;
+    private static final int
+            drawableIDMove = R.drawable.ic_baseline_pan_tool_24,
+            drawableIDDelete = R.drawable.ic_baseline_delete_24,
+            contentDescriptionMoveID = R.string.move,
+            contentDescriptionDeleteID = R.string.delete;
+    private final Drawable imageDrawableMove, imageDrawableDelete;
     private final StartDragListener startDragListener;
     private ACTION_MODE mode;
     private static String contentDescriptionMove, contentDescriptionDelete;
 
-    public ItemAdapter(java.util.List<Item> itemList, ACTION_MODE mode, StartDragListener startDragListener){
+    public ItemAdapter(Context context, java.util.List<Item> itemList, ACTION_MODE mode, StartDragListener startDragListener){
+        imageDrawableMove = ContextCompat.getDrawable(context, drawableIDMove);
+        contentDescriptionMove = context.getString(contentDescriptionMoveID);
+        imageDrawableDelete = ContextCompat.getDrawable(context, drawableIDDelete);
+        contentDescriptionDelete = context.getString(contentDescriptionDeleteID);
         this.itemList = itemList;
         this.mode = mode;
         this.startDragListener = startDragListener;
-    }
-
-    public static void setImageDrawableMove(Drawable move){
-        ItemAdapter.imageDrawableMove = move;
-    }
-
-    public static void setImageDrawableDelete(Drawable delete){
-        ItemAdapter.imageDrawableDelete = delete;
-    }
-
-    public static void setContentDescriptionMove(String contentDescriptionMove){
-        ItemAdapter.contentDescriptionMove = contentDescriptionMove;
-    }
-
-    public static void setContentDescriptionDelete(String contentDescriptionDelete){
-        ItemAdapter.contentDescriptionDelete = contentDescriptionDelete;
     }
 
     @NonNull

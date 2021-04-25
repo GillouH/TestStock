@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,14 +60,9 @@ public class MainActivity extends PersonalActivity implements StartDragListener{
             itemList = itemManager.getList();
         }
 
-        ItemAdapter.setImageDrawableMove(ContextCompat.getDrawable(this, R.drawable.ic_baseline_pan_tool_24));
-        ItemAdapter.setImageDrawableDelete(ContextCompat.getDrawable(this, R.drawable.ic_baseline_delete_24));
-        ItemAdapter.setContentDescriptionMove(getString(R.string.move));
-        ItemAdapter.setContentDescriptionDelete(getString(R.string.delete));
-
         showSubMenu = actionMode.equals(ACTION_MODE.NORMAL);
 
-        itemAdapter = new ItemAdapter(itemList, actionMode, this);
+        itemAdapter = new ItemAdapter(getApplicationContext(), itemList, actionMode, this);
         callback = new ItemMoveCallback(itemAdapter);
         callback.setLongPressDragEnabled(actionMode.equals(ACTION_MODE.MOVE));
         touchHelper = new ItemTouchHelper(callback);
