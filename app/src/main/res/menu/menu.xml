@@ -43,6 +43,11 @@
             android:title="@string/dictionary"
             app:showAsAction="never" />
 
+        <item
+            android:id="@+id/menu_submenu_button_test"
+            android:title="@string/test"
+            app:showAsAction="never" />
+
     </group>
 
 </menu>

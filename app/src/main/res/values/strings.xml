@@ -19,6 +19,7 @@
     <string name="plural">Plural</string>
     <string name="reset">Reset</string>
     <string name="warning">Warning</string>
+    <string name="test">Test</string>
 
     <string name="item_name">Item name</string>
     <string name="quantityUnit_label">Quantity:</string>
