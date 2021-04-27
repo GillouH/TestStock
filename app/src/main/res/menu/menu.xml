@@ -48,6 +48,16 @@
             android:title="@string/test"
             app:showAsAction="never" />
 
+        <item
+            android:id="@+id/menu_submenu_button_import"
+            android:title="@string/importStr"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/menu_submenu_button_export"
+            android:title="@string/export"
+            app:showAsAction="never" />
+
     </group>
 
 </menu>

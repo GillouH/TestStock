@@ -22,7 +22,7 @@ abstract class ListManager<T extends JSONable>{
         this.context = context;
     }
 
-    protected abstract String getPrefKey();
+    public abstract String getPrefKey();
 
     public void saveList(List<T> list){
         if(list != null){

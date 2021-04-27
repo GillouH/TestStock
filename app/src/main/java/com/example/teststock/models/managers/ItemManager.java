@@ -23,7 +23,6 @@ public class ItemManager extends ListManager<Item>{
     public static final String INTENT_EXTRA_DATA_KEY_ID = "INTENT_EXTRA_DATA_KEY_ID";
     private static final String PREF_KEY_ITEM_LIST = "PREF_KEY_ITEM_LIST";
     private final DictionaryManager dictionaryManager;
-    private final static int defaultPicture = R.drawable.ic_baseline_photo_size_select_actual_24;
 
     public ItemManager(Context context){
         super(context);
@@ -31,7 +30,7 @@ public class ItemManager extends ListManager<Item>{
     }
 
     @Override
-    protected String getPrefKey(){
+    public String getPrefKey(){
         return PREF_KEY_ITEM_LIST;
     }
 

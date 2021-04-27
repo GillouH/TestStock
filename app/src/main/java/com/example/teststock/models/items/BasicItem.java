@@ -25,7 +25,6 @@ public class BasicItem extends Item{
 
     public static @Nullable BasicItem fromJSON(JSONObject json){
         try{
-            // TODO: 22/04/2021 Prochaine version, enlever la vérification
             String imageStr;
             if(json.has(JSON_KEY_IMAGE)){
                 imageStr = json.getString(JSON_KEY_IMAGE);

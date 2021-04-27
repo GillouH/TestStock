@@ -48,7 +48,13 @@ public class MainActivity extends PersonalActivity implements StartDragListener{
         addButton = findViewById(R.id.activityMain_floattingButton);
 
         hasMenu = true;
-        subMenuItemToShow = Arrays.asList(R.id.menu_submenu_button_modifyOrder, R.id.menu_submenu_button_removeItem, R.id.menu_submenu_button_dictionary);
+        subMenuItemToShow = Arrays.asList(
+                R.id.menu_submenu_button_modifyOrder,
+                R.id.menu_submenu_button_removeItem,
+                R.id.menu_submenu_button_dictionary,
+                R.id.menu_submenu_button_import,
+                R.id.menu_submenu_button_export
+        );
         setSupportActionBar(toolbar);
 
         if(savedInstanceState != null){

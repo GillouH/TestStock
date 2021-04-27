@@ -20,6 +20,8 @@
     <string name="reset">Reset</string>
     <string name="warning">Warning</string>
     <string name="test">Test</string>
+    <string name="importStr">Import</string>
+    <string name="export">Export</string>
 
     <string name="item_name">Item name</string>
     <string name="quantityUnit_label">Quantity:</string>

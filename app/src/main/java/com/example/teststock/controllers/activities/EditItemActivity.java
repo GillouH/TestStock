@@ -58,7 +58,7 @@ public class EditItemActivity extends OneItemManagerActivity{
     private Drawable imageDrawableDefaultItemPicture;
     private String[] unitList;
     private String imageUriStr;
-    private Button buttonChoosetemPicture, buttonDeleteItemPicture, buttonSave;
+    private Button buttonSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -68,8 +68,8 @@ public class EditItemActivity extends OneItemManagerActivity{
         Toolbar toolbar = findViewById(R.id.activityEditItem_toolbar);
         editTextItemName = findViewById(R.id.activityEditItem_editText_itemName);
         imageViewItemPicture = findViewById(R.id.activityEditItem_imageView_itemPicture);
-        buttonChoosetemPicture = findViewById(R.id.activityEditItem_button_chooseItemPicture);
-        buttonDeleteItemPicture = findViewById(R.id.activityEditItem_button_deleteItemPicture);
+        Button buttonChoosetemPicture = findViewById(R.id.activityEditItem_button_chooseItemPicture);
+        Button buttonDeleteItemPicture = findViewById(R.id.activityEditItem_button_deleteItemPicture);
         radioButtonBasicItem = findViewById(R.id.activityEditItem_radioButton_basicItem);
         radioButtonPackItem = findViewById(R.id.activityEditItem_radioButton_packItem);
         linearLayoutBasicItem = findViewById(R.id.activityEditItem_linearLayout_basicItem);

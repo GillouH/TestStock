@@ -38,7 +38,7 @@ public class DictionaryManager extends ListManager<Couple>{
     }
 
     @Override
-    protected String getPrefKey(){
+    public String getPrefKey(){
         return PREF_KEY_DICTIONARY;
     }
 

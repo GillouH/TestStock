@@ -19,6 +19,8 @@
     <string name="reset">Réinitialiser</string>
     <string name="warning">Attention</string>
     <string name="test">Test</string>
+    <string name="importStr">Importer</string>
+    <string name="export">Exporter</string>
 
     <string name="item_name">Nom de l\'article</string>
     <string name="quantityUnit_label">Quantitée :</string>

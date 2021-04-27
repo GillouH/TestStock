@@ -1,21 +1,27 @@
 package com.example.teststock.controllers;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.teststock.R;
 import com.example.teststock.controllers.activities.DictionaryActivity;
+import com.example.teststock.controllers.activities.ImportActivity;
 import com.example.teststock.controllers.activities.TestActivity;
 import com.example.teststock.models.PersonalLog;
 import com.example.teststock.models.managers.DictionaryManager;
 import com.example.teststock.models.managers.ItemManager;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,6 +94,13 @@ public class PersonalActivity extends AppCompatActivity{
             personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickTestActivityButton");
             Intent intent = new Intent(this, TestActivity.class);
             startActivity(intent);
+        }else if(itemID == R.id.menu_submenu_button_import){
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickImportActivityButton");
+            Intent intent = new Intent(this, ImportActivity.class);
+            startActivity(intent);
+        }else if(itemID == R.id.menu_submenu_button_export){
+            personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickExportButton");
+            export();
         }else{
             return super.onOptionsItemSelected(item);
         }
@@ -162,5 +175,23 @@ public class PersonalActivity extends AppCompatActivity{
         MOVE,
         EDIT,
         DELETE
+    }
+
+    private void export(){
+        JSONObject jsonObjectToExport = new JSONObject();
+        try{
+            jsonObjectToExport.put(dictionaryManager.getPrefKey(), dictionaryManager.convertListToString(dictionaryManager.getList()));
+            jsonObjectToExport.put(itemManager.getPrefKey(), itemManager.convertListToString(itemManager.getList()));
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        ClipboardManager clipboardManager = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+        clipboardManager.setPrimaryClip(
+                ClipData.newPlainText(
+                        "List to export",
+                        jsonObjectToExport.toString()
+                )
+        );
+        Toast.makeText(this, "Liste copiée dans le presse-papier", Toast.LENGTH_LONG).show();
     }
 }

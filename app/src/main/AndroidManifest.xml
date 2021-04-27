@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TestStock">
+        <activity android:name=".controllers.activities.ImportActivity" />
         <activity android:name=".controllers.activities.TestActivity" />
         <activity android:name=".controllers.activities.DictionaryActivity" />
         <activity android:name=".controllers.activities.EditItemActivity" />
