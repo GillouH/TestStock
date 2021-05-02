@@ -10,12 +10,12 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.teststock.R;
-import com.example.teststock.controllers.PersonalActivity;
+import com.example.teststock.controllers.CustomActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ImportActivity extends PersonalActivity{
+public class ImportActivity extends CustomActivity{
     JSONObject jsonObjectToImport;
     String dictionaryAsString, itemListAsString;
 

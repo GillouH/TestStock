@@ -12,7 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.teststock.R;
 import com.example.teststock.controllers.OneItemManagerActivity;
 import com.example.teststock.controllers.QuantityManager;
-import com.example.teststock.models.PersonalLog;
+import com.example.teststock.models.CustomLog;
 import com.example.teststock.models.items.BasicItem;
 import com.example.teststock.models.items.Item;
 import com.example.teststock.models.items.PackItem;
@@ -152,7 +152,7 @@ public class ItemDetailActivity extends OneItemManagerActivity{
     }
 
     private void editAction(View view){
-        personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickEditButton");
+        customLog.write(CustomLog.TYPE.CLICK, getClass(), "clickEditButton");
         Intent intent = new Intent(this, EditItemActivity.class);
         intent.putExtra(ItemManager.INTENT_EXTRA_DATA_KEY_ID, itemID);
         startActivity(intent);

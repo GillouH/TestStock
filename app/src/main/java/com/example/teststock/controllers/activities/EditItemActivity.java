@@ -25,7 +25,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.teststock.R;
 import com.example.teststock.controllers.OneItemManagerActivity;
-import com.example.teststock.models.PersonalLog;
+import com.example.teststock.models.CustomLog;
 import com.example.teststock.models.items.BasicItem;
 import com.example.teststock.models.items.Item;
 import com.example.teststock.models.items.PackItem;
@@ -426,7 +426,8 @@ public class EditItemActivity extends OneItemManagerActivity{
                 }
                 unitList = dictionaryManager.getUnitArray();
             }else if(requestCode == REQUEST_CODE_PICTURE){
-                setNewPicture(data.getData().toString());
+                Uri uri = data.getData();
+                setNewPicture(uri != null ? uri.toString() : null);
             }
         }
     }
@@ -453,7 +454,7 @@ public class EditItemActivity extends OneItemManagerActivity{
     }
 
     private void saveItem(){
-        personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickSaveButton");
+        customLog.write(CustomLog.TYPE.CLICK, getClass(), "clickSaveButton");
         Item item = createItemFromForm();
         if(itemID == -1){
             itemManager.addInList(item);

@@ -102,6 +102,7 @@ abstract class ListManager<T extends JSONable>{
                 }catch(JSONException ignored){
                     jsonObject = new JSONObject();
                 }
+                //noinspection unchecked
                 list.add((T)JSONable.fromJSON(jsonObject));
             }
         }

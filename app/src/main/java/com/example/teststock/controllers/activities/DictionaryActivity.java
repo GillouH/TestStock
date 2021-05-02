@@ -18,9 +18,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.example.teststock.R;
-import com.example.teststock.controllers.PersonalActivity;
 import com.example.teststock.models.Couple;
-import com.example.teststock.models.PersonalLog;
+import com.example.teststock.models.CustomLog;
 import com.example.teststock.models.managers.DictionaryManager;
 
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-public class DictionaryActivity extends PersonalActivity{
+public class DictionaryActivity extends MenuActivity{
     private static final String BUNDLE_STATE_DICTIONARY = "BUNDLE_STATE_DICTIONARY";
     private static final String BUNDLE_STATE_EDITING = "BUNDLE_STATE_EDITING";
     private static final String BUNDLE_STATE_ROW_INDEX = "BUNDLE_STATE_ROW_INDEX";
@@ -126,7 +125,7 @@ public class DictionaryActivity extends PersonalActivity{
     }
 
     private void refresh(){
-        personalLog.write(PersonalLog.TYPE.METHOD, getClass(), "refresh()");
+        customLog.write(CustomLog.TYPE.METHOD, getClass(), "refresh()");
         showSubMenu = actionMode.equals(ACTION_MODE.NORMAL);
         invalidateOptionsMenu();
         displayTable();

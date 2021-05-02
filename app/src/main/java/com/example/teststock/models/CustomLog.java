@@ -3,7 +3,7 @@ package com.example.teststock.models;
 import android.util.Log;
 
 
-public class PersonalLog{
+public class CustomLog{
     protected static final String PERSO = "[PERSO]";
 
     public void write(TYPE type, Class<?> classToLog, String msg){

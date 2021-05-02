@@ -20,8 +20,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teststock.R;
-import com.example.teststock.controllers.PersonalActivity.ACTION_MODE;
 import com.example.teststock.controllers.activities.ItemDetailActivity;
+import com.example.teststock.controllers.activities.MenuActivity.ACTION_MODE;
 import com.example.teststock.models.items.Item;
 import com.example.teststock.models.managers.ItemManager;
 

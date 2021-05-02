@@ -14,8 +14,7 @@ import com.example.teststock.R;
 import com.example.teststock.adapters.ItemAdapter;
 import com.example.teststock.adapters.ItemMoveCallback;
 import com.example.teststock.adapters.StartDragListener;
-import com.example.teststock.controllers.PersonalActivity;
-import com.example.teststock.models.PersonalLog;
+import com.example.teststock.models.CustomLog;
 import com.example.teststock.models.items.Item;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,9 +26,8 @@ import java.util.List;
 // TODO: 18/03/2021 Gestion de compte
 // TODO: 18/03/2021 Mise en réseau avec serveur
 // TODO: 20/03/2021 Bouton rappel notification
-// TODO: 12/04/2021 partage de liste
 
-public class MainActivity extends PersonalActivity implements StartDragListener{
+public class MainActivity extends MenuActivity implements StartDragListener{
     private static final String BUNDLE_STATE_ITEM_LIST = "BUNDLE_STATE_ITEM_LIST";
 
     private ItemAdapter itemAdapter;
@@ -47,7 +45,6 @@ public class MainActivity extends PersonalActivity implements StartDragListener{
         RecyclerView recyclerView = findViewById(R.id.activityMain_recyclerView);
         addButton = findViewById(R.id.activityMain_floattingButton);
 
-        hasMenu = true;
         subMenuItemToShow = Arrays.asList(
                 R.id.menu_submenu_button_modifyOrder,
                 R.id.menu_submenu_button_removeItem,
@@ -81,7 +78,7 @@ public class MainActivity extends PersonalActivity implements StartDragListener{
     }
 
     private void refresh(){
-        personalLog.write(PersonalLog.TYPE.METHOD, getClass(), "refresh()");
+        customLog.write(CustomLog.TYPE.METHOD, getClass(), "refresh()");
         showSubMenu = actionMode.equals(ACTION_MODE.NORMAL);
         invalidateOptionsMenu();
         itemAdapter.setItemList(itemList);
@@ -125,7 +122,7 @@ public class MainActivity extends PersonalActivity implements StartDragListener{
     }
 
     private void addAction(){
-        personalLog.write(PersonalLog.TYPE.CLICK, getClass(), "clickAddButton");
+        customLog.write(CustomLog.TYPE.CLICK, getClass(), "clickAddButton");
         Intent intent = new Intent(this, EditItemActivity.class);
         startActivity(intent);
     }
