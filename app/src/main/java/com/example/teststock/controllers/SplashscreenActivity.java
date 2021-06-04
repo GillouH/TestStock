@@ -12,15 +12,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.teststock.R;
+import com.example.teststock.controllers.activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SplashscreenActivity extends AppCompatActivity{
 
-    private ObjectAnimator fadeIn, fadeOut;
-    private ImageView splashScreenImage;
-    private List<Drawable> pictureList = new ArrayList<>();
+    private final List<Drawable> pictureList = new ArrayList<>();
+    private ObjectAnimator fadeOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -29,13 +29,13 @@ public class SplashscreenActivity extends AppCompatActivity{
 
         pictureList.add(ContextCompat.getDrawable(this, R.drawable.femme_parfaite_splashscreen));
         pictureList.add(ContextCompat.getDrawable(this, R.drawable.maman_nolan));
-        Integer random = (int)(Math.random() * pictureList.size());
+        int random = (int)(Math.random() * pictureList.size());
 
-        splashScreenImage = findViewById(R.id.activitySplashscreen_imageView);
+        ImageView splashScreenImage = findViewById(R.id.activitySplashscreen_imageView);
         splashScreenImage.setImageDrawable(pictureList.get(random));
         splashScreenImage.setImageAlpha(0);
 
-        fadeIn = ObjectAnimator.ofInt(splashScreenImage, "imageAlpha", 0, 255);
+        ObjectAnimator fadeIn = ObjectAnimator.ofInt(splashScreenImage, "imageAlpha", 0, 255);
         fadeIn.setDuration(1000);
         fadeOut = ObjectAnimator.ofInt(splashScreenImage, "imageAlpha", 255, 0);
         fadeOut.setDuration(1000);

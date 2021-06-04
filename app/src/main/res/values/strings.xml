@@ -67,4 +67,5 @@
     <string name="example_value">5 box of 50 gloves:</string>
     <string name="addInDictionary">Add in dictionary</string>
     <string name="editInDictionary">Edit in dictionary</string>
+    <string name="splashscreen_image_contentDescription">Splashscreen Image</string>
 </resources>

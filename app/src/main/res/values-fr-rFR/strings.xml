@@ -66,4 +66,5 @@
     <string name="editItemActivity_button_choosePicture_contentDescription">Choisir l\'image de l\'article</string>
     <string name="editItemActivity_button_deletePicture_text">Supprimer l\'image</string>
     <string name="editItemActivity_button_deletePicture_contentDescription">Supprimer l\'image de l\'article</string>
+    <string name="splashscreen_image_contentDescription">Image d\'accueil</string>
 </resources>
