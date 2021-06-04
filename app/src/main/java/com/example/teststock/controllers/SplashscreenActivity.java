@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.teststock.R;
 
@@ -26,8 +27,8 @@ public class SplashscreenActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
-        pictureList.add(getDrawable(R.drawable.femme_parfaite_splashscreen));
-        pictureList.add(getDrawable(R.drawable.maman_nolan));
+        pictureList.add(ContextCompat.getDrawable(this, R.drawable.femme_parfaite_splashscreen));
+        pictureList.add(ContextCompat.getDrawable(this, R.drawable.maman_nolan));
         Integer random = (int)(Math.random() * pictureList.size());
 
         splashScreenImage = findViewById(R.id.activitySplashscreen_imageView);
