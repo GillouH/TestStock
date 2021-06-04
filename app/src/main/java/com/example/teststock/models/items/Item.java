@@ -31,6 +31,8 @@ public abstract class Item extends JSONable{
         return name;
     }
 
+    public abstract int getQuantityLeft();
+
     public int getSeuil(){
         return seuil;
     }

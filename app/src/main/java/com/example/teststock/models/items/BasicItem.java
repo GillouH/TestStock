@@ -48,6 +48,11 @@ public class BasicItem extends Item{
         return quantity;
     }
 
+    @Override
+    public int getQuantityLeft(){
+        return getQuantity();
+    }
+
     public Couple getCoupleUnit(){
         return coupleUnit;
     }

@@ -82,10 +82,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         }
         holder.name.setText(item.getName());
         holder.itemView.setClickable(false);
+        holder.quantity.setVisibility(mode.equals(ACTION_MODE.NORMAL) ? View.VISIBLE : View.GONE);
         holder.imageViewAction.setVisibility(mode.equals(ACTION_MODE.NORMAL) ? View.GONE : View.VISIBLE);
 
         switch(mode){
             case NORMAL:
+                holder.quantity.setText(String.valueOf(item.getQuantityLeft()));
                 holder.itemView.setOnClickListener(v->{
                     Intent intent = new Intent(holder.itemView.getContext(), ItemDetailActivity.class);
                     intent.putExtra(ItemManager.INTENT_EXTRA_DATA_KEY_ID, item.getID());
@@ -151,7 +153,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     public final static class ItemViewHolder extends RecyclerView.ViewHolder{
         private final CardView cardView;
-        private final TextView name;
+        private final TextView name, quantity;
         private final ImageView imageViewItemPicture, imageViewAction;
         private final ColorStateList cardViewBackgroundColorStateList;
 
@@ -159,7 +161,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             super(itemView);
             cardView = itemView.findViewById(R.id.itemAdapter_cardView);
             imageViewItemPicture = itemView.findViewById(R.id.itemAdapter_imageView_itemPicture);
-            name = itemView.findViewById(R.id.itemAdapter_textView);
+            name = itemView.findViewById(R.id.itemAdapter_textView_name);
+            quantity = itemView.findViewById(R.id.item_Adapter_textView_quantity);
             imageViewAction = itemView.findViewById(R.id.item_Adapter_imageView_action);
 
             cardViewBackgroundColorStateList = cardView.getCardBackgroundColor();

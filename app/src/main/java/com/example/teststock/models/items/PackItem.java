@@ -113,7 +113,7 @@ public class PackItem extends Item{
                 modifyNbPack(1);
                 quantityOut -= quantityMaxInPack;
             }
-            if(getTotalQuantity() <= seuil){
+            if(getQuantityLeft() <= seuil){
                 sendNotification = SEND_NOTIFICATION.YES;
             }
         }
@@ -124,7 +124,8 @@ public class PackItem extends Item{
         return nbPackFull;
     }
 
-    public int getTotalQuantity(){
+    @Override
+    public int getQuantityLeft(){
         return quantityOut + quantityMaxInPack * nbPackFull;
     }
 
@@ -173,7 +174,7 @@ public class PackItem extends Item{
         if(quantity > 0 || -quantity <= nbPackFull){
             nbPackFull += quantity;
         }
-        return getTotalQuantity() <= seuil ? SEND_NOTIFICATION.YES : SEND_NOTIFICATION.NO;
+        return getQuantityLeft() <= seuil ? SEND_NOTIFICATION.YES : SEND_NOTIFICATION.NO;
     }
 
     @SuppressWarnings({"unused", "RedundantSuppression"})
@@ -209,7 +210,7 @@ public class PackItem extends Item{
 
     @Override
     public String getQuantityLeftFormated(){
-        return String.format(Locale.getDefault(), "%d %s", getTotalQuantity(), getUnitInPack(getTotalQuantity()));
+        return String.format(Locale.getDefault(), "%d %s", getQuantityLeft(), getUnitInPack(getQuantityLeft()));
     }
 
     public JSONObject toJSON(){

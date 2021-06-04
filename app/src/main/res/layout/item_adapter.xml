@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/itemAdapter_textView"
+            android:id="@+id/itemAdapter_textView_name"
             style="@style/TextView"
             android:text="@string/item_name"
             android:textSize="20sp"
@@ -39,6 +39,19 @@
             android:layout_height="50sp"
             android:contentDescription="@string/itemAdapter_imageView_contentDescription"
             android:src="@drawable/ic_baseline_pan_tool_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_Adapter_textView_quantity"
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:text="@string/number0"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
